@@ -97,35 +97,35 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="lecture_web.php">
+        <a href="attack1web.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Web Security Lecture</h2>
+                    <h2>attack1</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn the fundamentals of securing web applications against common threats.</p>
+                <p class="description">attack1.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="lab_web.php">
+        <a href="attack2web.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>attack2</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice identifying and mitigating web vulnerabilities through hands-on labs.</p>
+                <p class="description">attack2.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://websecuritytools.example.com" target="_blank">
+        <a href="attack3web.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Web Security Tools</h2>
+                    <h2>attack3</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools and frameworks to enhance web application security.</p>
+                <p class="description">attack3.</p>
             </div>
         </a>
     </main>

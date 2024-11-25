@@ -97,35 +97,35 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="lecture_mobile.php">
+        <a href="attack1mob.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Mobile Security Lecture</h2>
+                    <h2>attack1</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn how to secure mobile devices and applications against security threats.</p>
+                <p class="description">attack1.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="lab_mobile.php">
+        <a href="attack2mob.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>attack2</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice identifying and resolving security issues in mobile environments.</p>
+                <p class="description">attack2.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://mobilesecuritytools.example.com" target="_blank">
+        <a href="attack3mob.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Mobile Security Tools</h2>
+                    <h2>attack3</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to secure mobile platforms and mitigate risks.</p>
+                <p class="description">attack3.</p>
             </div>
         </a>
     </main>

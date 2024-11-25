@@ -96,36 +96,36 @@
         <h1>Wireless Security Simulation</h1>
     </header>
     <main class="content">
-        <!-- Lecture Card -->
-        <a href="lecture_wireless.php">
+           <!-- Lecture Card -->
+           <a href="attack1wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>attack1</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">attack1.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="lab_wireless.php">
+        <a href="attack2wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>attack2</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">attack2.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://wirelesssecuritytools.example.com" target="_blank">
+        <a href="attack3wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Tools</h2>
+                    <h2>attack3</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
+                <p class="description">attack3.</p>
             </div>
         </a>
     </main>

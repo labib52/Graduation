@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Security Simulation</title>
+    <title>Wireless Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -93,39 +93,39 @@
 </head>
 <body>
     <header>
-        <h1>Network Security Simulation</h1>
+        <h1>Wireless Security Simulation</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack1network.php">
+        <a href="lecture_wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2>Wireless Security Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
+                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="attack2network.php">
+        <a href="lab_wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack2</h2>
+                    <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack2.</p>
+                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="attack3network.php">
+        <a href="https://wirelesssecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack3</h2>
+                    <h2>Wireless Security Tools</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack3.</p>
+                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
             </div>
         </a>
     </main>

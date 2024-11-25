@@ -96,36 +96,36 @@
         <h1>Cloud Security Simulation</h1>
     </header>
     <main class="content">
-        <!-- Objective Card -->
-        <a href="lecture_cloud.php">
+           <!-- Lecture Card -->
+           <a href="attack1cloud.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Cloud Security Lecture</h2>
+                    <h2>attack1</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about securing cloud environments, including strategies for managing vulnerabilities.</p>
+                <p class="description">attack1.</p>
             </div>
         </a>
 
-        <!-- Scenario Card -->
-        <a href="lab_cloud.php">
+        <!-- Lab Exercises Card -->
+        <a href="attack2cloud.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>attack2</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Apply your knowledge with hands-on labs focused on cloud security practices.</p>
+                <p class="description">attack2.</p>
             </div>
         </a>
 
-        <!-- Resources Card -->
-        <a href="https://cloudresources.example.com" target="_blank">
+        <!-- Tools Card -->
+        <a href="attack3cloud.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Cloud Security Resources</h2>
+                    <h2>attack3</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Access additional learning materials and tools for securing cloud environments.</p>
+                <p class="description">attack3.</p>
             </div>
         </a>
     </main>

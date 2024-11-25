@@ -97,35 +97,35 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="lecture_api.php">
+        <a href="attack1api.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>API Security Lecture</h2>
+                    <h2>attack1</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn the best practices for securing APIs and preventing unauthorized access.</p>
+                <p class="description">attack1.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="lab_api.php">
+        <a href="attack2api.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>attack2</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing APIs and identifying common vulnerabilities in hands-on labs.</p>
+                <p class="description">attack2.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://apisecuritytools.example.com" target="_blank">
+        <a href="attack3api.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>API Security Tools</h2>
+                    <h2>attack3</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Discover tools to analyze, secure, and monitor API endpoints effectively.</p>
+                <p class="description">attack3.</p>
             </div>
         </a>
     </main>
