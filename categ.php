@@ -81,7 +81,7 @@
 <body>
 
     <header class="header">
-        <h1>Assessment Categories</h1>
+        <h1>CyberWise</h1>
     </header>
 
     <div class="container">
