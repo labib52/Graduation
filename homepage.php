@@ -28,7 +28,7 @@
         .header p {
             font-size: 1.2rem;
         }
-         .header a {
+        .header a {
             background-color: #fff;
             color: #007BFF;
             padding: 0.5rem 1rem;
@@ -37,7 +37,8 @@
             font-weight: bold;
             float:right;
             margin:5px;
-
+        }
+        
         /* About Us Section */
         .about-us {
             padding: 40px 20px;
