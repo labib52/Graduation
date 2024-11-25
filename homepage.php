@@ -38,7 +38,7 @@
             float:right;
             margin:5px;
         }
-        
+
         /* About Us Section */
         .about-us {
             padding: 40px 20px;
@@ -136,7 +136,7 @@
             <div class="container">
                 <h2>Start Learning</h2>
                 <p>Select a lesson to begin your journey toward becoming a cybersecurity expert.</p>
-                <a href="index.php" class="lesson-btn">Choose your Lesson</a>
+                <a href="categ.php" class="lesson-btn">Choose your Lesson</a>
             </div>
         </section>
     </main>

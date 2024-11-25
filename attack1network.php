@@ -97,7 +97,7 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="lecture_wireless.php">
+        <a href="attack1networklec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Wireless Security Lecture</h2>
@@ -108,7 +108,7 @@
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="lab_wireless.php">
+        <a href="attack1networklab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
