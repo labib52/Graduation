@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireless</title>
+    <title>Wireless Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -93,39 +93,39 @@
 </head>
 <body>
     <header>
-        <h1>Wireless</h1>
+        <h1>Wireless Security Simulation</h1>
     </header>
     <main class="content">
-        <!-- Objective Card -->
-        <a href="lecture.php">
+        <!-- Lecture Card -->
+        <a href="lecture_wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lecture</h2>
+                    <h2>Wireless Security Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Understand the purpose and goals of this phishing email simulation.</p>
+                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
             </div>
         </a>
 
-        <!-- Scenario Card -->
-        <a href="lab.php">
+        <!-- Lab Exercises Card -->
+        <a href="lab_wireless.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab</h2>
+                    <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Some questions and practices on phishing and what you have learned from the lecture.</p>
+                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
             </div>
         </a>
 
-        <!-- Instructions Card -->
-        <a href="https://win7simu.visnalize.com/" target="_blank">
+        <!-- Tools Card -->
+        <a href="https://wirelesssecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Windows 7 VMware</h2>
+                    <h2>Wireless Security Tools</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Its a windows 7 vmware that can u applay what u have learned.</p>
+                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
             </div>
         </a>
     </main>

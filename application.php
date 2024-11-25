@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application</title>
+    <title>Application Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -93,39 +93,39 @@
 </head>
 <body>
     <header>
-        <h1>Application</h1>
+        <h1>Application Security Simulation</h1>
     </header>
     <main class="content">
-        <!-- Objective Card -->
-        <a href="lecture.php">
+        <!-- Lecture Card -->
+        <a href="lecture_application.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lecture</h2>
+                    <h2>Application Security Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Understand the purpose and goals of this phishing email simulation.</p>
+                <p class="description">Learn the key principles for securing web and desktop applications.</p>
             </div>
         </a>
 
-        <!-- Scenario Card -->
-        <a href="lab.php">
+        <!-- Lab Exercises Card -->
+        <a href="lab_application.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab</h2>
+                    <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Some questions and practices on phishing and what you have learned from the lecture.</p>
+                <p class="description">Practice identifying vulnerabilities and securing applications in hands-on labs.</p>
             </div>
         </a>
 
-        <!-- Instructions Card -->
-        <a href="https://win7simu.visnalize.com/" target="_blank">
+        <!-- Tools Card -->
+        <a href="https://applicationsecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Windows 7 VMware</h2>
+                    <h2>Application Security Tools</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Its a windows 7 vmware that can u applay what u have learned.</p>
+                <p class="description">Explore tools for analyzing, securing, and monitoring application security.</p>
             </div>
         </a>
     </main>
