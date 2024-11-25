@@ -28,6 +28,15 @@
         .header p {
             font-size: 1.2rem;
         }
+         .header a {
+            background-color: #fff;
+            color: #007BFF;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            float:right;
+            margin:5px;
 
         /* About Us Section */
         .about-us {
@@ -100,6 +109,10 @@
         <div class="container">
             <h1>Cybersecurity Training Platform</h1>
             <p>Your gateway to mastering cybersecurity through real-world simulations and expert knowledge.</p>
+        </div>
+        <div>
+            <a href="login.php">Login</a>
+            <a href="signup.php">SignUp</a>
         </div>
     </header>
 
