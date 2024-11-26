@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correctAnswers = [
         "q1" => "b",
         "q2" => "b",
-        "q3" => "a",
-        "q4" => "c",
-        "q5" => "b",
+        "q3" => "b",
+        "q4" => "a",
+        "q5" => "c",
     ];
 
     // Check user answers
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Lab</title>
+    <title>WEP/WPA Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Phishing Lab Questions</h1>
+        <h1>WEP/WPA Lab Questions</h1>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <div class="result">
@@ -123,56 +123,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="post">
                 <!-- Question 1 -->
                 <div class="question">
-                    <h3>1. What is phishing?</h3>
+                    <h3>1. What does WEP stand for in wireless security?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q1" value="a"> A method to send legitimate emails to users.</label>
-                        <label><input type="radio" name="q1" value="b"> A type of social engineering attack to steal sensitive information.</label>
-                        <label><input type="radio" name="q1" value="c"> A strategy for securely sharing passwords.</label>
-                        <label><input type="radio" name="q1" value="d"> None of the above.</label>
+                        <label><input type="radio" name="q1" value="a"> Wi-Fi Encryption Protocol</label>
+                        <label><input type="radio" name="q1" value="b"> Wired Equivalent Privacy</label>
+                        <label><input type="radio" name="q1" value="c"> Wireless Encryption Protocol</label>
+                        <label><input type="radio" name="q1" value="d"> Web Encryption Policy</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question">
-                    <h3>2. What does "spear phishing" target?</h3>
+                    <h3>2. Which of the following is a primary security weakness of WEP?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q2" value="a"> Everyone using an email account.</label>
-                        <label><input type="radio" name="q2" value="b"> Specific individuals or organizations.</label>
-                        <label><input type="radio" name="q2" value="c"> Social media accounts only.</label>
-                        <label><input type="radio" name="q2" value="d"> Large corporations exclusively.</label>
+                        <label><input type="radio" name="q2" value="a"> Strong password management.</label>
+                        <label><input type="radio" name="q2" value="b"> Static encryption keys and weak IVs (Initialization Vectors).</label>
+                        <label><input type="radio" name="q2" value="c"> Complex key exchange protocols.</label>
+                        <label><input type="radio" name="q2" value="d"> Strong user authentication.</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question">
-                    <h3>3. What is "smishing"?</h3>
+                    <h3>3. Which feature distinguishes WPA from WEP in terms of key management?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q3" value="a"> Phishing via text messages.</label>
-                        <label><input type="radio" name="q3" value="b"> Phishing through social media platforms.</label>
-                        <label><input type="radio" name="q3" value="c"> Phishing using fake phone calls.</label>
-                        <label><input type="radio" name="q3" value="d"> Phishing attacks that target executives.</label>
+                        <label><input type="radio" name="q3" value="a"> WPA uses static keys while WEP uses dynamic keys</label>
+                        <label><input type="radio" name="q3" value="b"> WPA uses dynamic keys, while WEP uses static keys</label>
+                        <label><input type="radio" name="q3" value="c"> Both WPA and WEP use static keys</label>
+                        <label><input type="radio" name="q3" value="d">  Both WPA and WEP use dynamic keys.</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question">
-                    <h3>4. Which of the following is NOT a phishing indicator?</h3>
+                    <h3>4. Which of the following is a key difference between WEP and WPA encryption?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q4" value="a"> Urgent and threatening language.</label>
-                        <label><input type="radio" name="q4" value="b"> Generic greetings like "Dear Customer."</label>
-                        <label><input type="radio" name="q4" value="c"> Emails from known contacts using official channels.</label>
-                        <label><input type="radio" name="q4" value="d"> Suspicious links or attachments.</label>
+                        <label><input type="radio" name="q4" value="a"> WPA uses more secure encryption algorithms like AES, while WEP uses weak RC4.</label>
+                        <label><input type="radio" name="q4" value="b"> WEP uses dynamic key exchange while WPA uses static keys</label>
+                        <label><input type="radio" name="q4" value="c"> WPA is more vulnerable to brute-force attacks than WEP</label>
+                        <label><input type="radio" name="q4" value="d"> WEP uses stronger encryption and is more secure than WPA</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question">
-                    <h3>5. What is the purpose of multi-factor authentication (MFA)?</h3>
+                    <h3>5. Which of the following is a recommended best practice to secure your wireless network?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q5" value="a"> To simplify login processes.</label>
-                        <label><input type="radio" name="q5" value="b"> To add an extra layer of security.</label>
-                        <label><input type="radio" name="q5" value="c"> To store passwords securely.</label>
-                        <label><input type="radio" name="q5" value="d"> To prevent software updates.</label>
+                        <label><input type="radio" name="q5" value="a"> Using WEP for encryption to ensure compatibility with old devices</label>
+                        <label><input type="radio" name="q5" value="b"> Disabling WPA2 encryption for better performance</label>
+                        <label><input type="radio" name="q5" value="c"> Using a strong, unique password for WPA2 encryption</label>
+                        <label><input type="radio" name="q5" value="d"> Using WPA with RC4 encryption for all devices</label>
                     </div>
                 </div>
 
