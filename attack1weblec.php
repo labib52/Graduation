@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding Phishing: An Overview</title>
+    <title> Understanding Man-in-the-Middle (MITM) Attacks: An Overview</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -100,60 +100,77 @@
 </head>
 <body>
     <div class="container">
-        <h1>Understanding Phishing: An Overview</h1>
-        <p>
-            Phishing is one of the most prevalent types of social engineering attacks in the world today. It involves tricking individuals into divulging sensitive information such as usernames, passwords, credit card numbers, or personal data. Phishing attacks are typically carried out through fraudulent emails, websites, or messages that appear to be from legitimate sources, such as banks, government organizations, or popular online services.
-        </p>
+        <h1>Understanding Man-in-the-Middle (MITM) Attacks: An Overview</h1>
+        <p>A Man-in-the-Middle (MITM) attack is a type of cyberattack where the attacker secretly intercepts and potentially alters the communication between two parties without their knowledge. The goal is often to steal sensitive information, manipulate communication, or disrupt normal data exchange. MITM attacks can target various types of communication, including web sessions, emails, or even real-time messaging applications.</p>
 
-        <h2>How Phishing Works</h2>
-        <p>
-            Phishing attacks rely on human error and exploitation of trust. The attacker often impersonates a reputable entity to deceive the target into taking a harmful action. This action might include clicking on a malicious link, opening an infected attachment, or entering confidential information into a fake website. Common tactics include:
-        </p>
+        <h2>How Man-in-the-Middle Attacks Work</h2>
+        <p>MITM attacks exploit vulnerabilities in network communication or authentication processes. The attacker inserts themselves between the victim and the intended recipient, masquerading as a trusted entity.</p>
         <ul>
-            <li><strong>Spoofed Emails:</strong> An attacker sends an email that appears to be from a trusted source (e.g., a bank), asking the recipient to click a link and enter personal details.</li>
-            <li><strong>Fake Websites:</strong> A fraudulent website is created to closely resemble a legitimate one, often through URL manipulation, to trick users into entering personal information.</li>
-            <li><strong>Social Media Phishing:</strong> Attackers can use social media platforms to impersonate people or companies, leading to malicious links or deceptive friend requests.</li>
-            <li><strong>Spear Phishing:</strong> Unlike generic phishing, spear phishing targets specific individuals or organizations, often with personalized details gathered through research.</li>
+            <li><strong>Interception: </strong> The attacker intercepts communication between two parties by compromising a network or using malicious software. <ul>This interception is often achieved through:
+        <li><strong>Rogue Wi-Fi hotspots:</strong> Fake public Wi-Fi access points that redirect user traffic through the attacker’s device.</li>
+    <li><strong>Packet sniffing: </strong>Using tools to capture data packets sent over unsecured networks.</li></ul></li>
+
+
+            <li><strong>Decryption: </strong> If the communication is encrypted, the attacker attempts to decrypt it using stolen credentials, session cookies, or compromised certificates.
+            Common methods include:
+            <ul><li><strong>SSL stripping: </strong> Downgrading a secure HTTPS connection to an unencrypted HTTP connection.</li>
+                <li><strong>Certificate spoofing:</strong>Presenting a fake SSL certificate to the victim's browser.</li>
+            </ul>
+            </li>
+
+
+            <li><strong>Manipulation or Theft</strong> The attacker reads, modifies, or injects malicious content into the intercepted communication.
+            Possible outcomes include:
+        <ul><li>Theft of login credentials or financial information.</li>
+        <li>Injection of malicious payloads into legitimate communication.</li>
+        <li>Disruption of communication between the two parties.</li>
+        </ul>
+        </li>
         </ul>
 
-        <h2>Types of Phishing Attacks</h2>
+        <h2>Types of MITM Attacks</h2>
         <ol>
-            <li><strong>Email Phishing:</strong> The most common form of phishing, where attackers send mass emails posing as trusted organizations, often using urgent language to prompt quick action.</li>
-            <li><strong>Smishing (SMS Phishing):</strong> Phishing via SMS or text messages, often containing links that lead to fake websites or malicious downloads.</li>
-            <li><strong>Vishing (Voice Phishing):</strong> Attackers use phone calls to impersonate legitimate institutions, like banks or government services, asking for sensitive information directly over the phone.</li>
-            <li><strong>Whaling:</strong> Aimed at high-profile targets like executives or other high-ranking officials within organizations, using highly personalized tactics.</li>
+            <li><strong>Wi-Fi Eavesdropping: </strong> The attacker sets up a fake Wi-Fi hotspot to capture traffic from connected devices.(Eg. A victim connects to "Free Coffee Shop Wi-Fi," unknowingly routed through the attacker’s system.)</li>
+            <li><strong>Session Hijacking: </strong> The attacker steals session cookies from a victim’s browser to impersonate them and gain access to their accounts.</li>
+            <li><strong>Email Hijacking: </strong> Cybercriminals compromise email accounts to intercept communication, often redirecting payments or sensitive information.</li>
+            <li><strong>DNS Spoofing: </strong> The attacker redirects the victim’s DNS queries to a malicious site that mimics a legitimate one. (Eg. Redirecting traffic from "www.bank.com" to a fake website designed to steal login credentials.)</li>
+        <li><strong>HTTPS Spoofing (SSL Stripping): </strong> The attacker downgrades a secure HTTPS connection to HTTP, exposing sensitive data to interception.</li>
         </ol>
 
-        <h2>Recognizing Phishing Attempts</h2>
-        <p>Phishing attempts can be difficult to spot, but there are several key indicators that can help you recognize them:</p>
-        <ul>
-            <li>Suspicious Email Addresses or URLs: Check for subtle misspellings or unusual characters in email addresses or website URLs.</li>
-            <li>Unsolicited Requests for Personal Information: Legitimate organizations typically do not ask for sensitive information like passwords or account numbers through email or phone.</li>
-            <li>Generic Greetings: Phishing emails often begin with general greetings like "Dear Customer" instead of using your actual name.</li>
-            <li>Urgency and Threats: Phishers often use scare tactics to make you act quickly without thinking, like claiming your account is about to be locked.</li>
-            <li>Suspicious Attachments or Links: Do not open attachments or click on links in unsolicited emails. Always verify the source before clicking.</li>
+        <h2>Recognizing Signs of MITM Attacks</h2>
+           <ul>
+            <li><strong>Unusual Certificate Warnings: </strong> Receiving warnings about invalid or untrusted SSL certificates when visiting a secure site.</li>
+            <li><strong>Slower Network Performance:</strong> The communication delay caused by routing through the attacker’s system.</li>
+            <li><strong>Mismatched URLs: </strong> Being redirected to a URL that looks suspicious or does not match the intended website.</li>
+            <li><strong>Unexpected Login Prompts: </strong>Repeated login prompts for accounts you are already signed into.</li>
         </ul>
-        <h2>How to Protect Yourself from Phishing Attacks</h2>
+        <h2>How to Protect Against MITM Attacks</h2>
         <ol>
-            <li><strong>Be Cautious with Emails and Messages:</strong> Always verify the sender’s identity. Look out for suspicious language, links, and attachments.</li>
-            <li><strong>Use Multi-Factor Authentication (MFA):</strong> Enabling MFA adds an extra layer of protection to your accounts.</li>
-            <li><strong>Keep Software Up to Date:</strong> Ensure your browser, email client, and security software are always up to date.</li>
-            <li><strong>Educate and Train Employees:</strong> Organizations should conduct regular phishing awareness training.</li>
-            <li><strong>Use Anti-Phishing Tools:</strong> Many modern browsers and email services include built-in phishing detection tools.</li>
+            <li><strong>Use Encrypted Communication:</strong> <ul><li>Always connect to websites using HTTPS.</li><li>Use secure protocols like SSH, VPNs, or TLS for sensitive communication.</li></ul></li>
+            <li><strong>Avoid Public Wi-Fi: </strong> <ul><li>Avoid accessing sensitive information or logging into accounts over public Wi-Fi.</li><li>Use a Virtual Private Network (VPN) for encryption if you must use public Wi-Fi.</li></ul></li>
+            <li><strong>Enable Multi-Factor Authentication (MFA): </strong> <ul><li>Add an extra layer of security to prevent account compromise even if credentials are stolen.</li></ul></li>
+            <li><strong>Verify Certificates: </strong> <ul><li>Check for secure lock icons and certificate validity when visiting websites.</li></ul></li>
+            <li><strong>Secure Your Network: </strong> <ul><li>Use WPA3 encryption for personal and corporate Wi-Fi networks.</li><li>Regularly update router firmware to patch vulnerabilities.</li></ul></li>
+            <li><strong>Monitor Unusual Activity: </strong> <ul><li>Use intrusion detection systems (IDS) and security monitoring tools to detect anomalies.</li></ul></li>
         </ol>
 
-        <h2>Consequences of Falling Victim to Phishing</h2>
+        <h2>Consequences of MITM Attacks</h2>
         <ul>
-            <li><strong>Identity Theft:</strong> Personal information obtained through phishing can be used to steal an individual’s identity.</li>
-            <li><strong>Financial Loss:</strong> Phishers may gain access to your bank accounts or credit cards.</li>
-            <li><strong>Malware and Ransomware:</strong> Clicking on phishing links can lead to malware infections.</li>
-            <li><strong>Reputation Damage:</strong> For organizations, a successful phishing attack can damage brand reputation.</li>
+            <li><strong>Data Theft: </strong> Exposure of personal, financial, or corporate information.</li>
+            <li><strong>Financial Loss: </strong> Theft of funds from compromised bank accounts or fraudulent transactions.</li>
+            <li><strong>Reputation Damage: </strong> For businesses, the fallout of customer data breaches or compromised communications can damage trust.</li>
+            <li><strong>Service Disruption: </strong> Altered or disrupted communication can impact business operations.</li>
         </ul>
-
+ <!-- Dynamically display the GIF using PHP -->
+ <?php
+    $gifPath = "mitm.gif"; // Replace with the path to your GIF
+    echo "<img src='$gifPath' alt='Animated GIF'>";
+    ?>
         <h2>Conclusion</h2>
         <p>
-            Phishing remains one of the most common and dangerous forms of cyberattack. The best defense against phishing is a combination of vigilance, education, and technology. By recognizing the signs of phishing, understanding how to protect yourself, and responding properly if you encounter a phishing attempt, you can greatly reduce your risk of falling victim to these malicious attacks.
+        Man-in-the-Middle attacks are among the most dangerous forms of cyberattacks due to their stealth and potential impact. Recognizing the signs, implementing strong security practices, and maintaining vigilance can significantly reduce the risk of falling victim to these attacks. Security tools, encryption protocols, and user education are critical components in mitigating the threat of MITM attacks.
         </p>
+       
 
         <div class="navigation">
             <a href="web.php" class="nav-btn">
