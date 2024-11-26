@@ -80,6 +80,8 @@
 
         footer {
             text-align: center;
+            position: fixed;
+            bottom:0;
             padding: 1rem;
             background-color: #ddd;
             margin-top: 2rem;
@@ -100,34 +102,14 @@
         <a href="attack1app.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2>Phishing Attack</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
+                <p class="description">explores the methods, motivations, and impacts of phishing attacks, providing insights into recognizing deceptive tactics and implementing strategies to mitigate risks and enhance cybersecurity awareness.</p>
             </div>
         </a>
 
-        <!-- Lab Exercises Card -->
-        <a href="attack2app.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack2.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="attack3app.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack3.</p>
-            </div>
-        </a>
+        
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
