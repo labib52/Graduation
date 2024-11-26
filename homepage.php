@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Check if a user is logged in
+$loggedIn = isset($_SESSION['user_id']);
+
+// Get the username from the session if logged in
+$username = $loggedIn ? htmlspecialchars($_SESSION['username']) : "Guest";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +37,7 @@
         .header p {
             font-size: 1.2rem;
         }
+
         .header a {
             background-color: #fff;
             color: #007BFF;
@@ -35,8 +45,8 @@
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
-            float:right;
-            margin:5px;
+            float: right;
+            margin: 5px;
         }
 
         /* About Us Section */
@@ -108,12 +118,16 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1>Cybersecurity Training Platform</h1>
+            <h1>Welcome, <?php echo $username; ?>!</h1>
             <p>Your gateway to mastering cybersecurity through real-world simulations and expert knowledge.</p>
         </div>
         <div>
-            <a href="login.php">Login</a>
-            <a href="signup.php">SignUp</a>
+            <?php if ($loggedIn): ?>
+                <a href="logout.php">Logout</a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+                <a href="signup.php">Sign Up</a>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -136,7 +150,7 @@
             <div class="container">
                 <h2>Start Learning</h2>
                 <p>Select a lesson to begin your journey toward becoming a cybersecurity expert.</p>
-                <a href="categ.php" class="lesson-btn">Choose your Lesson</a>
+                <a href="<?php echo $loggedIn ? 'categ.php' : 'login.php'; ?>" class="lesson-btn">Choose your Lesson</a>
             </div>
         </section>
     </main>
