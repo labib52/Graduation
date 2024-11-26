@@ -93,17 +93,17 @@
 </head>
 <body>
     <header>
-        <h1>Wireless Security Simulation</h1>
+        <h1>Phishing Attack</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
         <a href="attack1applec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>Phishing Attack lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">Learn about Phishing security protocols, threats, and mitigation techniques.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">involves simulating phishing attacks to understand techniques, identify vulnerabilities, and learn how to recognize and defend against such attacks..</p>
             </div>
         </a>
 
@@ -122,10 +122,10 @@
         <a href="https://wirelesssecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Tools</h2>
+                    <h2>Phishing Security Tools</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
+                <p class="description">Explore tools to analyze, secure, and monitor Phishing attacks effectively.</p>
             </div>
         </a>
     </main>
