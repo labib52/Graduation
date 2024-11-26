@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correctAnswers = [
         "q1" => "b",
         "q2" => "b",
-        "q3" => "a",
-        "q4" => "c",
+        "q3" => "b",
+        "q4" => "b",
         "q5" => "b",
     ];
 
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Lab</title>
+    <title>Mobile Attacks Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Phishing Lab Questions</h1>
+        <h1>Mobile Attacks Lab Questions</h1>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <div class="result">
@@ -123,56 +123,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="post">
                 <!-- Question 1 -->
                 <div class="question">
-                    <h3>1. What is phishing?</h3>
+                    <h3>1. What is a mobile attack?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q1" value="a"> A method to send legitimate emails to users.</label>
-                        <label><input type="radio" name="q1" value="b"> A type of social engineering attack to steal sensitive information.</label>
-                        <label><input type="radio" name="q1" value="c"> A strategy for securely sharing passwords.</label>
+                        <label><input type="radio" name="q1" value="a">A targeted attack on desktop computers.</label>
+                        <label><input type="radio" name="q1" value="b">An attempt to exploit or compromise mobile devices.</label>
+                        <label><input type="radio" name="q1" value="c"> A strategy to improve mobile device performance.</label>
                         <label><input type="radio" name="q1" value="d"> None of the above.</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question">
-                    <h3>2. What does "spear phishing" target?</h3>
+                    <h3>2. What is cryptojacking?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q2" value="a"> Everyone using an email account.</label>
-                        <label><input type="radio" name="q2" value="b"> Specific individuals or organizations.</label>
-                        <label><input type="radio" name="q2" value="c"> Social media accounts only.</label>
-                        <label><input type="radio" name="q2" value="d"> Large corporations exclusively.</label>
+                        <label><input type="radio" name="q2" value="a">Encrypting mobile data for security.</label>
+                        <label><input type="radio" name="q2" value="b"> Using a mobile device's processing power to mine cryptocurrency without user consent.</label>
+                        <label><input type="radio" name="q2" value="c"> Sending spam messages from a device.</label>
+                        <label><input type="radio" name="q2" value="d"> None of the above.</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question">
-                    <h3>3. What is "smishing"?</h3>
+                    <h3>3. What is the purpose of fake apps in mobile attacks?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q3" value="a"> Phishing via text messages.</label>
-                        <label><input type="radio" name="q3" value="b"> Phishing through social media platforms.</label>
-                        <label><input type="radio" name="q3" value="c"> Phishing using fake phone calls.</label>
-                        <label><input type="radio" name="q3" value="d"> Phishing attacks that target executives.</label>
+                        <label><input type="radio" name="q3" value="a"> To improve user experience.</label>
+                        <label><input type="radio" name="q3" value="b"> To trick users into sharing sensitive information or downloading malware.</label>
+                        <label><input type="radio" name="q3" value="c"> To increase app store rankings.</label>
+                        <label><input type="radio" name="q3" value="d"> None of the above.</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question">
-                    <h3>4. Which of the following is NOT a phishing indicator?</h3>
+                    <h3>4. How can a VPN help protect mobile devices?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q4" value="a"> Urgent and threatening language.</label>
-                        <label><input type="radio" name="q4" value="b"> Generic greetings like "Dear Customer."</label>
-                        <label><input type="radio" name="q4" value="c"> Emails from known contacts using official channels.</label>
-                        <label><input type="radio" name="q4" value="d"> Suspicious links or attachments.</label>
+                        <label><input type="radio" name="q4" value="a"> By speeding up internet connectivity.</label>
+                        <label><input type="radio" name="q4" value="b"> By encrypting data and securing communications on public networks.</label>
+                        <label><input type="radio" name="q4" value="c"> By blocking malware directly.</label>
+                        <label><input type="radio" name="q4" value="d"> None of the above.</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question">
-                    <h3>5. What is the purpose of multi-factor authentication (MFA)?</h3>
+                    <h3>5. Why should mobile devices be regularly updated?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q5" value="a"> To simplify login processes.</label>
-                        <label><input type="radio" name="q5" value="b"> To add an extra layer of security.</label>
-                        <label><input type="radio" name="q5" value="c"> To store passwords securely.</label>
-                        <label><input type="radio" name="q5" value="d"> To prevent software updates.</label>
+                        <label><input type="radio" name="q5" value="a"> To free up storage space.</label>
+                        <label><input type="radio" name="q5" value="b"> To patch security vulnerabilities and improve defenses.</label>
+                        <label><input type="radio" name="q5" value="c"> To disable app permissions.</label>
+                        <label><input type="radio" name="q5" value="d"> None of the above.</label>
                     </div>
                 </div>
 
