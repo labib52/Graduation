@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($insertQuery->execute()) {
                 echo "Registration successful!";
-                header("Location: login.php");
+                header("Location: homepage.php");
                 exit();
             } else {
                 $errors['general'] = "Error: " . $insertQuery->error;
