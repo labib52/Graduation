@@ -4,11 +4,11 @@ $score = 0;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Correct answers
     $correctAnswers = [
-        "q1" => "a",
+        "q1" => "b",
         "q2" => "c",
-        "q3" => "c",
-        "q4" => "b",
-        "q5" => "a",
+        "q3" => "b",
+        "q4" => "a",
+        "q5" => "b",
     ];
 
     // Check user answers
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Network Lab Questions</h1>
+        <h1>Port Scanning Lab Questions</h1>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <div class="result">
@@ -123,56 +123,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="post">
                 <!-- Question 1 -->
                 <div class="question">
-                    <h3>1. What is a network attack?</h3>
+                    <h3>1. What is port scanning?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q1" value="a"> An attempt to disrupt, access, or exploit a computer network or its resources..</label>
-                        <label><input type="radio" name="q1" value="b"> A method of securely transmitting data across networks.</label>
-                        <label><input type="radio" name="q1" value="c"> A way to encrypt sensitive information during transit.</label>
-                        <label><input type="radio" name="q1" value="d"> A strategy for improving network speed..</label>
+                        <label><input type="radio" name="q1" value="a"> The process of closing unused network ports.</label>
+                        <label><input type="radio" name="q1" value="b"> A technique used to identify open ports on a target system.</label>
+                        <label><input type="radio" name="q1" value="c"> A method for improving network speed</label>
+                        <label><input type="radio" name="q1" value="d"> A strategy to protect against malware.</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question">
-                    <h3>2. What is the goal of a Denial of Service (DoS) attack?</h3>
+                    <h3>2. Which of the following is NOT a type of port scanning technique?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q2" value="a"> To access sensitive data from a database.</label>
-                        <label><input type="radio" name="q2" value="b"> To steal credentials during a network session.</label>
-                        <label><input type="radio" name="q2" value="c"> To overload a network or server, making it unavailable to users.</label>
-                        <label><input type="radio" name="q2" value="d"> To inject malicious scripts into trusted websites.</label>
+                        <label><input type="radio" name="q2" value="a"> SYN Scan.</label>
+                        <label><input type="radio" name="q2" value="b"> ACK Scan.</label>
+                        <label><input type="radio" name="q2" value="c"> DNS Scan.</label>
+                        <label><input type="radio" name="q2" value="d"> UDP Scan.</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question">
-                    <h3>3. What is the primary target of a SQL injection attack?</h3>
+                    <h3>3. What role do honeypots play in detecting port scans?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q3" value="a"> A network router.</label>
-                        <label><input type="radio" name="q3" value="b"> A user’s browser session.</label>
-                        <label><input type="radio" name="q3" value="c"> A database query.</label>
-                        <label><input type="radio" name="q3" value="d"> An unencrypted Wi-Fi connection.</label>
+                        <label><input type="radio" name="q3" value="a"> They automatically encrypt scanned data.</label>
+                        <label><input type="radio" name="q3" value="b"> They provide fake services to attract and analyze malicious traffic.</label>
+                        <label><input type="radio" name="q3" value="c"> They filter out all incoming traffic.</label>
+                        <label><input type="radio" name="q3" value="d"> They provide real-time alerts for successful login attempts.</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question">
-                    <h3>4. Which of the following is a common sign of a network attack?</h3>
+                    <h3>4. What is the benefit of using port knocking as a defense against port scanning?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q4" value="a"> Faster-than-usual network performance.</label>
-                        <label><input type="radio" name="q4" value="b">Unauthorized access attempts or login failures.</label>
-                        <label><input type="radio" name="q4" value="c"> Increased employee awareness about phishing emails.</label>
-                        <label><input type="radio" name="q4" value="d"> Reduced volume of outgoing traffic.</label>
+                        <label><input type="radio" name="q4" value="a"> It hides open ports by requiring a secret sequence of network requests before the ports are revealed.</label>
+                        <label><input type="radio" name="q4" value="b">It blocks all traffic from scanning IP addresses.</label>
+                        <label><input type="radio" name="q4" value="c"> It automatically closes ports after scanning is completed.</label>
+                        <label><input type="radio" name="q4" value="d"> It sends a warning message to the attacker.</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question">
-                    <h3>5. Which of the following is a recommended practice for protecting against network attacks?</h3>
+                    <h3>5. How can an IDS (Intrusion Detection System) help detect port scanning?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q5" value="a"> Keeping software and systems up to date.</label>
-                        <label><input type="radio" name="q5" value="b"> Avoiding the use of encryption for sensitive data.</label>
-                        <label><input type="radio" name="q5" value="c"> Sharing passwords with trusted team members via email.</label>
-                        <label><input type="radio" name="q5" value="d"> Disabling firewalls to reduce latency.</label>
+                        <label><input type="radio" name="q5" value="a"> It automatically blocks port scanning attempts.</label>
+                        <label><input type="radio" name="q5" value="b">  It looks for suspicious patterns in network traffic, such as frequent requests to different ports.</label>
+                        <label><input type="radio" name="q5" value="c"> It logs all open ports in real time.</label>
+                        <label><input type="radio" name="q5" value="d"> It encrypts the data to prevent scanning.</label>
                     </div>
                 </div>
 
