@@ -100,10 +100,10 @@
         <a href="attack1wirelesslec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>WEP/WAP Attack Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">explores how attackers exploit vulnerabilities in wireless encryption protocols (WEP/WPA) to gain unauthorized access to Wi-Fi networks, emphasizing secure encryption practices.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">provides hands-on experience in attempting to crack WEP/WPA keys, demonstrating the weaknesses in outdated encryption methods and the importance of stronger security standards.</p>
             </div>
         </a>
 
