@@ -100,10 +100,10 @@
         <a href="attack1apilec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>Broken Authentication attackLecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">explores vulnerabilities in authentication mechanisms, showing how attackers exploit weak or flawed implementations to gain unauthorized access and emphasizing secure design practices.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">provides hands-on experience identifying and exploiting authentication flaws, demonstrating their risks, and implementing strategies to secure API authentication mechanisms.</p>
             </div>
         </a>
 
@@ -122,7 +122,7 @@
         <a href="https://wirelesssecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Tools</h2>
+                    <h2>broken Authentication Tools</h2>
                     <span class="status active">Active</span>
                 </div>
                 <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
