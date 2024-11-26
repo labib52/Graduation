@@ -100,10 +100,10 @@
         <a href="attack1networklec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>Port Scanning Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">identify open ports and services on a network, explaining how attackers use port scanning to detect vulnerabilities and potential entry points, as well as how network defenders can mitigate these risks through proactive monitoring and security measures.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">involves hands-on practice in using port scanning tools (e.g., Nmap) to scan networks, identify open ports, and analyze the associated risks, helping learners understand how attackers map networks and how to safeguard systems from unauthorized access.</p>
             </div>
         </a>
 
