@@ -93,17 +93,17 @@
 </head>
 <body>
     <header>
-        <h1>Wireless Security Simulation</h1>
+        <h1>Man In The Middle Attack</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
         <a href="attack1weblec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>Man In The Middle Attack Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">Learn about Man in the middle attack and mitigation techniques.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description">demonstrates intercepting and manipulating communication between two parties to explore vulnerabilities and secure data transmission.</p>
             </div>
         </a>
 
@@ -122,10 +122,10 @@
         <a href="https://wirelesssecuritytools.example.com" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Tools</h2>
+                    <h2>Man In The Middle Attack Tools</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
+                <p class="description">Explore tools to analyze, secure, and monitor man in the middle effectively.</p>
             </div>
         </a>
     </main>
