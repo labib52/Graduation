@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>
                     <?php
                     if ($score == 5) {
-                        echo "Excellent! You have a strong understanding of phishing.";
+                        echo "Excellent! You have a strong understanding of web.";
                     } elseif ($score >= 3) {
                         echo "Good job! You understand most of the concepts, but there's room for improvement.";
                     } else {
