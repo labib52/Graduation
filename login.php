@@ -1,5 +1,29 @@
 <?php
 session_start();
+
+// Prevent session hijacking
+if (!isset($_SESSION['user_agent'])) {
+    $_SESSION['user_agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+} elseif ($_SESSION['user_agent'] !== md5($_SERVER['HTTP_USER_AGENT'])) {
+    // Destroy the session if the user agent doesn't match
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+
+// Secure the session
+if (!isset($_SESSION['initiated'])) {
+    session_regenerate_id(true); // Regenerate session ID to prevent fixation
+    $_SESSION['initiated'] = true;
+}
+
+// Redirect to homepage if user is already logged in
+if (isset($_SESSION['user_id'])) {
+    header("Location: homepage.php");
+    exit();
+}
+
 include 'db_connection.php'; // Include the database connection file
 
 $errors = ["username" => "", "password" => ""];
@@ -17,110 +41,120 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($query->num_rows > 0) {
         $query->bind_result($id, $hashed_password, $is_2fa_enabled, $security_question, $security_answer);
         $query->fetch();
-
+    
         // Verify the password
         if (password_verify($password, $hashed_password)) {
             if ($is_2fa_enabled) {
                 if (!isset($_POST['security_answer'])) {
                     // Prompt for the security question
-                  echo "<!DOCTYPE html>";
-echo "<html lang='en'>";
-echo "<head>";
-echo "<meta charset='UTF-8'>";
-echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-echo "<title>Security Question</title>";
-echo "<link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap' rel='stylesheet'>";
-echo "<style>";
-echo "body {";
-echo "    font-family: 'Roboto', sans-serif;";
-echo "    background-color: #f3f4f6;";
-echo "    display: flex;";
-echo "    justify-content: center;";
-echo "    align-items: center;";
-echo "    min-height: 100vh;";
-echo "    margin: 0;";
-echo "}";
-echo ".container {";
-echo "    background: #fff;";
-echo "    border-radius: 8px;";
-echo "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);";
-echo "    max-width: 500px;";
-echo "    width: 100%;";
-echo "    padding: 20px;";
-echo "    position: relative;";
-echo "}";
-echo "header {";
-echo "    text-align: center;";
-echo "    margin-bottom: 20px;";
-echo "    background-color: #4caf50;";
-echo "    padding: 20px;";
-echo "    color: white;";
-echo "    border-radius: 8px;";
-echo "    font-family: 'Roboto', sans-serif;";
-echo "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);";
-echo "}";
-echo "header h1 {";
-echo "    margin: 0;";
-echo "    font-size: 2.5em;";
-echo "    font-weight: bold;";
-echo "}";
-echo "label {";
-echo "    font-weight: 500;";
-echo "    margin-top: 10px;";
-echo "    display: block;";
-echo "    color: #555;";
-echo "}";
-echo "input, button {";
-echo "    width: 100%;";
-echo "    padding: 10px;";
-echo "    margin-top: 5px;";
-echo "    margin-bottom: 15px;";
-echo "    border: 1px solid #ccc;";
-echo "    border-radius: 5px;";
-echo "    font-size: 1em;";
-echo "}";
-echo "button {";
-echo "    background-color: #4caf50;";
-echo "    color: white;";
-echo "    border: none;";
-echo "    cursor: pointer;";
-echo "}";
-echo "button:hover {";
-echo "    background-color: #45a049;";
-echo "}";
-echo "</style>";
-echo "</head>";
-echo "<body>";
-echo "<header><h1>CyberWise</h1></header>";
-echo "<div class='container'>";
-echo "    <h2>Security Question</h2>";
-echo "    <form method='POST'>";
-echo "        <input type='hidden' name='username' value='$username'>";
-echo "        <input type='hidden' name='password' value='$password'>";
-echo "        <label for='security_answer'>" . htmlspecialchars($security_question) . ":</label>";
-echo "        <input type='text' name='security_answer' id='security_answer' required>";
-echo "        <button type='submit'>Verify</button>";
-echo "    </form>";
-echo "</div>";
-echo "</body>";
-echo "</html>";
-exit;
-
-                } else {
+                    echo "<!DOCTYPE html>";
+                    echo "<html lang='en'>";
+                    echo "<head>";
+                    echo "<meta charset='UTF-8'>";
+                    echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+                    echo "<title>Security Question</title>";
+                    echo "<link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap' rel='stylesheet'>";
+                    echo "<style>";
+                    echo "body {";
+                    echo "    font-family: 'Roboto', sans-serif;";
+                    echo "    background-color: #f3f4f6;";
+                    echo "    display: flex;";
+                    echo "    justify-content: center;";
+                    echo "    align-items: center;";
+                    echo "    min-height: 100vh;";
+                    echo "    margin: 0;";
+                    echo "}";
+                    echo ".container {";
+                    echo "    background: #fff;";
+                    echo "    border-radius: 8px;";
+                    echo "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);";
+                    echo "    max-width: 500px;";
+                    echo "    width: 100%;";
+                    echo "    padding: 20px;";
+                    echo "    position: relative;";
+                    echo "}";
+                    echo "header {";
+                    echo "    text-align: center;";
+                    echo "    margin-bottom: 20px;";
+                    echo "    background-color: #4caf50;";
+                    echo "    padding: 20px;";
+                    echo "    color: white;";
+                    echo "    border-radius: 8px;";
+                    echo "    font-family: 'Roboto', sans-serif;";
+                    echo "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);";
+                    echo "}";
+                    echo "header h1 {";
+                    echo "    margin: 0;";
+                    echo "    font-size: 2.5em;";
+                    echo "    font-weight: bold;";
+                    echo "}";
+                    echo "h2 {";
+                    echo "    margin-bottom: 20px;";
+                    echo "    text-align: center;";
+                    echo "    color: #333;";
+                    echo "}";
+                    echo "label {";
+                    echo "    font-weight: 500;";
+                    echo "    margin-top: 10px;";
+                    echo "    display: block;";
+                    echo "    color: #555;";
+                    echo "}";
+                    echo "input, button {";
+                    echo "    width: 100%;";
+                    echo "    padding: 10px;";
+                    echo "    margin-top: 5px;";
+                    echo "    margin-bottom: 15px;";
+                    echo "    border: 1px solid #ccc;";
+                    echo "    border-radius: 5px;";
+                    echo "    font-size: 1em;";
+                    echo "}";
+                    echo "button {";
+                    echo "    background-color: #4caf50;";
+                    echo "    color: white;";
+                    echo "    border: none;";
+                    echo "    cursor: pointer;";
+                    echo "}";
+                    echo "button:hover {";
+                    echo "    background-color: #45a049;";
+                    echo "}";
+                    echo "</style>";
+                    echo "</head>";
+                    echo "<body>";
+                    echo "<header><h1>CyberWise</h1></header>";
+                    echo "<div class='container'>";
+                    echo "<h2>Security Question</h2>";
+                    echo "<form method='POST'>";
+                    echo "<input type='hidden' name='username' value='$username'>";
+                    echo "<input type='hidden' name='password' value='$password'>";
+                    echo "<label for='security_answer'>" . htmlspecialchars($security_question) . ":</label>";
+                    echo "<input type='text' name='security_answer' id='security_answer' required>";
+                    echo "<button type='submit'>Verify</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</body>";
+                    echo "</html>";
+                    exit;
+                }
+                else {
                     // Verify the security answer
                     $provided_answer = trim($_POST['security_answer']);
                     if (password_verify($provided_answer, $security_answer)) {
+                        // Start a session and store user data
                         $_SESSION['user_id'] = $id;
+                        $_SESSION['username'] = $username;
                         echo "Login successful!";
                         header("Location: homepage.php");
                         exit();
                     } else {
+                        // Invalid security answer
                         echo "Invalid security answer. Please try again.";
                     }
                 }
             } else {
                 // 2FA is not enabled
                 $_SESSION['user_id'] = $id;
+                $_SESSION['username'] = $username;
+                $_SESSION['is_2fa_enabled'] = $is_2fa_enabled;
                 echo "Login successful!";
                 header("Location: homepage.php");
                 exit();
@@ -131,7 +165,7 @@ exit;
     } else {
         $errors['username'] = "Username does not exist.";
     }
-
+    
     $query->close();
     $conn->close();
 }
