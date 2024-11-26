@@ -1,5 +1,4 @@
 <?php
-require 'includes/GoogleAuthenticator.php';
 session_start();
 include 'db_connection.php'; // Include the database connection file
 
@@ -8,40 +7,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     // Check if the username exists
-    $query = $conn->prepare("SELECT id, password, is_2fa_enabled, 2fa_secret FROM users WHERE username = ?");
+    $query = $conn->prepare("SELECT id, password, is_2fa_enabled, security_question, security_answer FROM users WHERE username = ?");
     $query->bind_param("s", $username);
     $query->execute();
     $query->store_result();
 
     if ($query->num_rows > 0) {
-        $query->bind_result($id, $hashed_password, $is_2fa_enabled, $secret);
+        $query->bind_result($id, $hashed_password, $is_2fa_enabled, $security_question, $security_answer);
         $query->fetch();
 
         // Verify the password
         if (password_verify($password, $hashed_password)) {
             if ($is_2fa_enabled) {
-                if (!isset($_POST['2fa_code'])) {
-                    // Prompt for the 2FA code
+                if (!isset($_POST['security_answer'])) {
+                    // Prompt for the security question
                     echo "<form method='POST'>";
                     echo "<input type='hidden' name='username' value='$username'>";
                     echo "<input type='hidden' name='password' value='$password'>";
-                    echo "<label for='2fa_code'>Enter 2FA Code:</label>";
-                    echo "<input type='text' name='2fa_code' id='2fa_code' required>";
+                    echo "<label for='security_answer'>" . htmlspecialchars($security_question) . ":</label>";
+                    echo "<input type='text' name='security_answer' id='security_answer' required>";
                     echo "<button type='submit'>Verify</button>";
                     echo "</form>";
                     exit;
                 } else {
-                    // Verify the 2FA code
-                    $gAuth = new PHPGangsta_GoogleAuthenticator();
-                    $code = $_POST['2fa_code'];
-
-                    if ($gAuth->verifyCode($secret, $code, 2)) { // 2 = 2-minute tolerance
+                    // Verify the security answer
+                    $provided_answer = trim($_POST['security_answer']);
+                    if (password_verify($provided_answer, $security_answer)) {
                         $_SESSION['user_id'] = $id;
                         echo "Login successful!";
                         header("Location: index.php");
                         exit();
                     } else {
-                        echo "Invalid 2FA code. Please try again.";
+                        echo "Invalid security answer. Please try again.";
                     }
                 }
             } else {
