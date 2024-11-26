@@ -100,59 +100,58 @@
 </head>
 <body>
     <div class="container">
-        <h1>Understanding Phishing: An Overview</h1>
-        <p>
-            Phishing is one of the most prevalent types of social engineering attacks in the world today. It involves tricking individuals into divulging sensitive information such as usernames, passwords, credit card numbers, or personal data. Phishing attacks are typically carried out through fraudulent emails, websites, or messages that appear to be from legitimate sources, such as banks, government organizations, or popular online services.
-        </p>
+        <h1>Understanding WEP/WPA Attack: An Overview</h1>
+        <p>Wireless security protocols, such as WEP (Wired Equivalent Privacy) and WPA (Wi-Fi Protected Access), are designed to secure wireless networks from unauthorized access, data interception, and other malicious activities. These protocols are crucial in ensuring confidentiality and integrity for wireless communication over Wi-Fi networks.<p>
 
-        <h2>How Phishing Works</h2>
+        <h2>What is WEP (Wired Equivalent Privacy)?</h2>
         <p>
-            Phishing attacks rely on human error and exploitation of trust. The attacker often impersonates a reputable entity to deceive the target into taking a harmful action. This action might include clicking on a malicious link, opening an infected attachment, or entering confidential information into a fake website. Common tactics include:
-        </p>
+        WEP was the first security protocol designed to secure wireless networks. It was introduced as part of the IEEE 802.11 standard for wireless networks. The goal of WEP was to provide a wireless network with a level of security similar to a wired network, hence the name "Wired Equivalent Privacy."</p>
+        <h4>Key Features of WEP:</h4>
         <ul>
-            <li><strong>Spoofed Emails:</strong> An attacker sends an email that appears to be from a trusted source (e.g., a bank), asking the recipient to click a link and enter personal details.</li>
-            <li><strong>Fake Websites:</strong> A fraudulent website is created to closely resemble a legitimate one, often through URL manipulation, to trick users into entering personal information.</li>
-            <li><strong>Social Media Phishing:</strong> Attackers can use social media platforms to impersonate people or companies, leading to malicious links or deceptive friend requests.</li>
-            <li><strong>Spear Phishing:</strong> Unlike generic phishing, spear phishing targets specific individuals or organizations, often with personalized details gathered through research.</li>
+            <li><strong>Encryption: </strong>WEP uses the RC4 (Rivest Cipher 4) encryption algorithm to protect data transmitted over the wireless network.</li>
+            <li><strong>Shared Key Authentication: </strong> WEP uses a shared key that must be known by both the wireless device and the access point.</li>
+            <li><strong>Weaknesses:</strong> WEP is known for its vulnerabilities, especially in the generation of encryption keys. The protocol uses weak initialization vectors (IVs) and static keys, which can be easily cracked by attackers.</li>
         </ul>
 
-        <h2>Types of Phishing Attacks</h2>
+        <h4>Security Issues with WEP:</h4>
         <ol>
-            <li><strong>Email Phishing:</strong> The most common form of phishing, where attackers send mass emails posing as trusted organizations, often using urgent language to prompt quick action.</li>
-            <li><strong>Smishing (SMS Phishing):</strong> Phishing via SMS or text messages, often containing links that lead to fake websites or malicious downloads.</li>
-            <li><strong>Vishing (Voice Phishing):</strong> Attackers use phone calls to impersonate legitimate institutions, like banks or government services, asking for sensitive information directly over the phone.</li>
-            <li><strong>Whaling:</strong> Aimed at high-profile targets like executives or other high-ranking officials within organizations, using highly personalized tactics.</li>
+            <li><strong>Short Key Length:</strong> WEP supports 64-bit and 128-bit encryption keys, but these are considered too short by modern standards.</li>
+            <li><strong>Weak Initialization Vector (IV):</strong> WEP uses a 24-bit IV that is often reused, making it easier for attackers to predict and crack the encryption.</li>
+            <li><strong>Lack of Key Management:</strong> WEP does not have a robust mechanism for key management, meaning keys are often static and do not change frequently, which makes them vulnerable to attacks.</li>
+       </ol>
+
+
+       <h2>What is WPA (Wi-Fi Protected Access)?</h2>
+        <p>
+        WPA was introduced as a replacement for WEP to address its security flaws. WPA improves on WEP by providing stronger encryption and better authentication methods.</p>
+        <h4>Key Features of WPA:</h4>
+        <ul>
+            <li><strong>Improved Encryption: </strong>WPA uses the stronger AES (Advanced Encryption Standard) algorithm or TKIP (Temporal Key Integrity Protocol) to provide more secure encryption.</li>
+            <li><strong>Dynamic Key Management: </strong>  WPA uses dynamic encryption keys that change over time, making it much harder for attackers to crack the encryption.</li>
+            <li><strong>Authentication: </strong> WPA supports both pre-shared key (PSK) authentication and enterprise-level authentication using EAP (Extensible Authentication Protocol), providing greater flexibility and security.</li>
+        </ul>
+
+        <h4>WPA vs. WEP:</h4>
+        <ul>
+            <li><strong>Encryption:</strong>WPA uses AES or TKIP, both of which are much stronger than WEP's RC4 encryption.</li>
+            <li><strong>Key Management:</strong>WPA uses dynamic key management, whereas WEP uses static keys.</li>
+            <li><strong>Authentication:</strong>WPA offers better authentication methods, including the ability to use a RADIUS server for enterprise-level security.</li>
+
+        </ul>
+        <h2>Best Practices for Securing Wireless Networks</h2>
+        <ol>
+            <li><strong>Use WPA2 or WPA3:</strong>Always use WPA2 or WPA3 to secure your wireless network. Avoid WEP and WPA whenever possible.</li>
+            <li><strong>Use Strong Passwords:</strong> Use a strong, unique password for WPA2 or WPA3 encryption. A strong password typically contains a mix of letters, numbers, and special characters.</li>
+            <li><strong>Change Default Settings:</strong> Always change the default username and password of your router to avoid unauthorized access.</li>
+            <li><strong>Disable WPS (Wi-Fi Protected Setup):</strong> WPS can be exploited by attackers to gain access to your network. It’s recommended to disable it.</li>
+            <li><strong>Enable WPA2 with AES:</strong> Make sure to configure your network with WPA2 using AES encryption rather than TKIP for enhanced security.</li>
         </ol>
 
-        <h2>Recognizing Phishing Attempts</h2>
-        <p>Phishing attempts can be difficult to spot, but there are several key indicators that can help you recognize them:</p>
-        <ul>
-            <li>Suspicious Email Addresses or URLs: Check for subtle misspellings or unusual characters in email addresses or website URLs.</li>
-            <li>Unsolicited Requests for Personal Information: Legitimate organizations typically do not ask for sensitive information like passwords or account numbers through email or phone.</li>
-            <li>Generic Greetings: Phishing emails often begin with general greetings like "Dear Customer" instead of using your actual name.</li>
-            <li>Urgency and Threats: Phishers often use scare tactics to make you act quickly without thinking, like claiming your account is about to be locked.</li>
-            <li>Suspicious Attachments or Links: Do not open attachments or click on links in unsolicited emails. Always verify the source before clicking.</li>
-        </ul>
-        <h2>How to Protect Yourself from Phishing Attacks</h2>
-        <ol>
-            <li><strong>Be Cautious with Emails and Messages:</strong> Always verify the sender’s identity. Look out for suspicious language, links, and attachments.</li>
-            <li><strong>Use Multi-Factor Authentication (MFA):</strong> Enabling MFA adds an extra layer of protection to your accounts.</li>
-            <li><strong>Keep Software Up to Date:</strong> Ensure your browser, email client, and security software are always up to date.</li>
-            <li><strong>Educate and Train Employees:</strong> Organizations should conduct regular phishing awareness training.</li>
-            <li><strong>Use Anti-Phishing Tools:</strong> Many modern browsers and email services include built-in phishing detection tools.</li>
-        </ol>
-
-        <h2>Consequences of Falling Victim to Phishing</h2>
-        <ul>
-            <li><strong>Identity Theft:</strong> Personal information obtained through phishing can be used to steal an individual’s identity.</li>
-            <li><strong>Financial Loss:</strong> Phishers may gain access to your bank accounts or credit cards.</li>
-            <li><strong>Malware and Ransomware:</strong> Clicking on phishing links can lead to malware infections.</li>
-            <li><strong>Reputation Damage:</strong> For organizations, a successful phishing attack can damage brand reputation.</li>
-        </ul>
+        
 
         <h2>Conclusion</h2>
         <p>
-            Phishing remains one of the most common and dangerous forms of cyberattack. The best defense against phishing is a combination of vigilance, education, and technology. By recognizing the signs of phishing, understanding how to protect yourself, and responding properly if you encounter a phishing attempt, you can greatly reduce your risk of falling victim to these malicious attacks.
+        WEP and WPA are critical components of wireless network security, but WEP is outdated and insecure. WPA and WPA2 offer more robust security with improved encryption and key management. WPA3 offers even stronger protections and should be used whenever possible. Proper implementation of these protocols, along with best security practices, can greatly reduce the risk of unauthorized access and attacks on wireless networks.
         </p>
 
         <div class="navigation">
