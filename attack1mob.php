@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireless Security Simulation</title>
+    <title>Mobile Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -93,17 +93,17 @@
 </head>
 <body>
     <header>
-        <h1>Wireless Security Simulation</h1>
+        <h1>Mobile Security Simulation</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
         <a href="attack1moblec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Lecture</h2>
+                    <h2>SMS Phishing (Smishing) Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about wireless security protocols, threats, and mitigation techniques.</p>
+                <p class="description">explores common threats targeting mobile devices, such as malware, phishing, and insecure data storage, while discussing mitigation strategies and best practices for mobile security.</p>
             </div>
         </a>
 
@@ -114,7 +114,7 @@
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice securing wireless networks and identifying vulnerabilities through simulations.</p>
+                <p class="description"> provides hands-on experience in identifying, analyzing, and defending against various mobile security threats, helping learners understand how to secure mobile devices from attacks.</p>
             </div>
         </a>
 
