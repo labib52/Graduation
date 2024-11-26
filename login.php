@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // 2FA is not enabled
                 $_SESSION['user_id'] = $id;
                 echo "Login successful!";
-                header("Location: index.php");
+                header("Location: homepage.php");
                 exit();
             }
         } else {
