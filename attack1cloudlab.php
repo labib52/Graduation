@@ -5,9 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Correct answers
     $correctAnswers = [
         "q1" => "b",
-        "q2" => "b",
-        "q3" => "a",
-        "q4" => "c",
+        "q2" => "a",
+        "q3" => "b",
+        "q4" => "a",
         "q5" => "b",
     ];
 
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Lab</title>
+    <title>Cloud Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Phishing Lab Questions</h1>
+        <h1>Cloud Lab Questions</h1>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <div class="result">
@@ -123,56 +123,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="post">
                 <!-- Question 1 -->
                 <div class="question">
-                    <h3>1. What is phishing?</h3>
+                    <h3>1. What is a cloud attack?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q1" value="a"> A method to send legitimate emails to users.</label>
-                        <label><input type="radio" name="q1" value="b"> A type of social engineering attack to steal sensitive information.</label>
-                        <label><input type="radio" name="q1" value="c"> A strategy for securely sharing passwords.</label>
-                        <label><input type="radio" name="q1" value="d"> None of the above.</label>
+                        <label><input type="radio" name="q1" value="a"> A hardware failure in a data center.</label>
+                        <label><input type="radio" name="q1" value="b"> An attempt to exploit vulnerabilities in cloud systems.</label>
+                        <label><input type="radio" name="q1" value="c"> A natural disaster affecting cloud services.</label>
+                        <label><input type="radio" name="q1" value="d"> A process to optimize cloud performance.</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question">
-                    <h3>2. What does "spear phishing" target?</h3>
+                    <h3>2. What is account hijacking in the context of cloud security?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q2" value="a"> Everyone using an email account.</label>
-                        <label><input type="radio" name="q2" value="b"> Specific individuals or organizations.</label>
-                        <label><input type="radio" name="q2" value="c"> Social media accounts only.</label>
-                        <label><input type="radio" name="q2" value="d"> Large corporations exclusively.</label>
+                        <label><input type="radio" name="q2" value="a"> Unauthorized access to user accounts.</label>
+                        <label><input type="radio" name="q2" value="b"> Stealing passwords from hardware devices.</label>
+                        <label><input type="radio" name="q2" value="c"> Disabling encryption on cloud storage.</label>
+                        <label><input type="radio" name="q2" value="d"> A lawful data access request.</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question">
-                    <h3>3. What is "smishing"?</h3>
+                    <h3>3. Which of the following best describes rogue cloud providers?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q3" value="a"> Phishing via text messages.</label>
-                        <label><input type="radio" name="q3" value="b"> Phishing through social media platforms.</label>
-                        <label><input type="radio" name="q3" value="c"> Phishing using fake phone calls.</label>
-                        <label><input type="radio" name="q3" value="d"> Phishing attacks that target executives.</label>
+                        <label><input type="radio" name="q3" value="a"> Unauthorized cloud applications installed by users.</label>
+                        <label><input type="radio" name="q3" value="b"> Fraudulent providers offering fake cloud services to collect sensitive data..</label>
+                        <label><input type="radio" name="q3" value="c"> Legal cloud providers with poor customer service.</label>
+                        <label><input type="radio" name="q3" value="d"> Overpriced cloud services.</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question">
-                    <h3>4. Which of the following is NOT a phishing indicator?</h3>
+                    <h3>4. What is the role of a VPN in cloud security?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q4" value="a"> Urgent and threatening language.</label>
-                        <label><input type="radio" name="q4" value="b"> Generic greetings like "Dear Customer."</label>
-                        <label><input type="radio" name="q4" value="c"> Emails from known contacts using official channels.</label>
-                        <label><input type="radio" name="q4" value="d"> Suspicious links or attachments.</label>
+                        <label><input type="radio" name="q4" value="a"> To ensure only encrypted communication between users and cloud services.</label>
+                        <label><input type="radio" name="q4" value="b"> To disable unauthorized apps on the cloud.</label>
+                        <label><input type="radio" name="q4" value="c"> To enforce stricter access controls.</label>
+                        <label><input type="radio" name="q4" value="d"> To identify potential phishing attempts.</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question">
-                    <h3>5. What is the purpose of multi-factor authentication (MFA)?</h3>
+                    <h3>5. Which of the following is a common sign of a cloud attack?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q5" value="a"> To simplify login processes.</label>
-                        <label><input type="radio" name="q5" value="b"> To add an extra layer of security.</label>
-                        <label><input type="radio" name="q5" value="c"> To store passwords securely.</label>
-                        <label><input type="radio" name="q5" value="d"> To prevent software updates.</label>
+                        <label><input type="radio" name="q5" value="a"> Faster cloud service performance.</label>
+                        <label><input type="radio" name="q5" value="b"> Unauthorized access attempts or unusual activity logs.</label>
+                        <label><input type="radio" name="q5" value="c"> Increased user satisfaction with cloud services.</label>
+                        <label><input type="radio" name="q5" value="d"> Lower resource usage than expected.</label>
                     </div>
                 </div>
 
