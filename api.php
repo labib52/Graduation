@@ -100,32 +100,10 @@
         <a href="attack1api.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2> Broken Authentication</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
-            </div>
-        </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack2api.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack2.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="attack3api.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack3.</p>
+                <p class="description">APIs with weak or improperly implemented authentication mechanisms are exploited to gain unauthorized access.</p>
             </div>
         </a>
     </main>
