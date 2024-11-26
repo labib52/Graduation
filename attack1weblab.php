@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correctAnswers = [
         "q1" => "b",
         "q2" => "b",
-        "q3" => "a",
+        "q3" => "b",
         "q4" => "c",
-        "q5" => "b",
+        "q5" => "a",
     ];
 
     // Check user answers
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Lab</title>
+    <title>MITM Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Phishing Lab Questions</h1>
+        <h1>Man In The Middle Lab Questions</h1>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <div class="result">
@@ -123,56 +123,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="post">
                 <!-- Question 1 -->
                 <div class="question">
-                    <h3>1. What is phishing?</h3>
+                    <h3>1. What is a Man-in-the-Middle (MITM) attack?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q1" value="a"> A method to send legitimate emails to users.</label>
-                        <label><input type="radio" name="q1" value="b"> A type of social engineering attack to steal sensitive information.</label>
-                        <label><input type="radio" name="q1" value="c"> A strategy for securely sharing passwords.</label>
-                        <label><input type="radio" name="q1" value="d"> None of the above.</label>
+                        <label><input type="radio" name="q1" value="a"> A direct denial of service attack on a network.</label>
+                        <label><input type="radio" name="q1" value="b"> An attack where the attacker secretly intercepts and manipulates communication between two parties.</label>
+                        <label><input type="radio" name="q1" value="c"> An attack involving physical theft of devices.</label>
+                        <label><input type="radio" name="q1" value="d"> A type of ransomware attack.</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question">
-                    <h3>2. What does "spear phishing" target?</h3>
+                    <h3>2. What is SSL stripping?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q2" value="a"> Everyone using an email account.</label>
-                        <label><input type="radio" name="q2" value="b"> Specific individuals or organizations.</label>
-                        <label><input type="radio" name="q2" value="c"> Social media accounts only.</label>
-                        <label><input type="radio" name="q2" value="d"> Large corporations exclusively.</label>
+                        <label><input type="radio" name="q2" value="a"> Upgrading HTTP connections to HTTPS.</label>
+                        <label><input type="radio" name="q2" value="b"> Downgrading HTTPS connections to HTTP to expose sensitive data.</label>
+                        <label><input type="radio" name="q2" value="c"> Encrypting network communication.</label>
+                        <label><input type="radio" name="q2" value="d"> Spoofing a DNS query.</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question">
-                    <h3>3. What is "smishing"?</h3>
+                    <h3>3. What is a potential sign of a MITM attack?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q3" value="a"> Phishing via text messages.</label>
-                        <label><input type="radio" name="q3" value="b"> Phishing through social media platforms.</label>
-                        <label><input type="radio" name="q3" value="c"> Phishing using fake phone calls.</label>
-                        <label><input type="radio" name="q3" value="d"> Phishing attacks that target executives.</label>
+                        <label><input type="radio" name="q3" value="a"> Unusually fast network performance.</label>
+                        <label><input type="radio" name="q3" value="b"> Receiving certificate warnings when accessing secure sites..</label>
+                        <label><input type="radio" name="q3" value="c"> Seamless connection to public Wi-Fi.</label>
+                        <label><input type="radio" name="q3" value="d"> Auto-saving of login credentials..</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question">
-                    <h3>4. Which of the following is NOT a phishing indicator?</h3>
+                    <h3>4. Which of the following is NOT an effective way to prevent MITM attacks?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q4" value="a"> Urgent and threatening language.</label>
-                        <label><input type="radio" name="q4" value="b"> Generic greetings like "Dear Customer."</label>
-                        <label><input type="radio" name="q4" value="c"> Emails from known contacts using official channels.</label>
-                        <label><input type="radio" name="q4" value="d"> Suspicious links or attachments.</label>
+                        <label><input type="radio" name="q4" value="a"> Regularly updating software and firmware.</label>
+                        <label><input type="radio" name="q4" value="b"> Avoiding sensitive transactions on public Wi-Fi."</label>
+                        <label><input type="radio" name="q4" value="c"> Clicking on all certificate warnings to bypass them.</label>
+                        <label><input type="radio" name="q4" value="d"> SUsing intrusion detection systems (IDS).</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question">
-                    <h3>5. What is the purpose of multi-factor authentication (MFA)?</h3>
+                    <h3>5. Why is monitoring access logs important in detecting MITM attacks?</h3>
                     <div class="options">
-                        <label><input type="radio" name="q5" value="a"> To simplify login processes.</label>
-                        <label><input type="radio" name="q5" value="b"> To add an extra layer of security.</label>
-                        <label><input type="radio" name="q5" value="c"> To store passwords securely.</label>
-                        <label><input type="radio" name="q5" value="d"> To prevent software updates.</label>
+                        <label><input type="radio" name="q5" value="a">  It can reveal unauthorized access or unusual communication patterns.</label>
+                        <label><input type="radio" name="q5" value="b"> It disables potential attackers’ connections.</label>
+                        <label><input type="radio" name="q5" value="c"> It ensures data is encrypted during transit.</label>
+                        <label><input type="radio" name="q5" value="d">  It removes all unencrypted traffic.</label>
                     </div>
                 </div>
 
