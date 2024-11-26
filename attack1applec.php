@@ -150,6 +150,11 @@
             <li><strong>Reputation Damage:</strong> For organizations, a successful phishing attack can damage brand reputation.</li>
         </ul>
 
+         <!-- Dynamically display the GIF using PHP -->
+    <?php
+    $gifPath = "phishing.gif"; // Replace with the path to your GIF
+    echo "<img src='$gifPath' alt='Animated GIF'>";
+    ?>
         <h2>Conclusion</h2>
         <p>
             Phishing remains one of the most common and dangerous forms of cyberattack. The best defense against phishing is a combination of vigilance, education, and technology. By recognizing the signs of phishing, understanding how to protect yourself, and responding properly if you encounter a phishing attempt, you can greatly reduce your risk of falling victim to these malicious attacks.
