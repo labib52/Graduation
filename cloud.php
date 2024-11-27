@@ -100,32 +100,10 @@
            <a href="attack1cloud.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2>Denial Of Service</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
-            </div>
-        </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack2cloud.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack2.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="attack3cloud.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack3.</p>
+                <p class="description">Attackers overwhelm cloud servers with excessive traffic, disrupting access to applications and data.</p>
             </div>
         </a>
     </main>
