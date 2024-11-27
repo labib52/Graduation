@@ -100,32 +100,10 @@
         <a href="attack1network.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2>Port Scanning Attacks</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
-            </div>
-        </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack2network.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack2.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="attack3network.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack3.</p>
+                <p class="description">scanning a network's open ports to identify vulnerabilities or services that can be exploited for unauthorized access or further attacks.</p>
             </div>
         </a>
     </main>
