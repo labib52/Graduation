@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Security Simulation</title>
+    <title>Web Attacks</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -80,6 +80,8 @@
 
         footer {
             text-align: center;
+            position: fixed;
+            bottom:0;
             padding: 1rem;
             background-color: #ddd;
             margin-top: 2rem;
@@ -93,39 +95,17 @@
 </head>
 <body>
     <header>
-        <h1>Web Security Simulation</h1>
+        <h1>Web Secutiy Simulation</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
         <a href="attack1web.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>attack1</h2>
+                    <h2>Man In The Middle(MITM)</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">attack1.</p>
-            </div>
-        </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack2web.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack2.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="attack3web.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>attack3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">attack3.</p>
+                <p class="description">Attackers intercept communication between the client and server, potentially stealing sensitive information </p>
             </div>
         </a>
     </main>
