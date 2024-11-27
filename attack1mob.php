@@ -93,7 +93,7 @@
 </head>
 <body>
     <header>
-        <h1>Mobile Security Simulation</h1>
+        <h1>Smishing</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
@@ -119,13 +119,13 @@
         </a>
 
         <!-- Tools Card -->
-        <a href="https://wirelesssecuritytools.example.com" target="_blank">
+        <a href="https://win7simu.visnalize.com/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Wireless Security Tools</h2>
+                    <h2>Windows 7</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
+                <p class="description">Windows 7 Simulator VM.</p>
             </div>
         </a>
     </main>

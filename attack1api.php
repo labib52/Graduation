@@ -93,14 +93,14 @@
 </head>
 <body>
     <header>
-        <h1>Wireless Security Simulation</h1>
+        <h1>Broken Authentication attack</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
         <a href="attack1apilec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Broken Authentication attackLecture</h2>
+                    <h2>Broken Authentication attack Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
                 <p class="description">explores vulnerabilities in authentication mechanisms, showing how attackers exploit weak or flawed implementations to gain unauthorized access and emphasizing secure design practices.</p>
@@ -119,13 +119,13 @@
         </a>
 
         <!-- Tools Card -->
-        <a href="https://wirelesssecuritytools.example.com" target="_blank">
+        <a href="https://win7simu.visnalize.com/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>broken Authentication Tools</h2>
+                    <h2>Windows 7</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools to analyze, secure, and monitor wireless networks effectively.</p>
+                <p class="description">Windows 7 Simulator VM.</p>
             </div>
         </a>
     </main>
