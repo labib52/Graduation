@@ -102,43 +102,7 @@
             </div>
             <a href="network.php" class="btn">Open</a>
         </div>
-
-        <!-- Mobile Category -->
-        <div class="category-card">
-            <div>
-                <h2>Mobile</h2>
-                <p>Understand security assessments for mobile applications.</p>
-            </div>
-            <a href="mobile.php" class="btn">Open</a>
-        </div>
-
-        <!-- Cloud Category -->
-        <div class="category-card">
-            <div>
-                <h2>Cloud</h2>
-                <p>Delve into cloud security and assessment techniques.</p>
-            </div>
-            <a href="cloud.php" class="btn">Open</a>
-        </div>
-
-        <!-- API Category -->
-        <div class="category-card">
-            <div>
-                <h2>Application Programming Interface (API)</h2>
-                <p>Learn about API security and assessment practices.</p>
-            </div>
-            <a href="api.php" class="btn">Open</a>
-        </div>
-
-        <!-- Application Category -->
-        <div class="category-card">
-            <div>
-                <h2>Application</h2>
-                <p>Focus on security in software applications.</p>
-            </div>
-            <a href="application.php" class="btn">Open</a>
-        </div>
-
+        
         <!-- Wireless Category -->
         <div class="category-card">
             <div>
