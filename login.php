@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     // Check if the username exists
-    $query = $conn->prepare("SELECT id, password, is_2fa_enabled, security_question, security_answer FROM users WHERE username = ?");
+    $query = $conn->prepare("SELECT id, password, is_2fa_enabled, security_question, security_answer, is_admin FROM users WHERE username = ?");
     $query->bind_param("s", $username);
     $query->execute();
     $query->store_result();
 
     if ($query->num_rows > 0) {
-        $query->bind_result($id, $hashed_password, $is_2fa_enabled, $security_question, $security_answer);
+        $query->bind_result($id, $hashed_password, $is_2fa_enabled, $security_question, $security_answer, $is_admin);
         $query->fetch();
     
         // Verify the password
@@ -142,9 +142,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         // Start a session and store user data
                         $_SESSION['user_id'] = $id;
                         $_SESSION['username'] = $username;
-                        echo "Login successful!";
-                        header("Location: homepage.php");
-                        exit();
+                        $_SESSION['is_admin'] = $is_admin;
+                        // Redirect based on user role
+            if ($is_admin == 1) {
+                header("Location: admin/admin_dashboard.php");
+            } else {
+                header("Location: homepage.php");
+            }
+            exit();
+                        
                     } else {
                         // Invalid security answer
                         echo "Invalid security answer. Please try again.";
@@ -154,10 +160,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // 2FA is not enabled
                 $_SESSION['user_id'] = $id;
                 $_SESSION['username'] = $username;
+                $_SESSION['is_admin'] = $is_admin;
                 $_SESSION['is_2fa_enabled'] = $is_2fa_enabled;
-                echo "Login successful!";
+                // Redirect based on user role
+            if ($is_admin == 1) {
+                header("Location: admin/admin_dashboard.php");
+            } else {
                 header("Location: homepage.php");
-                exit();
+            }
+            exit();
+                
             }
         } else {
             $errors['password'] = "Incorrect password.";
