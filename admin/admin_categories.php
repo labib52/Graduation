@@ -53,8 +53,12 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
     <link rel="stylesheet" href="admin_styles.css">
 </head>
 <body>
-    <h2>Manage Categories</h2>
-    <a href="admin_dashboard.php" class="back">Back to Dashboard</a>
+    <header>
+        <h2>Manage Categories</h2>
+        <a href="admin_dashboard.php" class="back">Back to Dashboard</a> 
+        
+    </header>
+   
     <form action="admin_categories.php" method="POST">
         <input type="text" name="category_name" placeholder="Category Name" required>
         <button type="submit" name="add_category">Add Category</button>

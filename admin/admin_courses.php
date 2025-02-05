@@ -69,9 +69,11 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
     <link rel="stylesheet" href="admin_styles.css">
 </head>
 <body>
-    <h2>Manage Courses</h2>
-    <a href="admin_dashboard.php" class="back">Back to Dashboard</a>
-
+    <header>
+        <h2>Manage Courses</h2>
+        <a href="admin_dashboard.php" class="back">Back to Dashboard</a>
+    </header>
+    
     <form action="admin_courses.php" method="POST">
         <input type="text" name="title" placeholder="Course Title" required>
         <textarea name="description" placeholder="Description"></textarea>
