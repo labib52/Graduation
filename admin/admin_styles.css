@@ -181,3 +181,45 @@ li {
     background: #2980b9; /* Darker blue on hover */
     transform: scale(1.1);
 }
+
+/* Specific Section: Page Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #ffffff; /* White background for tables */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dcdcdc; /* Subtle border between rows */
+    color: #2c3e50; /* Dark gray-blue for text */
+}
+
+table th {
+    background-color: #3498db; /* Soft blue for header */
+    color: white; /* White text for contrast */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Slightly different background for alternate rows */
+}
+
+table tr:hover {
+    background-color: #ecf0f1; /* Light gray on hover */
+    transition: background 0.3s ease;
+}
