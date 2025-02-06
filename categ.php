@@ -176,14 +176,14 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         <h2 class="section-title">Categories We Provide</h2>
 
         <div class="categories">
-            <!-- Web Category -->
+            <!-- Wireless Category (Moved here) -->
             <div class="category-card">
                 <div class="category-icon">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-wifi"></i>
                 </div>
-                <h2>Web</h2>
-                <p>Learn about web-based assessment techniques.</p>
-                <a href="web.php" class="btn">Open</a>
+                <h2>Wireless</h2>
+                <p>Explore assessments for wireless network security.</p>
+                <a href="wireless.php" class="btn">Open</a>
             </div>
 
             <!-- Network Category -->
@@ -196,14 +196,14 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
                 <a href="network.php" class="btn">Open</a>
             </div>
 
-            <!-- Wireless Category -->
+            <!-- Web Category (Moved here) -->
             <div class="category-card">
                 <div class="category-icon">
-                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-globe"></i>
                 </div>
-                <h2>Wireless</h2>
-                <p>Explore assessments for wireless network security.</p>
-                <a href="wireless.php" class="btn">Open</a>
+                <h2>Web</h2>
+                <p>Learn about web-based assessment techniques.</p>
+                <a href="web.php" class="btn">Open</a>
             </div>
         </div>
 
