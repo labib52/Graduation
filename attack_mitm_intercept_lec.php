@@ -136,7 +136,7 @@ anything that the target computer sends or receives right now will be captured b
     <!-- Back and Next Buttons -->
     <div class="navigation">
         <a href="attack_mitm_intercept.php" class="back-button">← Back</a>
-        <a href="attack_mitm_intercept_lab.php" class="next-button">→ Next</a>
+        
     </div>
 
     <footer>
