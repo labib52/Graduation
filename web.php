@@ -138,13 +138,13 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack1web.php">
+        <a href="attack_xss.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Man In The Middle (MITM)</h2>
+                    <h2>Cross Site Scripting (XSS)</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Attackers intercept communication between the client and server, potentially stealing sensitive information.</p>
+                <p class="description">Learn how attackers inject malicious scripts into web applications, exploiting vulnerabilities in user inputs.</p>
             </div>
         </a>
 
