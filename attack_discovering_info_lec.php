@@ -147,6 +147,8 @@ command: ssh root@192.168.1.12</p>
 
        <!-- Back Button -->
        <a href="attack_discovering_info.php" class="back-button">← Back</a>
+        <!-- nextk Button -->
+        <a href="attack_discovering_info_lab.php" class="back-button">→ next</a>
     </main>
 
     <footer>
