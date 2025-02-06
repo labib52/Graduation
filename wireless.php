@@ -212,6 +212,17 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
                     <span class="status active">Active</span>
                 </div>
             </a>
+
+            <!-- Attack 5: Man in the Middle Attacks -->
+            <a href="attacks_for_man_in_the_middle.php">
+                <div class="simulation-card">
+                    <div class="simulation-header">
+                        <h2>Man in the Middle Attacks</h2>
+                        <p class="description">Intercepting and manipulating communications between two parties without their knowledge.</p>
+                    </div>
+                    <span class="status active">Active</span>
+                </div>
+            </a>
         </div>
 
         <!-- Back Button -->
