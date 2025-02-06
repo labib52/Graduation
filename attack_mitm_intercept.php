@@ -148,28 +148,6 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </div>
         </a>
 
-        <!-- Lab Exercises Card -->
-        <a href="attack_mitm_intercept_lab.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Practice intercepting network packets using MITM techniques in a controlled lab environment.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="https://www.kali.org/tools/bettercap/" target="_blank">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Bettercap - MITM Tool</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Explore Bettercap, a powerful tool for executing MITM attacks and intercepting network traffic.</p>
-            </div>
-        </a>
-
         <!-- Back Button -->
         <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
     </main>
