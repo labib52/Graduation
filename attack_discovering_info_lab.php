@@ -5,16 +5,22 @@ session_start();
 $loggedIn = isset($_SESSION['user_id']);
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
 
-// Track user attempts
+// Track user attempts and completion
 if (!isset($_SESSION['attempts'])) {
     $_SESSION['attempts'] = 0;
     $_SESSION['incorrect_questions'] = []; // Store incorrect questions from the last attempt
+}
+if (!isset($_SESSION['completed'])) {
+    $_SESSION['completed'] = false;
+}
+if (!isset($_SESSION['final_score'])) {
+    $_SESSION['final_score'] = 0; // Initialize the final score
 }
 
 $score = 0;
 $incorrectQuestions = [];
 $lastAttemptAnswers = [];
-$showCorrectAnswers = false;
+$showAllQuestions = false;
 
 $correctAnswers = [
     "q1" => "b",
@@ -29,13 +35,15 @@ $correctAnswers = [
     "q10" => "a",
 ];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// If the user has completed the lab, show feedback and prevent further attempts
+if ($_SESSION['completed']) {
+    $score = $_SESSION['final_score'];
+    $showAllQuestions = true;
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['attempts']++;
-
     foreach ($correctAnswers as $question => $correctAnswer) {
         if (isset($_POST[$question])) {
             $lastAttemptAnswers[$question] = $_POST[$question];
-
             if ($_POST[$question] == $correctAnswer) {
                 $score++;
                 unset($_SESSION['incorrect_questions'][$question]); // Remove question from incorrect list if answered correctly
@@ -45,8 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if ($_SESSION['attempts'] >= 3 && $score < 10) {
-        $showCorrectAnswers = true;
+    if ($score == 10) {
+        $_SESSION['completed'] = true;
+        $_SESSION['final_score'] = $score; // Save the final score
+        $showAllQuestions = true;
+    } elseif ($_SESSION['attempts'] >= 3) {
+        $showAllQuestions = true; // Show all questions with correct answers after 3 attempts
     }
 }
 ?>
@@ -96,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 10px;
         }
 
-        .nav-btn, .submit-btn {
+        .nav-btn, .submit-btn, .done-btn {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 20px;
@@ -110,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: background-color 0.3s ease;
         }
 
-        .nav-btn:hover, .submit-btn:hover {
+        .nav-btn:hover, .submit-btn:hover, .done-btn:hover {
             background-color: #0056b3;
         }
 
@@ -140,15 +152,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1>Discovering Sensitive Info - Lab Questions</h1>
 
-        <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <?php if ($showAllQuestions): ?>
             <div class="result">
-                <h2>Your Score: <strong><?php echo $score; ?>/10</strong></h2>
+                <h2>Your Score: <strong><?php echo $_SESSION['final_score']; ?>/10</strong></h2>
                 <p>
                     <?php
-                    if ($score == 10) {
-                        echo "🎉 Excellent! You have a strong understanding of information gathering.";
-                        $_SESSION['attempts'] = 0;
-                        $_SESSION['incorrect_questions'] = []; // Reset incorrect questions if all answers are correct
+                    if ($_SESSION['completed']) {
+                        echo "🎉 Congratulations! You have completed the lab with a perfect score.";
                     } elseif ($score >= 7) {
                         echo "👍 Good job! You understand most of the concepts, but there's room for improvement.";
                     } else {
@@ -157,35 +167,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </p>
 
-                <?php if ($score < 10 && $_SESSION['attempts'] < 3): ?>
-                    <p><strong>Incorrect Questions from the last attempt:</strong></p>
-                    <ul>
-                        <?php foreach ($_SESSION['incorrect_questions'] as $question => $wrongAnswer): ?>
-                            <li><?php echo ucfirst($question) . " - Incorrect answer: " . strtoupper($wrongAnswer); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php elseif ($_SESSION['attempts'] >= 3): ?>
-                    <h3>Review Correct Answers:</h3>
-                    <?php
-                    $qNum = 1;
-                    foreach ($correctAnswers as $question => $correctAnswer):
-                    ?>
-                        <div class="question">
-                            <h3><?php echo "Question $qNum"; ?></h3>
-                            <p>Correct Answer: <span class="correct-answer"><?php echo strtoupper($correctAnswer); ?></span></p>
-                            <?php if (isset($_SESSION['incorrect_questions'][$question])): ?>
-                                <p>Your Last Answer: <span class="incorrect"><?php echo strtoupper($_SESSION['incorrect_questions'][$question]); ?></span></p>
-                            <?php endif; ?>
-                        </div>
-                    <?php
-                        $qNum++;
-                    endforeach;
-                    ?>
-                <?php endif; ?>
+                <h3>Review Correct Answers:</h3>
+                <?php
+                $qNum = 1;
+                foreach ($correctAnswers as $question => $correctAnswer):
+                ?>
+                    <div class="question">
+                        <h3><?php echo "Question $qNum"; ?></h3>
+                        <p>Correct Answer: <span class="correct-answer"><?php echo strtoupper($correctAnswer); ?></span></p>
+                        <?php if (isset($_SESSION['incorrect_questions'][$question])): ?>
+                            <p>Your Last Answer: <span class="incorrect"><?php echo strtoupper($_SESSION['incorrect_questions'][$question]); ?></span></p>
+                        <?php endif; ?>
+                    </div>
+                <?php
+                    $qNum++;
+                endforeach;
+                ?>
 
-                <a href="attack_discovering_info_lab.php" class="nav-btn">Try Again</a>
+                <?php if ($_SESSION['completed']): ?>
+                    <a href="attack_discovering_info.php" class="done-btn">Done</a>
+                <?php endif; ?>
             </div>
         <?php else: ?>
+            <div class="result">
+                <h2>Your Score: <strong><?php echo $score; ?>/10</strong></h2>
+                <p>Incorrect Question Numbers:</p>
+                <ul>
+                    <?php foreach ($_SESSION['incorrect_questions'] as $question => $answer): ?>
+                        <li><?php echo ucfirst($question); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
             <form method="post">
                 <?php
                 $questions = [
@@ -214,18 +226,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "q10" => ["a" => "Unauthorized access", "b" => "Faster network speed", "c" => "Improved security", "d" => "Reduced battery life"]
                 ];
 
+                $qNum = 1;
                 foreach ($questions as $key => $qText) {
-                    echo "<div class='question'><h3>$qText</h3><div class='options'>";
+                    echo "<div class='question'><h3>$qNum. $qText</h3><div class='options'>";
                     foreach ($options[$key] as $optKey => $optValue) {
                         $checked = isset($lastAttemptAnswers[$key]) && $lastAttemptAnswers[$key] == $optKey ? "checked" : "";
                         echo "<label><input type='radio' name='$key' value='$optKey' $checked required> $optValue</label>";
                     }
                     echo "</div></div>";
+                    $qNum++;
                 }
                 ?>
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
         <?php endif; ?>
+
+        <a href="attack_discovering_info_lec.php" class="nav-btn">Back</a>
     </div>
 </body>
 </html>
