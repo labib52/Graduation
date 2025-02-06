@@ -147,32 +147,11 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
                 <p class="description">Understand how attackers attempt to bypass HSTS security mechanisms and downgrade HTTPS connections in a MITM attack.</p>
             </div>
         </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack_mitm_bypassing_hsts_lab.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Engage in hands-on activities to simulate bypassing HSTS protection techniques.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="https://www.kali.org/tools/sslstrip/" target="_blank">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>SSLStrip - HSTS Downgrade Tool</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Explore SSLStrip and other tools used to bypass HSTS and force HTTP communication.</p>
-            </div>
-        </a>
-
-        <!-- Back Button -->
-        <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
     </main>
+
+    <!-- Back Button -->
+    <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
+
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
