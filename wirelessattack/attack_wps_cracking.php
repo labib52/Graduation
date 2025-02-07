@@ -1,9 +1,17 @@
+<?php
+session_start();
+
+// Check if a user is logged in
+$loggedIn = isset($_SESSION['user_id']);
+$username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireless Security Simulation</title>
+    <title>WPS Cracking Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -21,12 +29,25 @@
             background-color: #007BFF;
             color: #fff;
             padding: 1rem 2rem;
-            text-align: left;
+            text-align: center;
+            position: relative;
         }
 
         header h1 {
             font-size: 1.5rem;
             font-weight: 600;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
         }
 
         .content {
@@ -78,10 +99,27 @@
             margin-bottom: 1rem;
         }
 
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
         footer {
             text-align: center;
             padding: 1rem;
-            background-color: #ddd;
+            background-color: #007BFF;
+            color: white;
             margin-top: 2rem;
         }
 
@@ -93,41 +131,47 @@
 </head>
 <body>
     <header>
-        <h1>Man In The Middle Attack</h1>
+        <h1>WPS Cracking Simulation</h1>
+        <div class="user-info">
+            Welcome, <?php echo $username; ?>!
+        </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack1weblec.php">
+        <a href="/Graduation/wirelessattack/attack_wps_cracking_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Man In The Middle Attack Lecture</h2>
+                    <h2>WPS Cracking Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about Man in the middle attack and mitigation techniques.</p>
+                <p class="description">Learn about exploiting vulnerabilities in the WPS protocol to gain unauthorized access to wireless networks and best practices to prevent such attacks.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="attack1weblab.php">
+        <a href="/Graduation/wirelessattack/attack_wps_cracking_lab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">demonstrates intercepting and manipulating communication between two parties to explore vulnerabilities and secure data transmission.</p>
+                <p class="description">Hands-on exercises to simulate and mitigate WPS cracking attacks on wireless networks.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://win7simu.visnalize.com/" target="_blank">
+        <a href="https://aircrack-ng.org/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Windows 7</h2>
+                    <h2>Aircrack-ng</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Windows 7 Simulator VM.</p>
+                <p class="description">Explore tools like Aircrack-ng for conducting and understanding WPS cracking attacks.</p>
             </div>
         </a>
+
+        <!-- Back Button -->
+        <a href="../wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

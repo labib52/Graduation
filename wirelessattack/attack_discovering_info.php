@@ -11,7 +11,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WPS Cracking Simulation</title>
+    <title>Discovering Sensitive Info Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,47 +131,47 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 </head>
 <body>
     <header>
-        <h1>WPS Cracking Simulation</h1>
+        <h1>Discovering Sensitive Info Simulation</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_wps_cracking_lec.php">
+        <a href="/Graduation/wirelessattack/attack_discovering_info_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>WPS Cracking Lecture</h2>
+                    <h2>Discovering Sensitive Info Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about exploiting vulnerabilities in the WPS protocol to gain unauthorized access to wireless networks and best practices to prevent such attacks.</p>
+                <p class="description">Understand how attackers gather sensitive information about devices connected to the same network, including IPs, MAC addresses, and open ports, and learn prevention strategies.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="attack_wps_cracking_lab.php">
+        <a href="/Graduation/wirelessattack/attack_discovering_info_lab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Hands-on exercises to simulate and mitigate WPS cracking attacks on wireless networks.</p>
+                <p class="description">Engage in hands-on activities that simulate discovering and gathering sensitive information from network devices.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://aircrack-ng.org/" target="_blank">
+        <a href="https://kali.org/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Aircrack-ng</h2>
+                    <h2>Kali Linux</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools like Aircrack-ng for conducting and understanding WPS cracking attacks.</p>
+                <p class="description">Explore tools like Kali Linux for network reconnaissance and information gathering.</p>
             </div>
         </a>
 
         <!-- Back Button -->
-        <a href="wireless.php" class="back-button">← Back</a>
+        <a href="../wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

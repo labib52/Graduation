@@ -208,8 +208,9 @@ header h1 {
             <div class="error"><?php echo $errors['general'] ?? ''; ?></div>
 
             <button type="submit">Sign Up</button>
+            
         </form>
-
+       <button> <a href="Login.php">Login</a></button>
         <div class="password-instructions">
             <p><strong>Password Requirements:</strong></p>
             <ul>

@@ -11,7 +11,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bypassing HSTS Security</title>
+    <title>Cross Site Scripting (XSS) Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,47 +131,47 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 </head>
 <body>
     <header>
-        <h1>Bypassing HSTS Security</h1>
+        <h1>Cross Site Scripting (XSS) Simulation</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_mitm_bypassing_hsts_lec.php">
+        <a href="attack_xss_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Bypassing HSTS Lecture</h2>
+                    <h2>Cross Site Scripting (XSS) Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Understand how attackers attempt to bypass HSTS security mechanisms and downgrade HTTPS connections in a MITM attack.</p>
+                <p class="description">Learn how attackers inject malicious scripts into web applications, exploiting vulnerabilities in user inputs.</p>
             </div>
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="attack_mitm_bypassing_hsts_lab.php">
+        <a href="attack_xss_lab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Engage in hands-on activities to simulate bypassing HSTS protection techniques.</p>
+                <p class="description">Practice hands-on activities related to XSS vulnerabilities, identifying and mitigating security risks.</p>
             </div>
         </a>
 
         <!-- Tools Card -->
-        <a href="https://www.kali.org/tools/sslstrip/" target="_blank">
+        <a href="https://owasp.org/www-community/attacks/xss/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>SSLStrip - HSTS Downgrade Tool</h2>
+                    <h2>OWASP XSS Guide</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore SSLStrip and other tools used to bypass HSTS and force HTTP communication.</p>
+                <p class="description">Explore the OWASP guide to Cross-Site Scripting (XSS) attacks, prevention techniques, and security best practices.</p>
             </div>
         </a>
 
         <!-- Back Button -->
-        <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
+        <a href="web.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

@@ -138,7 +138,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_wep_cracking_lec.php">
+        <a href="/Graduation/wirelessattack/attack_wep_cracking_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>WEP Cracking Lecture</h2>
@@ -149,7 +149,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </a>
 
         <!-- Lab Exercises Card -->
-        <a href="attack_wep_cracking_lab.php">
+        <a href="/Graduation/wirelessattack/attack_wep_cracking_lab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
@@ -171,7 +171,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </a>
 
         <!-- Back Button -->
-        <a href="wireless.php" class="back-button">← Back</a>
+        <a href="../wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

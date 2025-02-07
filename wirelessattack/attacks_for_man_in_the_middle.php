@@ -11,7 +11,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercepting Traffic Simulation</title>
+    <title>Man in the Middle Attacks</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,47 +131,91 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 </head>
 <body>
     <header>
-        <h1>Intercepting Traffic Simulation</h1>
+        <h1>Man in the Middle Attacks</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_mitm_intercept_lec.php">
+        <a href="/Graduation/wirelessattack/attack_mitm_arp_poisoning.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Intercepting Traffic Lecture</h2>
+                    <h2>ARP Poisoning</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn how attackers intercept and analyze network traffic in a Man-in-the-Middle (MITM) attack scenario.</p>
+                <p class="description">Learn how attackers manipulate ARP tables to intercept communications on a network.</p>
             </div>
         </a>
 
-        <!-- Lab Exercises Card -->
-        <a href="attack_mitm_intercept_lab.php">
+        <!-- Bettercap Basics -->
+        <a href="/Graduation/wirelessattack/attack_mitm_bettercap_basics.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
+                    <h2>Bettercap Basics</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Practice intercepting network packets using MITM techniques in a controlled lab environment.</p>
+                <p class="description">Understand the fundamentals of using Bettercap for network attacks and reconnaissance.</p>
             </div>
         </a>
 
-        <!-- Tools Card -->
-        <a href="https://www.kali.org/tools/bettercap/" target="_blank">
+        <!-- ARP Spoofing with Bettercap -->
+        <a href="/Graduation/wirelessattack/attack_mitm_arp_spoofing.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Bettercap - MITM Tool</h2>
+                    <h2>ARP Spoofing using Bettercap</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore Bettercap, a powerful tool for executing MITM attacks and intercepting network traffic.</p>
+                <p class="description">Explore how attackers use ARP spoofing techniques with Bettercap to perform MITM attacks.</p>
+            </div>
+        </a>
+
+        <!-- Intercept Traffic -->
+        <a href="/Graduation/wirelessattack/attack_mitm_intercept.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Intercepting Traffic</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">See how attackers capture and manipulate network traffic in real-time.</p>
+            </div>
+        </a>
+
+        <!-- Creating Custom Spoofing Script -->
+        <a href="/Graduation/wirelessattack/attack_mitm_custom_spoofing.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Creating a Custom Spoofing Script</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Learn how to write custom scripts to automate ARP spoofing and traffic manipulation.</p>
+            </div>
+        </a>
+
+        <!-- Bypassing HTTPS -->
+        <a href="/Graduation/wirelessattack/attack_mitm_bypassing_https.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Bypassing HTTPS</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Discover methods used to downgrade secure connections and capture sensitive data.</p>
+            </div>
+        </a>
+
+        <!-- Bypassing HSTS -->
+        <a href="/Graduation/wirelessattack/attack_mitm_bypassing_hsts.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Bypassing HSTS</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Learn about techniques used to bypass HTTP Strict Transport Security (HSTS) protections.</p>
             </div>
         </a>
 
         <!-- Back Button -->
-        <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
+        <a href="../wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

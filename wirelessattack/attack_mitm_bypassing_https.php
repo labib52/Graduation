@@ -148,28 +148,6 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </div>
         </a>
 
-        <!-- Lab Exercises Card -->
-        <a href="attack_mitm_bypassing_https_lab.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Engage in hands-on activities to simulate and understand HTTPS interception techniques.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="https://www.kali.org/tools/sslstrip/" target="_blank">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>SSLStrip - HTTPS Interception Tool</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Explore SSLStrip, a tool used to downgrade HTTPS to HTTP, enabling interception of encrypted data.</p>
-            </div>
-        </a>
-
         <!-- Back Button -->
         <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
     </main>

@@ -11,7 +11,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Man in the Middle Attacks</title>
+    <title>WPA/WPA2 Cracking Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,91 +131,47 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 </head>
 <body>
     <header>
-        <h1>Man in the Middle Attacks</h1>
+        <h1>WPA/WPA2 Cracking Simulation</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_mitm_arp_poisoning.php">
+        <a href="/Graduation/wirelessattack/attack_wpa_cracking_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>ARP Poisoning</h2>
+                    <h2>WPA/WPA2 Cracking Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn how attackers manipulate ARP tables to intercept communications on a network.</p>
+                <p class="description">Understand how WPA/WPA2 encryption can be cracked using brute-force and dictionary attacks, and learn best practices to secure wireless networks.</p>
             </div>
         </a>
 
-        <!-- Bettercap Basics -->
-        <a href="attack_mitm_bettercap_basics.php">
+        <!-- Lab Exercises Card -->
+        <a href="/Graduation/wirelessattack/attack_wpa_cracking_lab.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Bettercap Basics</h2>
+                    <h2>Lab Exercises</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Understand the fundamentals of using Bettercap for network attacks and reconnaissance.</p>
+                <p class="description">Participate in hands-on activities to simulate WPA/WPA2 cracking methods and evaluate their effectiveness.</p>
             </div>
         </a>
 
-        <!-- ARP Spoofing with Bettercap -->
-        <a href="attack_mitm_arp_spoofing.php">
+        <!-- Tools Card -->
+        <a href="https://hashcat.net/" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>ARP Spoofing using Bettercap</h2>
+                    <h2>Hashcat</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore how attackers use ARP spoofing techniques with Bettercap to perform MITM attacks.</p>
-            </div>
-        </a>
-
-        <!-- Intercept Traffic -->
-        <a href="attack_mitm_intercept.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Intercepting Traffic</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">See how attackers capture and manipulate network traffic in real-time.</p>
-            </div>
-        </a>
-
-        <!-- Creating Custom Spoofing Script -->
-        <a href="attack_mitm_custom_spoofing.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Creating a Custom Spoofing Script</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Learn how to write custom scripts to automate ARP spoofing and traffic manipulation.</p>
-            </div>
-        </a>
-
-        <!-- Bypassing HTTPS -->
-        <a href="attack_mitm_bypassing_https.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Bypassing HTTPS</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Discover methods used to downgrade secure connections and capture sensitive data.</p>
-            </div>
-        </a>
-
-        <!-- Bypassing HSTS -->
-        <a href="attack_mitm_bypassing_hsts.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Bypassing HSTS</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Learn about techniques used to bypass HTTP Strict Transport Security (HSTS) protections.</p>
+                <p class="description">Explore tools like Hashcat for WPA/WPA2 cracking and password recovery.</p>
             </div>
         </a>
 
         <!-- Back Button -->
-        <a href="wireless.php" class="back-button">← Back</a>
+        <a href="../wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>

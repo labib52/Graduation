@@ -170,7 +170,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 
         <div class="simulations">
             <!-- Attack 1: Discovering & Gathering Sensitive Info -->
-            <a href="attack_discovering_info.php">
+            <a href="/Graduation/wirelessattack/attack_discovering_info.php">
                 <div class="simulation-card">
                     <div class="simulation-header">
                         <h2>Discovering Sensitive Info</h2>
@@ -181,7 +181,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </a>
 
             <!-- Attack 2: WPS Cracking -->
-            <a href="attack_wps_cracking.php">
+            <a href="/Graduation/wirelessattack/attack_wps_cracking.php">
                 <div class="simulation-card">
                     <div class="simulation-header">
                         <h2>WPS Cracking</h2>
@@ -192,7 +192,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </a>
 
             <!-- Attack 3: WEP Cracking -->
-            <a href="attack_wep_cracking.php">
+            <a href="/Graduation/wirelessattack/attack_wep_cracking.php">
                 <div class="simulation-card">
                     <div class="simulation-header">
                         <h2>WEP Cracking</h2>
@@ -203,7 +203,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </a>
 
             <!-- Attack 4: WPA/WPA2 Cracking -->
-            <a href="attack_wpa_cracking.php">
+            <a href="/Graduation/wirelessattack/attack_wpa_cracking.php">
                 <div class="simulation-card">
                     <div class="simulation-header">
                         <h2>WPA/WPA2 Cracking</h2>
@@ -214,7 +214,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </a>
 
             <!-- Attack 5: Man in the Middle Attacks -->
-            <a href="attacks_for_man_in_the_middle.php">
+            <a href="/Graduation/wirelessattack/attacks_for_man_in_the_middle.php">
                 <div class="simulation-card">
                     <div class="simulation-header">
                         <h2>Man in the Middle Attacks</h2>

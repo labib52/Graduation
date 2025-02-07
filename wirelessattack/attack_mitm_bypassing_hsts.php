@@ -11,7 +11,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WPA/WPA2 Cracking Simulation</title>
+    <title>Bypassing HSTS Security</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,48 +131,27 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 </head>
 <body>
     <header>
-        <h1>WPA/WPA2 Cracking Simulation</h1>
+        <h1>Bypassing HSTS Security</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="attack_wpa_cracking_lec.php">
+        <a href="attack_mitm_bypassing_hsts_lec.php">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>WPA/WPA2 Cracking Lecture</h2>
+                    <h2>Bypassing HSTS Lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Understand how WPA/WPA2 encryption can be cracked using brute-force and dictionary attacks, and learn best practices to secure wireless networks.</p>
+                <p class="description">Understand how attackers attempt to bypass HSTS security mechanisms and downgrade HTTPS connections in a MITM attack.</p>
             </div>
         </a>
-
-        <!-- Lab Exercises Card -->
-        <a href="attack_wpa_cracking_lab.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab Exercises</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Participate in hands-on activities to simulate WPA/WPA2 cracking methods and evaluate their effectiveness.</p>
-            </div>
-        </a>
-
-        <!-- Tools Card -->
-        <a href="https://hashcat.net/" target="_blank">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Hashcat</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Explore tools like Hashcat for WPA/WPA2 cracking and password recovery.</p>
-            </div>
-        </a>
-
-        <!-- Back Button -->
-        <a href="wireless.php" class="back-button">← Back</a>
     </main>
+
+    <!-- Back Button -->
+    <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
+
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
