@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="submit">Login</button>
         </form>
-
+        <button> <a href="signup.php">Signup</a></button>
         <div class="password-instructions">
             <p><strong>Password Requirements:</strong></p>
             <ul>
