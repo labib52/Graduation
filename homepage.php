@@ -131,6 +131,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     <header class="header">
         <div class="auth-links">
             <?php if ($loggedIn): ?>
+                <a href="view_profile.php">View Profile</a>
                 <a href="logout.php">Logout</a>
             <?php else: ?>
                 <a href="login.php">Login</a>
