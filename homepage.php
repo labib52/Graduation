@@ -1,12 +1,29 @@
 <?php
 session_start();
+include('db_connection.php'); // Include database connection
 
 // Check if a user is logged in
 $loggedIn = isset($_SESSION['user_id']);
 $is_admin = isset($_SESSION['admin_id']);
-
-// Get the username from the session if logged in
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
+
+// Fetch enrolled courses for the logged-in user
+$enrolled_courses = [];
+if ($loggedIn) {
+    $user_id = $_SESSION['user_id'];
+    $query = $conn->prepare("
+        SELECT courses.id, courses.title, categories.name AS category_name
+        FROM enrollments 
+        JOIN courses ON enrollments.course_id = courses.id 
+        JOIN categories ON courses.category_id = categories.id
+        WHERE enrollments.student_id = ?");
+    $query->bind_param("i", $user_id);
+    $query->execute();
+    $result = $query->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $enrolled_courses[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -117,6 +134,40 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             font-size: 1rem;
             color: #555;
         }
+        .enrolled-courses {
+            background: #fff;
+            padding: 40px 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .enrolled-courses h2 {
+            color: #0d47a1;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .course-list {
+            list-style: none;
+            padding: 0;
+        }
+        .course-list li {
+            margin: 10px 0;
+            padding: 15px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .course-list li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        .course-list li:hover {
+            background: #0056b3;
+        }
         .footer {
             background: #0d47a1;
             color: white;
@@ -150,6 +201,21 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         <p>Join thousands of learners in exploring cybersecurity threats, simulated attacks, and defense strategies. Protect yourself and your organization.</p>
         <a href="<?php echo $loggedIn ? 'categ.php' : 'login.php'; ?>" class="cta-btn">Choose Your Lesson</a>
     </section>
+
+    <?php if ($loggedIn && !empty($enrolled_courses)): ?>
+        <section class="enrolled-courses">
+            <h2>Your Enrolled Courses</h2>
+            <ul class="course-list">
+                <?php foreach ($enrolled_courses as $course): ?>
+                    <li>
+                        <a href="<?php echo strtolower($course['category_name']); ?>attack/attack_<?php echo strtolower(str_replace(' ', '_', $course['title'])); ?>.php">
+                            <?php echo htmlspecialchars($course['title']); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+    <?php endif; ?>
 
     <section class="features">
         <div class="feature-box">
