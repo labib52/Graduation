@@ -14,9 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_student'])) {
     $security_question = isset($_POST['security_question']) ? trim($_POST['security_question']) : NULL;
     $security_answer = isset($_POST['security_answer']) ? trim($_POST['security_answer']) : NULL;
 
+    // Hash security_answer if provided
+    $hashed_security_answer = !empty($security_answer) ? password_hash($security_answer, PASSWORD_DEFAULT) : NULL;
+
     if (!empty($username) && !empty($email) && !empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        addStudent($conn, $username, $email, $hashed_password, $payment_info, $is_admin, $is_2fa_enabled, $security_question, $security_answer);
+        addStudent($conn, $username, $email, $hashed_password, $payment_info, $is_admin, $is_2fa_enabled, $security_question, $hashed_security_answer);
         header("Location: admin_students.php");
         exit();
     } else {
@@ -35,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_student'])) {
     $new_security_question = isset($_POST['new_security_question']) ? trim($_POST['new_security_question']) : NULL;
     $new_security_answer = isset($_POST['new_security_answer']) ? trim($_POST['new_security_answer']) : NULL;
 
-    updateStudent($conn, $student_id, $new_username, $new_email, $new_password, $new_is_admin, $new_is_2fa_enabled, $new_security_question, $new_security_answer);
+    // Hash the new security_answer if provided
+    $hashed_new_security_answer = !empty($new_security_answer) ? password_hash($new_security_answer, PASSWORD_DEFAULT) : NULL;
+
+    updateStudent($conn, $student_id, $new_username, $new_email, $new_password, $new_is_admin, $new_is_2fa_enabled, $new_security_question, $hashed_new_security_answer);
     header("Location: admin_students.php");
     exit();
 }
@@ -124,7 +130,7 @@ $students = getStudents($conn);
                             <?php echo $student['is_admin']; ?>,
                             <?php echo $student['is_2fa_enabled']; ?>,
                             '<?php echo htmlspecialchars($student['security_question']); ?>',
-                            '<?php echo htmlspecialchars($student['security_answer']); ?>'
+                            ''
                         )">Edit</button>
                         <button onclick="confirmDelete(<?php echo $student['id']; ?>)" class="delete">Remove</button>
                     </li>
@@ -148,7 +154,7 @@ $students = getStudents($conn);
                 <option value="What was the name of your first pet?">What was the name of your first pet?</option>
                 <option value="What was the name of your elementary school?">What was the name of your elementary school?</option>
             </select>
-            <input type="text" name="new_security_answer" id="edit_security_answer">
+            <input type="text" name="new_security_answer" id="edit_security_answer" placeholder="New Security Answer">
             <button type="submit" name="update_student">Update Student</button>
         </form>
     </div>
