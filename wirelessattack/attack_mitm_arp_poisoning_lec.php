@@ -13,6 +13,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARP Poisoning - Lecture</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -30,7 +31,10 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             color: #fff;
             padding: 1rem 2rem;
             text-align: center;
-            position: relative;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
         header h1 {
@@ -50,33 +54,114 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             border-radius: 8px;
         }
 
-        .content {
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background: #fff;
+            color: #007BFF;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .sidebar.closed {
+            transform: translateX(-250px);
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #007BFF;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background: #007BFF;
+            color: white;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 260px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            z-index: 1001;
+        }
+
+        .toggle-btn:hover {
+            background: #0056b3;
+        }
+
+        .toggle-btn.closed {
+            left: 20px;
+            transform: rotate(180deg);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #f4f4f9;
+            z-index: 999;
+            height: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #007BFF;
+            width: 0;
+            transition: width 0.25s;
+        }
+
+        /* Content */
+        .content-container {
+            margin-top: 70px; /* Account for fixed header */
+            margin-left: 270px;
             padding: 2rem;
-            margin: auto;
-            max-width: 900px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: justify;
-            line-height: 1.8;
-            overflow-wrap: break-word;
-            white-space: pre-wrap;
+            transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
         }
 
-        .back-button, .next-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+        .content-container.collapsed {
+            margin-left: 20px;
+            width: calc(100% - 40px);
         }
 
-        .back-button:hover, .next-button:hover {
-            background-color: #0056b3;
+        .section {
+            padding-top: 80px; /* Offset for header height */
+            margin-bottom: 2rem;
         }
 
         footer {
@@ -84,12 +169,33 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             padding: 1rem;
             background-color: #007BFF;
             color: white;
-            margin-top: 2rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
-        a {
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
             text-decoration: none;
-            color: inherit;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -101,8 +207,27 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </div>
     </header>
 
-    <main class="content">
-        <p>-Now, in this lecture and the next few lectures, I will start talking about Man In the Middle Attacks.
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Navigation</h2>
+        <a href="#introduction"><i class="fas fa-info-circle"></i> 1. Introduction</a>
+        <a href="#arp_protocol"><i class="fas fa-network-wired"></i> 2. ARP Protocol</a>
+        <a href="#arp_spoofing"><i class="fas fa-shield-alt"></i> 3. ARP Spoofing</a>
+        <a href="#mitm_attack"><i class="fas fa-user-secret"></i> 4. Man In The Middle Attack</a>
+    </div>
+
+    <button class="toggle-btn" id="toggle-btn">&laquo;</button>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container" id="content-container">
+        <div id="introduction" class="section">
+            <h2>1. Introduction</h2>
+            <p>-Now, in this lecture and the next few lectures, I will start talking about Man In the Middle Attacks.
 These are attacks that we can launch only if we are able to intercept the communication between two devices.
 So a normal communication would look like this, where the device is directly communicating with the entity that they want to communicate with.
 In a Man In The Middle Attack, the hacker would be able to place themselves in the middle of the connection, allowing them to intercept and see anything that is being transferred between the two devices.
@@ -110,9 +235,12 @@ In a Man In The Middle Attack, the hacker would be able to place themselves in t
 -the first method to achieve this is using an ARP spoofing attack.
 ARP spoofing allow us to redirect the flow of packets so instead of it flowing directly through the two devices communicating it would flow through my own computer(attacker).
 So any requests sent and any responses received by the target computer, will have to flow through the hacker computer. This means that any messages, any websites, any images, any usernames, any passwords entered by the target will have to flow through my computer. This allows me to read this information, modify
- it or drop it.
+ it or drop it.</p>
+        </div>
 
--ARP stands for Address Resolution Protocol, and it's a very simple protocol that allow us to link IP addresses to MAC addresses.
+        <div id="arp_protocol" class="section">
+            <h2>2. ARP Protocol</h2>
+            <p>-ARP stands for Address Resolution Protocol, and it's a very simple protocol that allow us to link IP addresses to MAC addresses.
 So for example, let's say we have a network here, we have devices A, B, C, and D.
 They're all connected to the same network And we have the router here for this network. We can see that each device has an IP and a MAC address.
 Let's assume that device A needs to communicate with device C. Now we're also gonna assume that device A knows the IP of device C.
@@ -127,9 +255,12 @@ So all of this communication is facilitated using the ARP protocol. All it has i
 and the whole point of it is so that we can link IP addresses to MAC addresses or translate IP addresses to MAC addresses.
 you can see your Arp table by command: ARP-a
 
--in any typical network any device that's connected to the network, if it wants to send a request, it will send them to the router, the router will go and send that request to the Internet, wait for the response and then forward the response to the device that requested it.
+-in any typical network any device that's connected to the network, if it wants to send a request, it will send them to the router, the router will go and send that request to the Internet, wait for the response and then forward the response to the device that requested it.</p>
+        </div>
 
--Now what we can do is we can exploit the ARP protocol and send two ARP responses, one to the gateway and one to the victim. We're gonna tell the gateway that I am at the IP of the victim,
+        <div id="arp_spoofing" class="section">
+            <h2>3. ARP Spoofing</h2>
+            <p>-Now what we can do is we can exploit the ARP protocol and send two ARP responses, one to the gateway and one to the victim. We're gonna tell the gateway that I am at the IP of the victim,
 so the access point will update its ARP table and it'll associate the IP of the target with my MAC address.
 We'll do the same with the victim, so we'll send it an ARP response. We're gonna tell it that I am at 10.0.2.1 so it's going to update its ARP table and associate the IP of 10.0.2.1 with my own MAC address.
 So the result of this, the victim is gonna think that I am the router and the router is gonna think that I am the victim.
@@ -146,8 +277,12 @@ Not only that,
 well, they're also not going to verify who I am. So when I say that I am a 10.0.2.7. I am clearly not at that IP But the access point will trust this and it'll actually update its ARP table based on the information that I sent.
 Same goes to the victim.
 I'm gonna tell it that I am at 10.0.2.1 it's gonna trust and believe this, even though I am clearly not at this IP
-So these are the two main weaknesses with ARP protocol that allow us to run ARP spoofing attacks.
--------------------------------------------------------------------
+So these are the two main weaknesses with ARP protocol that allow us to run ARP spoofing attacks.</p>
+        </div>
+
+        <div id="mitm_attack" class="section">
+            <h2>4. Man In The Middle Attack</h2>
+            <p>
 I will show you how to use a very simple yet reliable tool called arpspoof,
 
 Now, using arpspoof is very simple.
@@ -169,15 +304,54 @@ So, you need to enable port forwarding so that this computer would allow packets
 Now to enable port forwarding,
 in another terminal
 -echo 1 > /proc/sys/net/ipv4/ip_forward
-</p>
 
-        <!-- Navigation Buttons -->
-        <a href="attack_mitm_arp_poisoning.php" class="back-button">← Back</a>
-        <a href="attack_mitm_arp_poisoning_lab.php" class="next-button">→ Next</a>
-    </main>
+</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="attack_mitm_arp_poisoning.php" class="back-button">&larr; Back</a>
+        <a href="attack_mitm_arp_poisoning_lab.php" class="back-button">Next &rarr;</a>
+    </div>
 
     <footer>
-        <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
+        <p>&copy; 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // Sidebar toggle functionality
+        const toggleBtn = document.getElementById('toggle-btn');
+        const sidebar = document.getElementById('sidebar');
+        const contentContainer = document.getElementById('content-container');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('closed');
+            contentContainer.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('closed');
+        });
+
+        // Progress Bar Functionality
+        window.addEventListener("scroll", function() {
+            const progressBar = document.getElementById("progress-bar");
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = progress + "%";
+        });
+
+        // Fix navigation scroll offset
+        const links = document.querySelectorAll('.sidebar a');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                const offsetTop = targetSection.offsetTop - 70; // Account for header height
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
