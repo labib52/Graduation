@@ -175,7 +175,17 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
                 <p class="description">A malicious script encrypted a very secret piece of information I had on my system. Can you recover the information for me please?</p>
             </div>
         </a>
-        <!-- Back Button -->
+        <!-- Lecture Card  -->
+        <a href="forensics/lab5.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Lab5</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">This challenge is composed of 2 flags but do you really think so? Maybe a little flag is hiding somewhere.</p>
+            </div>
+        </a>
+       <!-- Back Button -->
         <a href="categ.php" class="back-button">← Back</a>
     </main>
     <footer>
