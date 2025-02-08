@@ -149,7 +149,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </a>
 
         <!-- Back Button -->
-        <a href="attacks_for_man_in_the_middle.php" class="back-button">← Back</a>
+        <a href="attack_man_in_the_middle.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
