@@ -218,6 +218,8 @@ All OK
 <div class="imglab5">
 <img src="../public/images/lab5.png" style="height: 400px;" width="600px" alt="">
 </div>
+<br>
+<div><p><b>Flag 2: flag{W1th_th1s_$taGe_2_1s_c0mPL3T3_!!}</b></p></div>
 <br><br>
 <a href="../forensics.php" class="back-button">← Back</a>
 </body>
