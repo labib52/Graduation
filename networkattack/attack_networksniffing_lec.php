@@ -78,7 +78,7 @@ hr{
         </i>
         </div>
         <br>
-        <div class="img1"><img src="./network sniffing.jpg" alt=""></div>
+        <div><img src="../public/images/network sniffing.jpg" alt=""></div>
         <br>
         <hr>
         <br>
@@ -114,7 +114,7 @@ hr{
 <br>
 <br>
 <div class="img1">
-<img src="./macaddress.jpg" alt="">
+<img src="../public/images/macaddress.jpg" alt="">
 </div>
 <br><br>
 <div class="parone">
