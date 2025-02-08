@@ -35,15 +35,16 @@ hr{
      height: 10px;
      width: 800px;
 }
-.img1{
-    height: 50%;
-}
 .steps{
     font-size: 50px;
     color:rgb(65, 74, 210);
 }
 .parone{
     font-size: 25px;
+}
+.hint{
+    font-size: 15px;
+    font-weight: bold;
 }
     </style>
 </head>
@@ -78,7 +79,7 @@ hr{
         </i>
         </div>
         <br>
-        <div class="img1"><img src="./network sniffing.jpg" alt=""></div>
+        <div><img src="./network sniffing.jpg"  style="height: 400px;" width="700px" alt=""></div>
         <br>
         <hr>
         <br>
@@ -113,8 +114,8 @@ hr{
 </div>
 <br>
 <br>
-<div class="img1">
-<img src="./macaddress.jpg" alt="">
+<div>
+<img src="./macaddress.jpg" style="height: 400px;" width="700px" alt="">
 </div>
 <br><br>
 <div class="parone">
@@ -130,7 +131,122 @@ hr{
     bytes_str=map('{:02x}'.format,bytes_addr)
     return ':'.join(bytes_str).upper()
 </i>
+</div>
+<br><br><hr><br><br>
+<div class="steps">Step 3:</div>
+<div class="parone">
+<i class="fa-solid fa-1">
+   <p> -In this step you should make a socket to have connections to other computers:</p> 
+</i>
+</div>
+<div class="hint">Hint:Use main loop for recursion</div>
+<br><br>
+<div class="parone">
+<i class="fa-solid fa-1">
+   <p> def main(): <br>
+conn=socket.socket(socket.AF_PACKET,socket-SOCK_RAW,socket,ntohs(3)) <br>
+while true: <br>
+raw_data,addr=conn-rcvfrom(65536) <br>
+dest_mac,src_mac,eth_proto,data=ethernet_frame(raw_data) <br>
+print('\n EthernetFrame:')
+print('Destination:{},source{},Protocol:{}',format(dest_mac,src_mac,eth_proto))
+</p> 
+</i>
+</div>
+<br><br>
+<div>
+<p class="parone">The result: the destination, the source and the protocol</p>
+<br>
+<img src="./dest,port.jpg" style="height: 400px;" width="700px" alt="">
+</div>
+<br>
+<hr>
+<br>
+<div class="steps">Step 4:</div>
+<br>
 
+<div class="parone">
+<i class="fa-solid fa-1">
+    -In this step you are going to unpack IP packet, this pic will help you understand IP more:
+    <br>
+    <br>
+<img src="./IPheader.jpg" style="height: 400px;" width="700px" alt="">
+</i>
+</div>
+<br><br>
+<div class="parone">
+<i class="fa-solid fa-1">
+def ipv4_packet(data): <br>
+version_header_length=data[0] <br>
+version=version_header_length >> 4 <br>
+header_length=(version_header_length & 15) * 4 <br>
+ttl,proto,src,target=struct.unpack('! 8x B 2x 4s 4s',data[:20])<br>
+returnn version,header_length,ttl,proto,ipv4(src),ipv4(target),data[headere_length:]  <br><br>
+-#returns properly formatted ipv4 address <br>
+def ipv4(addr): <br>
+return'.'.join(map(str,addr))
+</i>
+</div>
+<br><div class="hint">
+   NOTE: The header length is used to determine where the data starts because <br>
+after the header ends that's where actual data begins
+</div>
+<br><hr><br>
+<div class="steps">Step 5:</div>
+<br><br>
+<div class="parone">
+<i class="fa-solid fa-1">
+-In this step you are going to unpack ICMP:
+</i>
+</div>
+<br><br>
+<div class="parone">
+<i class="fa-solid fa-1">
+<p>def icmp_packet(data): <br>
+icmp_type,code,checksum=struct.unpack('! B B H',data[:4]) <br>
+return icmp_type,code,checksum,data[4:] <br>
+</p>
+</i>
+</div>
+<br>
+<div class="parone">
+<i class="fa-solid fa-1">
+-Then you are going to unpack TCP segment by learning and understanding this pic:
+</i>
+</div>
+<br><br>
+<div>
+    <img src="./TCP.jpg" style="height: 500px;" width="600px" alt="">
+</div>
+<div class="parone">
+<i class="fa-solid fa-1">
+<p>
+    def tcp_segment(data): <br>
+    (src_port,dest_port,sequence,acknowledgement,offset_reserved_flags)=struct.unpack('! H H L L H',data[:14]) <br>
+    offset=(offset_reserved_flags >> 12) * 4 <br><br>
+    -To establish base connection: <br><br>
+    flag_urg=(offset_reserved_flags & 32) >> 5 <br>
+    flag_ack=(offset_reserved_flags & 32) >> 5 <br>
+    flag_psh=(offset_reserved_flags & 32) >> 5 <br>
+    flag_rst=(offset_reserved_flags & 32) >> 5 <br>
+    flag_syn=(offset_reserved_flags & 32) >> 5 <br>
+    flag_fin=offset_reserved_flags & 1 <br>
+    return src_port,dest_port,sequence,acknowledgement,flag_urg,flag_ack,flag_psh,flag_rst,flag_syn,flag_fin,data[offset] <br>
+
+</p>
+</i>
+</div>
+<br><hr><br>
+<div class="steps">Step 6:</div>
+<div class="parone">
+<i class="fa-solid fa-1">
+-This is last step that will show you results of IPV4 packet which in it is tcp segment and the destination and protocol and source <br>
+
+</i>
+</div>
+<br><br>
+<div class="parone">
+<img src="./final result.jpg"  style="height: 500px;" width="600px" alt="">
 </div>
     </main>
     </body>
