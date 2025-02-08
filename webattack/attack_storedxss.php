@@ -1,27 +1,9 @@
 <?php
 session_start();
-include('db_connection.php'); // Include database connection
 
 // Check if a user is logged in
 $loggedIn = isset($_SESSION['user_id']);
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
-
-// Fetch courses dynamically from the database for the Web category
-$category_name = "Web"; // The category this page belongs to
-$courses = [];
-
-$query = $conn->prepare("
-    SELECT courses.id, courses.title, courses.description, categories.name AS category_name
-    FROM courses
-    JOIN categories ON courses.category_id = categories.id
-    WHERE categories.name = ?");
-$query->bind_param("s", $category_name);
-$query->execute();
-$result = $query->get_result();
-
-while ($row = $result->fetch_assoc()) {
-    $courses[] = $row;
-}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +11,7 @@ while ($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Security Simulation</title>
+    <title>Cross Site Scripting (XSS) Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -52,7 +34,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
@@ -72,7 +54,6 @@ while ($row = $result->fetch_assoc()) {
             padding: 2rem;
             margin: auto;
             max-width: 800px;
-            text-align: center;
         }
 
         .simulation-card {
@@ -106,6 +87,9 @@ while ($row = $result->fetch_assoc()) {
             padding: 0.25rem 0.5rem;
             border-radius: 5px;
             font-weight: bold;
+        }
+
+        .active {
             background-color: #28a745;
             color: white;
         }
@@ -136,9 +120,7 @@ while ($row = $result->fetch_assoc()) {
             padding: 1rem;
             background-color: #007BFF;
             color: white;
-            margin-top: 20px;
-            font-size: 1rem;
-            width: 100%;
+            margin-top: 2rem;
         }
 
         a {
@@ -149,32 +131,47 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
     <header>
-        <h1>Web Security Simulation</h1>
+        <h1>Cross Site Scripting (XSS) Simulation</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
     </header>
     <main class="content">
-        <h2>Web Attacks</h2>
+        <!-- Lecture Card -->
+        <a href="attack_storedxss_lec.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>stored xss lecture</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Learn how attackers inject malicious scripts into web applications, exploiting vulnerabilities in user inputs.</p>
+            </div>
+        </a>
 
-        <?php if (!empty($courses)): ?>
-            <?php foreach ($courses as $course): ?>
-                <a href="/Graduation/webattack/attack_<?php echo strtolower(str_replace(' ', '', $course['title'])); ?>.php">
-                    <div class="simulation-card">
-                        <div class="simulation-header">
-                            <h2><?php echo htmlspecialchars($course['title']); ?></h2>
-                            <span class="status active">Active</span>
-                        </div>
-                        <p class="description"><?php echo htmlspecialchars($course['description']); ?></p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No courses available at the moment.</p>
-        <?php endif; ?>
+        <!-- Lab Exercises Card -->
+        <a href="attack_storedxss_lab.php">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Lab Exercises</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Practice hands-on activities related to XSS vulnerabilities, identifying and mitigating security risks.</p>
+            </div>
+        </a>
+
+        <!-- Tools Card -->
+        <a href="https://owasp.org/www-community/attacks/xss/" target="_blank">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>OWASP XSS Guide</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Explore the OWASP guide to Cross-Site Scripting (XSS) attacks, prevention techniques, and security best practices.</p>
+            </div>
+        </a>
 
         <!-- Back Button -->
-        <a href="categ.php" class="back-button">← Back</a>
+        <a href="../web.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
