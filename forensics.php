@@ -1,9 +1,27 @@
 <?php
 session_start();
+include('db_connection.php'); // Include database connection
 
 // Check if a user is logged in
 $loggedIn = isset($_SESSION['user_id']);
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
+
+// Fetch courses dynamically from the database for the Forensics category
+$category_name = "Forensics"; // The category this page belongs to
+$courses = [];
+
+$query = $conn->prepare("
+    SELECT courses.id, courses.title, courses.description, categories.name AS category_name
+    FROM courses
+    JOIN categories ON courses.category_id = categories.id
+    WHERE categories.name = ?");
+$query->bind_param("s", $category_name);
+$query->execute();
+$result = $query->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $courses[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +30,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Security Simulation</title>
+    <title>Forensics Science</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -138,54 +156,25 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </div>
     </header>
     <main class="content">
-        <!-- Lecture Card -->
-        <a href="forensics/lab1.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab1</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">My sister’s computer crashed. We were very fortunate to recover this memory dump.
-                    Your job is get all her important files from the system. From what we remember, we suddenly saw a
-                    black window pop up with some thing being executed. When the crash happened, she was trying to draw
-                    something. Thats all we remember from the time of crash.</p>
-            </div>
-        </a>
-        <!-- Lecture Card -->
-        <a href="forensics/lab2.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab2</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">One of the clients of our company, lost the access to his system due to an
-                    unknown error. He is supposedly a very popular “environmental” activist. As a part of the
-                    investigation, he told us that his go to applications are browsers, his password managers etc. We
-                    hope that you can dig into this memory dump and find his important stuff and give it back to us</p>
-            </div>
-        </a>
+        <h2>Forensics Labs</h2>
 
-        <!-- Lecture Card -->
-        <a href="forensics/lab3.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab3</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">A malicious script encrypted a very secret piece of information I had on my system. Can you recover the information for me please?</p>
-            </div>
-        </a>
-        <!-- Lecture Card  -->
-        <a href="forensics/lab5.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Lab5</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">This challenge is composed of 2 flags but do you really think so? Maybe a little flag is hiding somewhere.</p>
-            </div>
-        </a>
-       <!-- Back Button -->
+        <?php if (!empty($courses)): ?>
+            <?php foreach ($courses as $course): ?>
+                <a href="/Graduation/forensics/forensics_<?php echo strtolower(str_replace(' ', '_', $course['title'])); ?>.php">
+                    <div class="simulation-card">
+                        <div class="simulation-header">
+                            <h2><?php echo htmlspecialchars($course['title']); ?></h2>
+                            <span class="status active">Active</span>
+                        </div>
+                        <p class="description"><?php echo htmlspecialchars($course['description']); ?></p>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No courses available at the moment.</p>
+        <?php endif; ?>
+
+        <!-- Back Button -->
         <a href="categ.php" class="back-button">← Back</a>
     </main>
     <footer>
