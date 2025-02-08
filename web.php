@@ -1,9 +1,27 @@
 <?php
 session_start();
+include('db_connection.php'); // Include database connection
 
 // Check if a user is logged in
 $loggedIn = isset($_SESSION['user_id']);
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
+
+// Fetch courses dynamically from the database for the Web category
+$category_name = "Web"; // The category this page belongs to
+$courses = [];
+
+$query = $conn->prepare("
+    SELECT courses.id, courses.title, courses.description, categories.name AS category_name
+    FROM courses
+    JOIN categories ON courses.category_id = categories.id
+    WHERE categories.name = ?");
+$query->bind_param("s", $category_name);
+$query->execute();
+$result = $query->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $courses[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -137,16 +155,23 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </div>
     </header>
     <main class="content">
-        <!-- Lecture Card -->
-        <a href="attack_xss.php">
-            <div class="simulation-card">
-                <div class="simulation-header">
-                    <h2>Cross Site Scripting (XSS)</h2>
-                    <span class="status active">Active</span>
-                </div>
-                <p class="description">Learn how attackers inject malicious scripts into web applications, exploiting vulnerabilities in user inputs.</p>
-            </div>
-        </a>
+        <h2>Web Attacks</h2>
+
+        <?php if (!empty($courses)): ?>
+            <?php foreach ($courses as $course): ?>
+                <a href="/Graduation/webattack/attack_<?php echo strtolower(str_replace(' ', '', $course['title'])); ?>.php">
+                    <div class="simulation-card">
+                        <div class="simulation-header">
+                            <h2><?php echo htmlspecialchars($course['title']); ?></h2>
+                            <span class="status active">Active</span>
+                        </div>
+                        <p class="description"><?php echo htmlspecialchars($course['description']); ?></p>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No courses available at the moment.</p>
+        <?php endif; ?>
 
         <!-- Back Button -->
         <a href="categ.php" class="back-button">← Back</a>
