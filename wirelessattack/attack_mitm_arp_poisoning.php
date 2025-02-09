@@ -159,14 +159,14 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </div>
         </a>
 
-        <!-- Tools Card -->
-        <a href="https://kali.org/" target="_blank">
+          <!-- Tools Card (Now opens index.php without auto-starting VM) -->
+       <a href="index.php" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Kali Linux</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore how tools like Bettercap and Ettercap can be used for ARP spoofing and MITM attacks.</p>
+                <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
             </div>
         </a>
 
