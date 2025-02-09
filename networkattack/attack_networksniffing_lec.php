@@ -170,9 +170,7 @@ print('Destination:{},source{},Protocol:{}',format(dest_mac,src_mac,eth_proto))
     -In this step you are going to unpack IP packet, this pic will help you understand IP more:
     <br>
     <br>
-<<<<<<< HEAD
-=======
-<img src="../public/imagesIPheader.jpg" style="height: 400px;" width="700px" alt="">
+    <img src="../public/images/IPheader.jpg" style="height: 400px;" width="700px" alt="">
 >>>>>>> 1b3b89afea7fc2624f2b07226abef473e0e0ca75
 </i>
 </div>
