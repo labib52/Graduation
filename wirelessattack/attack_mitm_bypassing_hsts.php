@@ -147,6 +147,16 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
                 <p class="description">Understand how attackers attempt to bypass HSTS security mechanisms and downgrade HTTPS connections in a MITM attack.</p>
             </div>
         </a>
+           <!-- Tools Card (Now opens index.php without auto-starting VM) -->
+       <a href="index.php" target="_blank">
+            <div class="simulation-card">
+                <div class="simulation-header">
+                    <h2>Kali Linux</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
+            </div>
+        </a>
     </main>
 
     <!-- Back Button -->

@@ -159,14 +159,14 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
             </div>
         </a>
 
-        <!-- Tools Card -->
-        <a href="https://hashcat.net/" target="_blank">
+          <!-- Tools Card (Now opens index.php without auto-starting VM) -->
+       <a href="index.php" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Hashcat</h2>
+                    <h2>Kali Linux</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Explore tools like Hashcat for WPA/WPA2 cracking and password recovery.</p>
+                <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
             </div>
         </a>
 

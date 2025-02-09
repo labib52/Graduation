@@ -118,14 +118,14 @@
             </div>
         </a>
 
-        <!-- Tools Card -->
-        <a href="https://win7simu.visnalize.com/" target="_blank">
+        <!-- Tools Card (Now opens index.php without auto-starting VM) -->
+       <a href="index.php" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Windows 7</h2>
+                    <h2>Kali Linux</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Windows 7 Simulator VM.</p>
+                <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
             </div>
         </a>
          <!-- Back Button -->
