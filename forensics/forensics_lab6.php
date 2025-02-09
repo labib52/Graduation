@@ -121,6 +121,7 @@
     </style>
 </head>
 <body>
+    <div class="container">
 <h1>Challenge Description</h1>
         <p>The flag format for this lab is: inctf{s0me_l33t_Str1ng}</p>
 <p><b>Note: </b>This challenge is composed of only 1 flag. </p>
@@ -128,7 +129,8 @@
 <p><b>The flag format for this lab is: inctf{s0me_l33t_Str1ng}</b></p>
 <p><b>Challenge file:</b><a
                 href="https://mega.nz/file/C0pjUKxI#LnedePAfsJvFgD-Uaa4-f1Tu0kl5bFDzW6Mn2Ng6pnM">MemLabs Lab6</a></p>
-    <br><br>
+            </div>
+            <div class="container">    
     <p>-First we need to identify the operating system of the memory image.</p>
     <br>
     <p><b>$ volatility -f MemoryDump_Lab6.raw imageinfo</b></p>
@@ -247,4 +249,5 @@ top['GM_TRACING_THREAD_DETAILS_CHUNK_START'] = (window.performance && window.per
 <p><b>Flag: inctf{thi5cH4LL3Ng3_!s_g0nn4_b3_?_aN_Am4zINg_!_i_gU3Ss???}</b></p>
 <br><br>
 <a href="../forensics.php" class="back-button">← Back</a>
+</div>
 </body>

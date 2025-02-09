@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireless Security Simulation</title>
+    <title>Network Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
 .header {
@@ -170,7 +170,10 @@ print('Destination:{},source{},Protocol:{}',format(dest_mac,src_mac,eth_proto))
     -In this step you are going to unpack IP packet, this pic will help you understand IP more:
     <br>
     <br>
-<img src="../public/images/IPheader.jpg" style="height: 400px;" width="700px" alt="">
+<<<<<<< HEAD
+=======
+<img src="../public/imagesIPheader.jpg" style="height: 400px;" width="700px" alt="">
+>>>>>>> 1b3b89afea7fc2624f2b07226abef473e0e0ca75
 </i>
 </div>
 <br><br>
@@ -246,7 +249,11 @@ return icmp_type,code,checksum,data[4:] <br>
 </div>
 <br><br>
 <div class="parone">
+<<<<<<< HEAD
 <img src="../public/images/final result.jpg"  style="height: 500px;" width="600px" alt="">
+=======
+<img src="../public/imagesfinal result.jpg"  style="height: 500px;" width="600px" alt="">
+>>>>>>> 1b3b89afea7fc2624f2b07226abef473e0e0ca75
 <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
