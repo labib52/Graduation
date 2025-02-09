@@ -79,7 +79,7 @@ hr{
         </i>
         </div>
         <br>
-        <div><img src="./network sniffing.jpg"  style="height: 400px;" width="700px" alt=""></div>
+        <div><img src="../public/images/network sniffing.jpg"  style="height: 400px;" width="700px" alt=""></div>
         <br>
         <hr>
         <br>
@@ -115,7 +115,7 @@ hr{
 <br>
 <br>
 <div>
-<img src="./macaddress.jpg" style="height: 400px;" width="700px" alt="">
+<img src="../public/images/macaddress.jpg" style="height: 400px;" width="700px" alt="">
 </div>
 <br><br>
 <div class="parone">
@@ -157,7 +157,7 @@ print('Destination:{},source{},Protocol:{}',format(dest_mac,src_mac,eth_proto))
 <div>
 <p class="parone">The result: the destination, the source and the protocol</p>
 <br>
-<img src="./dest,port.jpg" style="height: 400px;" width="700px" alt="">
+<img src="../public/images/destport.jpg" style="height: 400px;" width="700px" alt="">
 </div>
 <br>
 <hr>
@@ -170,7 +170,7 @@ print('Destination:{},source{},Protocol:{}',format(dest_mac,src_mac,eth_proto))
     -In this step you are going to unpack IP packet, this pic will help you understand IP more:
     <br>
     <br>
-<img src="./IPheader.jpg" style="height: 400px;" width="700px" alt="">
+<img src="../public/images/IPheader.jpg" style="height: 400px;" width="700px" alt="">
 </i>
 </div>
 <br><br>
@@ -216,7 +216,7 @@ return icmp_type,code,checksum,data[4:] <br>
 </div>
 <br><br>
 <div>
-    <img src="./TCP.jpg" style="height: 500px;" width="600px" alt="">
+    <img src="../public/images/TCP.jpg" style="height: 500px;" width="600px" alt="">
 </div>
 <div class="parone">
 <i class="fa-solid fa-1">
@@ -246,7 +246,7 @@ return icmp_type,code,checksum,data[4:] <br>
 </div>
 <br><br>
 <div class="parone">
-<img src="./final result.jpg"  style="height: 500px;" width="600px" alt="">
+<img src="../public/images/final result.jpg"  style="height: 500px;" width="600px" alt="">
 <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
