@@ -247,11 +247,7 @@ return icmp_type,code,checksum,data[4:] <br>
 </div>
 <br><br>
 <div class="parone">
-<<<<<<< HEAD
-<img src="../public/images/final result.jpg"  style="height: 500px;" width="600px" alt="">
-=======
-<img src="../public/imagesfinal result.jpg"  style="height: 500px;" width="600px" alt="">
->>>>>>> 1b3b89afea7fc2624f2b07226abef473e0e0ca75
+
 <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
