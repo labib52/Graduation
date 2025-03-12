@@ -13,7 +13,7 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="/Graduation/views/lecture.php?id=36">
+        <a href="/Graduation/views/lecture.php?id=32">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>network sniffing lecture</h2>
@@ -24,7 +24,7 @@
             </div>
         </a>
         <!-- Lab Exercises Card -->
-        <a href="/Graduation/views/lab.php?id=14">
+        <a href="/Graduation/views/lab.php?id=13">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
