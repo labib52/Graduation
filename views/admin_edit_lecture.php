@@ -167,6 +167,182 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Lecture</title>
     <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <script src="../public/js/tinymce/tinymce.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof tinymce === "undefined") {
+                console.error("TinyMCE not found. Check the script path.");
+            } else {
+                console.log("TinyMCE loaded successfully.");
+                initializeTinyMCE();
+            }
+
+            // Add form submit handler
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update all TinyMCE instances before form submission
+                tinymce.triggerSave();
+                
+                // Now submit the form
+                this.submit();
+            });
+        });
+
+        function initializeTinyMCE() {
+            tinymce.init({
+                selector: 'textarea[name^="sections"][name$="[content]"]',
+                plugins: 'advlist autolink lists link charmap print preview anchor code',
+                toolbar: 'bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | code',
+                menubar: false,
+                entity_encoding: 'raw',
+                encoding: 'html',
+                content_style: `
+                    body { line-height: 2; }
+                    p { margin: 0; padding: 0.5em 0; }
+                    br { line-height: 2; }
+                `,
+                forced_root_block: 'p',
+                setup: function(editor) {
+                    editor.on('init', function() {
+                        console.log("TinyMCE initialized successfully.");
+                    });
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                },
+                height: 300
+            });
+        }
+
+        // Function to add new section (modified for edit page)
+        function addSection() {
+            const container = document.getElementById("sections-container");
+            const sectionCount = container.getElementsByClassName("section-group").length;
+            
+            const sectionHTML = `
+                <div class="section-group">
+                    <label>Navigation Item:</label>
+                    <input type="text" name="sections[${sectionCount}][nav_item]" required>
+                    
+                    <label>Content:</label>
+                    <textarea id="section-content-${sectionCount}" name="sections[${sectionCount}][content]" required></textarea>
+                    
+                    <label>Media (Optional):</label>
+                    <div class="media-upload-area" onclick="triggerFileInput(this)" 
+                         ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
+                         ondragleave="handleDragLeave(event)">
+                        <p>Drag & drop media here or click to upload</p>
+                        <input type="file" name="sections[${sectionCount}][media]" 
+                               accept="image/*,video/*" style="display: none" 
+                               onchange="handleFileSelect(this)">
+                        <img class="media-preview" src="" alt="Preview" style="display: none;">
+                        <button type="button" class="remove-btn" onclick="removeSection(this)">Remove</button>
+                    </div>
+                </div>`;
+            
+            container.insertAdjacentHTML("beforeend", sectionHTML);
+            
+            // Initialize TinyMCE for the new textarea
+            tinymce.init({
+                selector: `#section-content-${sectionCount}`,
+                plugins: 'advlist autolink lists link charmap print preview anchor code',
+                toolbar: 'bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | code',
+                menubar: false,
+                entity_encoding: 'raw',
+                encoding: 'html',
+                content_style: `
+                    body { line-height: 2; }
+                    p { margin: 0; padding: 0.5em 0; }
+                    br { line-height: 2; }
+                `,
+                forced_root_block: 'p',
+                height: 300,
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                }
+            });
+        }
+
+        // Add all the media handling functions
+        function triggerFileInput(area) {
+            area.querySelector('input[type="file"]').click();
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e, area) {
+            e.preventDefault();
+            area.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                const fileInput = area.querySelector('input[type="file"]');
+                fileInput.files = files;
+                handleFileSelect(fileInput);
+            }
+        }
+
+        function handleFileSelect(input) {
+            const preview = input.parentElement.querySelector('.media-preview');
+            const file = input.files[0];
+            
+            if (file) {
+                const fileType = file.type.split('/')[0];
+                
+                if (fileType === 'image') {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (preview.tagName === 'VIDEO') {
+                            const img = document.createElement('img');
+                            img.className = 'media-preview';
+                            img.src = e.target.result;
+                            img.style.display = 'block';
+                            preview.parentNode.replaceChild(img, preview);
+                        } else {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        }
+                    }
+                    reader.readAsDataURL(file);
+                } else if (fileType === 'video') {
+                    const videoURL = URL.createObjectURL(file);
+                    if (preview.tagName === 'IMG') {
+                        const video = document.createElement('video');
+                        video.className = 'media-preview';
+                        video.controls = true;
+                        video.src = videoURL;
+                        video.style.display = 'block';
+                        preview.parentNode.replaceChild(video, preview);
+                    } else {
+                        preview.src = videoURL;
+                        preview.style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        function removeSection(button) {
+            const section = button.closest('.section-group');
+            const textarea = section.querySelector('textarea');
+            
+            // Remove TinyMCE instance before removing the section
+            if (textarea) {
+                tinymce.get(textarea.id)?.remove();
+            }
+            
+            section.remove();
+        }
+    </script>
     <style>
         /* Add the same styles as in admin_add_lecture.php */
         .media-preview {
@@ -305,184 +481,5 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
         <button type="button" onclick="addSection()">+ Add Section</button>
         <button type="submit">Save Changes</button>
     </form>
-
-    <script>
-        function handleFileSelect(input) {
-            const mediaArea = input.closest('.media-upload-area');
-            const preview = mediaArea.querySelector('.media-preview');
-            const file = input.files[0];
-            let deleteButton = mediaArea.querySelector('.delete-media-btn');
-            
-            if (file) {
-                const fileType = file.type.split('/')[0];
-                
-                if (fileType === 'image') {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        if (preview.tagName === 'VIDEO') {
-                            const img = document.createElement('img');
-                            img.className = 'media-preview';
-                            img.src = e.target.result;
-                            img.style.display = 'block';
-                            preview.parentNode.replaceChild(img, preview);
-                        } else {
-                            preview.src = e.target.result;
-                            preview.style.display = 'block';
-                        }
-                    }
-                    reader.readAsDataURL(file);
-                } else if (fileType === 'video') {
-                    const videoURL = URL.createObjectURL(file);
-                    if (preview.tagName === 'IMG') {
-                        const video = document.createElement('video');
-                        video.className = 'media-preview';
-                        video.controls = true;
-                        video.src = videoURL;
-                        video.style.display = 'block';
-                        preview.parentNode.replaceChild(video, preview);
-                    } else {
-                        preview.src = videoURL;
-                        preview.style.display = 'block';
-                    }
-                }
-
-                // Add delete button if it doesn't exist
-                if (!deleteButton) {
-                    deleteButton = document.createElement('button');
-                    deleteButton.type = 'button';
-                    deleteButton.className = 'delete-media-btn';
-                    deleteButton.onclick = function() { deleteMedia(this); };
-                    deleteButton.textContent = 'Delete Media';
-                    preview.after(deleteButton);
-                }
-            }
-        }
-
-        function addSection() {
-            const container = document.getElementById('sections-container');
-            const sectionCount = container.getElementsByClassName('section-group').length;
-            
-            const sectionHTML = `
-                <div class="section-group">
-                    <label>Navigation Item:</label>
-                    <input type="text" name="sections[${sectionCount}][nav_item]" required>
-                    
-                    <label>Content:</label>
-                    <textarea name="sections[${sectionCount}][content]" required></textarea>
-                    
-                    <label>Media (Optional):</label>
-                    <div class="media-upload-area" onclick="triggerFileInput(this)" 
-                         ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
-                         ondragleave="handleDragLeave(event)">
-                        <p>Drag & drop media here or click to upload</p>
-                        <input type="file" name="sections[${sectionCount}][media]" 
-                               accept="image/*,video/*" style="display: none" 
-                               onchange="handleFileSelect(this)">
-                        <input type="hidden" name="sections[${sectionCount}][existing_media]" value="">
-                        <img class="media-preview" src="" alt="Preview" style="display: none;">
-                        <button type="button" class="remove-section-btn" onclick="removeSection(this)">Remove Section</button>
-                    </div>
-                </div>
-            `;
-            
-            container.insertAdjacentHTML('beforeend', sectionHTML);
-        }
-
-        function deleteMedia(button) {
-            const mediaArea = button.closest('.media-upload-area');
-            const preview = mediaArea.querySelector('.media-preview');
-            const existingMediaInput = mediaArea.querySelector('input[type="hidden"]');
-            const fileInput = mediaArea.querySelector('input[type="file"]');
-            
-            // Clear the preview
-            if (preview.tagName === 'VIDEO') {
-                const img = document.createElement('img');
-                img.className = 'media-preview';
-                img.src = '';
-                img.style.display = 'none';
-                img.alt = 'Preview';
-                preview.parentNode.replaceChild(img, preview);
-            } else {
-                preview.src = '';
-                preview.style.display = 'none';
-            }
-            
-            // Clear the existing media value
-            existingMediaInput.value = '';
-            
-            // Clear any selected file
-            fileInput.value = '';
-            
-            // Remove the delete media button
-            button.remove();
-        }
-
-        function removeSection(button) {
-            const container = document.getElementById('sections-container');
-            const sections = container.getElementsByClassName('section-group');
-            
-            // Only allow deletion if there's more than one section
-            if (sections.length > 1) {
-                if (confirm('Are you sure you want to delete this section?')) {
-                    button.closest('.section-group').remove();
-                    reindexSections();
-                }
-            } else {
-                alert('You cannot delete the last section. At least one section is required.');
-            }
-        }
-
-        function reindexSections() {
-            const container = document.getElementById('sections-container');
-            const sections = container.getElementsByClassName('section-group');
-            
-            Array.from(sections).forEach((section, index) => {
-                // Update navigation item input
-                const navInput = section.querySelector('input[type="text"]');
-                navInput.name = `sections[${index}][nav_item]`;
-                
-                // Update content textarea
-                const contentInput = section.querySelector('textarea');
-                contentInput.name = `sections[${index}][content]`;
-                
-                // Update media file input
-                const fileInput = section.querySelector('input[type="file"]');
-                if (fileInput) {
-                    fileInput.name = `sections[${index}][media]`;
-                }
-                
-                // Update existing media input
-                const existingMediaInput = section.querySelector('input[type="hidden"]');
-                if (existingMediaInput) {
-                    existingMediaInput.name = `sections[${index}][existing_media]`;
-                }
-            });
-        }
-
-        function triggerFileInput(area) {
-            area.querySelector('input[type="file"]').click();
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-        }
-
-        function handleDrop(e, area) {
-            e.preventDefault();
-            area.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length) {
-                const fileInput = area.querySelector('input[type="file"]');
-                fileInput.files = files;
-                handleFileSelect(fileInput);
-            }
-        }
-    </script>
 </body>
 </html> 
