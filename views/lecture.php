@@ -20,7 +20,7 @@ if (!$lecture) {
 
 // Convert JSON navigation items and content
 $nav_items = json_decode($lecture['nav_items'], true) ?: [];
-$content = json_decode($lecture['content'], true) ?: [];
+$contents = json_decode($lecture['content'], true);
 $media = json_decode($lecture['section_media'], true) ?: [];
 
 ?>
@@ -186,6 +186,28 @@ $media = json_decode($lecture['section_media'], true) ?: [];
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        .lecture-content {
+            line-height: 2;
+        }
+
+        .lecture-content p {
+            margin: 0;
+            padding: 0.5em 0;
+        }
+
+        /* For any lists within the content */
+        .lecture-content ul,
+        .lecture-content ol {
+            line-height: 2;
+            margin: 0.5em 0;
+        }
+
+        /* For any other text elements that might be in the content */
+        .lecture-content div,
+        .lecture-content span {
+            line-height: 2;
+        }
     </style>
 </head>
 <body>
@@ -206,16 +228,16 @@ $media = json_decode($lecture['section_media'], true) ?: [];
         <main class="content-area">
             <h1 class="lecture-title"><?php echo htmlspecialchars($lecture['title']); ?></h1>
             <?php 
-            $section_media = json_decode($lecture['section_media'], true) ?: [];
-            foreach($content as $index => $section_content): 
-            ?>
+            foreach ($contents as $content): ?>
                 <div id="section-<?php echo $index; ?>" class="section-content">
-                    <?php echo nl2br(htmlspecialchars($section_content)); ?>
+                    <div class="lecture-content">
+                        <?php echo html_entity_decode(htmlspecialchars_decode($content)); ?>
+                    </div>
                     
-                    <?php if (!empty($section_media[$index])): ?>
+                    <?php if (!empty($media[$index])): ?>
                         <div class="section-media">
                             <?php
-                            $media_path = $section_media[$index];
+                            $media_path = $media[$index];
                             $extension = strtolower(pathinfo($media_path, PATHINFO_EXTENSION));
                             if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
                                 <img src="../public/<?php echo htmlspecialchars($media_path); ?>" alt="Section media">
