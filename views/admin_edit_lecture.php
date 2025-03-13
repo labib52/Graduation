@@ -84,39 +84,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $nav_items[] = $nav_item;
                         $content[] = $section_content;
                         
-                        // Keep existing media if no new file is uploaded
-                        if (isset($section['existing_media']) && empty($_FILES['sections']['name'][$index]['media'])) {
-                            $section_media[] = $section['existing_media'];
+                        // Handle multiple media files
+                        $section_files = [];
+                        
+                        // Keep existing media if present
+                        if (isset($section['existing_media']) && is_array($section['existing_media'])) {
+                            $section_files = array_merge($section_files, $section['existing_media']);
                         }
-                        // Handle new media file upload
-                        else if (isset($_FILES['sections']['name'][$index]['media']) && 
-                            $_FILES['sections']['error'][$index]['media'] === UPLOAD_ERR_OK) {
+                        
+                        // Handle new media uploads
+                        if (isset($_FILES['sections']['name'][$index]['media']) && 
+                            is_array($_FILES['sections']['name'][$index]['media'])) {
                             
-                            $file = [
-                                'name' => $_FILES['sections']['name'][$index]['media'],
-                                'type' => $_FILES['sections']['type'][$index]['media'],
-                                'tmp_name' => $_FILES['sections']['tmp_name'][$index]['media'],
-                                'error' => $_FILES['sections']['error'][$index]['media'],
-                                'size' => $_FILES['sections']['size'][$index]['media']
-                            ];
-                            
-                            // Delete old media file if it exists
-                            if (isset($existing_media[$index]) && $existing_media[$index]) {
-                                $old_file = "../public/" . $existing_media[$index];
-                                if (file_exists($old_file)) {
-                                    unlink($old_file);
+                            foreach ($_FILES['sections']['name'][$index]['media'] as $fileIndex => $fileName) {
+                                if ($_FILES['sections']['error'][$index]['media'][$fileIndex] === UPLOAD_ERR_OK) {
+                                    $file = [
+                                        'name' => $_FILES['sections']['name'][$index]['media'][$fileIndex],
+                                        'type' => $_FILES['sections']['type'][$index]['media'][$fileIndex],
+                                        'tmp_name' => $_FILES['sections']['tmp_name'][$index]['media'][$fileIndex],
+                                        'error' => $_FILES['sections']['error'][$index]['media'][$fileIndex],
+                                        'size' => $_FILES['sections']['size'][$index]['media'][$fileIndex]
+                                    ];
+                                    
+                                    $file_path = saveUploadedFile($file);
+                                    if ($file_path) {
+                                        $section_files[] = $file_path;
+                                    }
                                 }
                             }
-                            
-                            $file_path = saveUploadedFile($file);
-                            if ($file_path) {
-                                $section_media[] = $file_path;
-                            } else {
-                                $section_media[] = null;
-                            }
-                        } else {
-                            $section_media[] = null;
                         }
+                        
+                        $section_media[] = $section_files;
                     }
                 }
             }
@@ -233,11 +231,11 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
                          ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
                          ondragleave="handleDragLeave(event)">
                         <p>Drag & drop media here or click to upload</p>
-                        <input type="file" name="sections[${sectionCount}][media]" 
+                        <input type="file" name="sections[${sectionCount}][media][]" 
                                accept="image/*,video/*" style="display: none" 
-                               onchange="handleFileSelect(this)">
-                        <img class="media-preview" src="" alt="Preview" style="display: none;">
-                        <button type="button" class="remove-btn" onclick="removeSection(this)">Remove</button>
+                               onchange="handleFileSelect(this)" multiple>
+                        <div class="media-preview-container"></div>
+                        <button type="button" class="remove-section-btn" onclick="removeSection(this)">Remove Section</button>
                     </div>
                 </div>`;
             
@@ -293,42 +291,49 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
         }
 
         function handleFileSelect(input) {
-            const preview = input.parentElement.querySelector('.media-preview');
-            const file = input.files[0];
+            const previewContainer = input.parentElement.querySelector('.media-preview-container');
+            const existingMedia = previewContainer.querySelectorAll('.media-item');
             
-            if (file) {
+            // Create temporary container for new files
+            const newFilesContainer = document.createElement('div');
+            
+            Array.from(input.files).forEach(file => {
                 const fileType = file.type.split('/')[0];
+                const mediaItem = document.createElement('div');
+                mediaItem.className = 'media-item';
                 
                 if (fileType === 'image') {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        if (preview.tagName === 'VIDEO') {
-                            const img = document.createElement('img');
-                            img.className = 'media-preview';
-                            img.src = e.target.result;
-                            img.style.display = 'block';
-                            preview.parentNode.replaceChild(img, preview);
-                        } else {
-                            preview.src = e.target.result;
-                            preview.style.display = 'block';
-                        }
+                        const img = document.createElement('img');
+                        img.className = 'media-preview';
+                        img.src = e.target.result;
+                        img.style.display = 'block';
+                        mediaItem.appendChild(img);
                     }
                     reader.readAsDataURL(file);
                 } else if (fileType === 'video') {
-                    const videoURL = URL.createObjectURL(file);
-                    if (preview.tagName === 'IMG') {
-                        const video = document.createElement('video');
-                        video.className = 'media-preview';
-                        video.controls = true;
-                        video.src = videoURL;
-                        video.style.display = 'block';
-                        preview.parentNode.replaceChild(video, preview);
-                    } else {
-                        preview.src = videoURL;
-                        preview.style.display = 'block';
-                    }
+                    const video = document.createElement('video');
+                    video.className = 'media-preview';
+                    video.controls = true;
+                    video.src = URL.createObjectURL(file);
+                    video.style.display = 'block';
+                    mediaItem.appendChild(video);
                 }
-            }
+                
+                // Add delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.className = 'delete-media-btn';
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = function() { deleteMediaFile(this); };
+                mediaItem.appendChild(deleteBtn);
+                
+                newFilesContainer.appendChild(mediaItem);
+            });
+            
+            // Append new files after existing media
+            previewContainer.appendChild(newFilesContainer);
         }
 
         function removeSection(button) {
@@ -341,6 +346,15 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
             }
             
             section.remove();
+        }
+
+        // Add this new function
+        function deleteMediaFile(button) {
+            const mediaItem = button.closest('.media-item');
+            if (mediaItem) {
+                // Remove the hidden input and the media preview
+                mediaItem.remove();
+            }
         }
     </script>
     <style>
@@ -404,6 +418,55 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
         .remove-section-btn:hover {
             background-color: #5a6268;
         }
+
+        .media-preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .media-preview {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        video.media-preview {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Add these to your existing styles */
+        .media-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .delete-media-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .delete-media-btn:hover {
+            opacity: 1;
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -445,33 +508,32 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
                          ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
                          ondragleave="handleDragLeave(event)">
                         <p>Drag & drop media here or click to upload</p>
-                        <input type="file" name="sections[<?php echo $i; ?>][media]" 
+                        <input type="file" name="sections[<?php echo $i; ?>][media][]" 
                                accept="image/*,video/*" style="display: none" 
-                               onchange="handleFileSelect(this)">
-                        <input type="hidden" name="sections[<?php echo $i; ?>][existing_media]" 
-                               value="<?php echo htmlspecialchars($section_media[$i] ?? ''); ?>">
-                        
-                        <?php if (!empty($section_media[$i])): ?>
-                            <?php
-                            $media_path = $section_media[$i];
-                            $extension = strtolower(pathinfo($media_path, PATHINFO_EXTENSION));
-                            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                                <img class="media-preview" src="../public/<?php 
-                                    echo htmlspecialchars($media_path); 
-                                ?>" alt="Preview" style="display: block;">
-                            <?php elseif (in_array($extension, ['mp4', 'webm'])): ?>
-                                <video class="media-preview" controls style="display: block;">
-                                    <source src="../public/<?php echo htmlspecialchars($media_path); ?>" 
-                                            type="video/<?php echo $extension; ?>">
-                                </video>
+                               onchange="handleFileSelect(this)" multiple>
+                        <div class="media-preview-container">
+                            <?php if (!empty($section_media[$i]) && is_array($section_media[$i])): ?>
+                                <?php foreach($section_media[$i] as $media_index => $media_path): ?>
+                                    <div class="media-item">
+                                        <?php
+                                        $extension = strtolower(pathinfo($media_path, PATHINFO_EXTENSION));
+                                        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                            <img class="media-preview" src="../public/<?php 
+                                                echo htmlspecialchars($media_path); 
+                                            ?>" alt="Preview" style="display: block;">
+                                        <?php elseif (in_array($extension, ['mp4', 'webm'])): ?>
+                                            <video class="media-preview" controls style="display: block;">
+                                                <source src="../public/<?php echo htmlspecialchars($media_path); ?>" 
+                                                        type="video/<?php echo $extension; ?>">
+                                            </video>
+                                        <?php endif; ?>
+                                        <button type="button" class="delete-media-btn" onclick="deleteMediaFile(this)">Delete</button>
+                                        <input type="hidden" name="sections[<?php echo $i; ?>][existing_media][]" 
+                                               value="<?php echo htmlspecialchars($media_path); ?>">
+                                    </div>
+                                <?php endforeach; ?>
                             <?php endif; ?>
-                        <?php else: ?>
-                            <img class="media-preview" src="" alt="Preview" style="display: none;">
-                        <?php endif; ?>
-                        
-                        <?php if (!empty($section_media[$i])): ?>
-                            <button type="button" class="delete-media-btn" onclick="deleteMedia(this)">Delete Media</button>
-                        <?php endif; ?>
+                        </div>
                         <button type="button" class="remove-section-btn" onclick="removeSection(this)">Remove Section</button>
                     </div>
                 </div>
