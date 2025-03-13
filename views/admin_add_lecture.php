@@ -310,8 +310,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: #e3f2fd;
             border-color: var(--primary-blue);
         }
+
+        .lecture-content p {
+            margin: 0;
+            padding: 0.5em 0;
+            line-height: 2;
+        }
     </style>
+    <script src="../public/js/tinymce/tinymce.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof tinymce === "undefined") {
+                console.error("TinyMCE not found. Check the script path.");
+            } else {
+                console.log("TinyMCE loaded successfully.");
+                initializeTinyMCE();
+            }
+
+            // Add form submit handler
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update all TinyMCE instances before form submission
+                tinymce.triggerSave();
+                
+                // Now submit the form
+                this.submit();
+            });
+        });
+
+        // Modify the initializeTinyMCE function
+        function initializeTinyMCE() {
+            tinymce.init({
+                selector: 'textarea[name^="sections"][name$="[content]"]',
+                plugins: 'advlist autolink lists link charmap print preview anchor code',
+                toolbar: 'bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | code',
+                menubar: false,
+                entity_encoding: 'raw',
+                encoding: 'html',
+                content_style: `
+                    body { line-height: 2; }
+                    p { margin: 0; padding: 0.5em 0; }
+                    br { line-height: 2; }
+                `,
+                forced_root_block: 'p',
+                setup: function(editor) {
+                    editor.on('init', function() {
+                        console.log("TinyMCE initialized successfully.");
+                    });
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                },
+                height: 300
+            });
+        }
+
+        // Update the addSection function to include a unique ID for the textarea
         function addSection() {
             const container = document.getElementById("sections-container");
             const sectionCount = container.getElementsByClassName("section-group").length;
@@ -322,7 +377,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" name="sections[${sectionCount}][nav_item]" required>
                     
                     <label>Content:</label>
-                    <textarea name="sections[${sectionCount}][content]" required></textarea>
+                    <textarea id="section-content-${sectionCount}" name="sections[${sectionCount}][content]" required></textarea>
                     
                     <label>Media (Optional):</label>
                     <div class="media-upload-area" onclick="triggerFileInput(this)" 
@@ -338,6 +393,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>`;
             
             container.insertAdjacentHTML("beforeend", sectionHTML);
+            
+            // Initialize TinyMCE for the new textarea
+            tinymce.init({
+                selector: `#section-content-${sectionCount}`,
+                plugins: 'advlist autolink lists link charmap print preview anchor code',
+                toolbar: 'bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | code',
+                menubar: false,
+                entity_encoding: 'raw',
+                encoding: 'html',
+                content_style: `
+                    body { line-height: 2; }
+                    p { margin: 0; padding: 0.5em 0; }
+                    br { line-height: 2; }
+                `,
+                forced_root_block: 'p',
+                height: 300,
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                }
+            });
         }
 
         function triggerFileInput(area) {
@@ -409,16 +486,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         function removeSection(button) {
-            button.parentElement.remove();
-            // Reindex the remaining sections
-            const container = document.getElementById("sections-container");
-            const sections = container.getElementsByClassName("section-group");
-            Array.from(sections).forEach((section, index) => {
-                section.querySelector('input[type="text"]').name = `sections[${index}][nav_item]`;
-                section.querySelector('textarea').name = `sections[${index}][content]`;
-            });
+            const section = button.closest('.section-group');
+            const textarea = section.querySelector('textarea');
+            
+            // Remove TinyMCE instance before removing the section
+            if (textarea) {
+                tinymce.get(textarea.id)?.remove();
+            }
+            
+            section.remove();
         }
     </script>
+    
 </head>
 <body>
     <header>
@@ -443,7 +522,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="sections[0][nav_item]" required>
                 
                 <label>Content:</label>
-                <textarea name="sections[0][content]" required></textarea>
+                <textarea id="section-content-0" name="sections[0][content]" required></textarea>
                 
                 <label>Media (Optional):</label>
                 <div class="media-upload-area" onclick="triggerFileInput(this)" 
