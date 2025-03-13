@@ -74,27 +74,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $nav_items[] = $nav_item;
                     $content[] = $section_content;
                     
-                    // Handle media file for this section
+                    // Handle multiple media files for this section
+                    $section_files = [];
                     if (isset($_FILES['sections']['name'][$index]['media']) && 
-                        $_FILES['sections']['error'][$index]['media'] === UPLOAD_ERR_OK) {
+                        is_array($_FILES['sections']['name'][$index]['media'])) {
                         
-                        $file = [
-                            'name' => $_FILES['sections']['name'][$index]['media'],
-                            'type' => $_FILES['sections']['type'][$index]['media'],
-                            'tmp_name' => $_FILES['sections']['tmp_name'][$index]['media'],
-                            'error' => $_FILES['sections']['error'][$index]['media'],
-                            'size' => $_FILES['sections']['size'][$index]['media']
-                        ];
-                        
-                        $file_path = saveUploadedFile($file);
-                        if ($file_path) {
-                            $section_media[] = $file_path;
-                        } else {
-                            $section_media[] = null;
+                        foreach ($_FILES['sections']['name'][$index]['media'] as $fileIndex => $fileName) {
+                            if ($_FILES['sections']['error'][$index]['media'][$fileIndex] === UPLOAD_ERR_OK) {
+                                $file = [
+                                    'name' => $_FILES['sections']['name'][$index]['media'][$fileIndex],
+                                    'type' => $_FILES['sections']['type'][$index]['media'][$fileIndex],
+                                    'tmp_name' => $_FILES['sections']['tmp_name'][$index]['media'][$fileIndex],
+                                    'error' => $_FILES['sections']['error'][$index]['media'][$fileIndex],
+                                    'size' => $_FILES['sections']['size'][$index]['media'][$fileIndex]
+                                ];
+                                
+                                $file_path = saveUploadedFile($file);
+                                if ($file_path) {
+                                    $section_files[] = $file_path;
+                                }
+                            }
                         }
-                    } else {
-                        $section_media[] = null;
                     }
+                    $section_media[] = $section_files;
                 }
             }
         }
@@ -316,6 +318,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0.5em 0;
             line-height: 2;
         }
+
+        .media-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .media-preview {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            margin: 5px;
+        }
+
+        video.media-preview {
+            width: 200px;
+        }
     </style>
     <script src="../public/js/tinymce/tinymce.min.js"></script>
     <script>
@@ -384,10 +404,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                          ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
                          ondragleave="handleDragLeave(event)">
                         <p>Drag & drop media here or click to upload</p>
-                        <input type="file" name="sections[${sectionCount}][media]" 
+                        <input type="file" name="sections[${sectionCount}][media][]" 
                                accept="image/*,video/*" style="display: none" 
-                               onchange="handleFileSelect(this)">
-                        <img class="media-preview" src="" alt="Preview" style="display: none;">
+                               onchange="handleFileSelect(this)" multiple>
+                        <div class="media-preview-container"></div>
                         <button type="button" class="remove-btn" onclick="removeSection(this)">Remove</button>
                     </div>
                 </div>`;
@@ -443,46 +463,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         function handleFileSelect(input) {
-            const preview = input.parentElement.querySelector('.media-preview');
-            const file = input.files[0];
+            const previewContainer = input.parentElement.querySelector('.media-preview-container');
+            previewContainer.innerHTML = ''; // Clear existing previews
             
-            if (file) {
-                const fileType = file.type.split('/')[0]; // 'image' or 'video'
+            Array.from(input.files).forEach(file => {
+                const fileType = file.type.split('/')[0];
                 
                 if (fileType === 'image') {
                     // Handle image preview
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        if (preview.tagName === 'VIDEO') {
-                            // Replace video with img
-                            const img = document.createElement('img');
-                            img.className = 'media-preview';
-                            img.src = e.target.result;
-                            img.style.display = 'block';
-                            preview.parentNode.replaceChild(img, preview);
-                        } else {
-                            preview.src = e.target.result;
-                            preview.style.display = 'block';
-                        }
+                        const img = document.createElement('img');
+                        img.className = 'media-preview';
+                        img.src = e.target.result;
+                        img.style.display = 'block';
+                        previewContainer.appendChild(img);
                     }
                     reader.readAsDataURL(file);
                 } else if (fileType === 'video') {
                     // Handle video preview
-                    const videoURL = URL.createObjectURL(file);
-                    if (preview.tagName === 'IMG') {
-                        // Replace img with video
-                        const video = document.createElement('video');
-                        video.className = 'media-preview';
-                        video.controls = true;
-                        video.src = videoURL;
-                        video.style.display = 'block';
-                        preview.parentNode.replaceChild(video, preview);
-                    } else {
-                        preview.src = videoURL;
-                        preview.style.display = 'block';
-                    }
+                    const video = document.createElement('video');
+                    video.className = 'media-preview';
+                    video.controls = true;
+                    video.src = URL.createObjectURL(file);
+                    video.style.display = 'block';
+                    previewContainer.appendChild(video);
                 }
-            }
+            });
         }
 
         function removeSection(button) {
@@ -529,10 +536,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                      ondrop="handleDrop(event, this)" ondragover="handleDragOver(event)" 
                      ondragleave="handleDragLeave(event)">
                     <p>Drag & drop media here or click to upload</p>
-                    <input type="file" name="sections[0][media]" 
+                    <input type="file" name="sections[0][media][]" 
                            accept="image/*,video/*" style="display: none" 
-                           onchange="handleFileSelect(this)">
-                    <img class="media-preview" src="" alt="Preview" style="display: none;">
+                           onchange="handleFileSelect(this)" multiple>
+                    <div class="media-preview-container"></div>
                     <button type="button" class="remove-btn" onclick="removeSection(this)">Remove</button>
                 </div>
             </div>
