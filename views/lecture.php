@@ -149,6 +149,7 @@ $media = json_decode($lecture['section_media'], true) ?: [];
             margin-bottom: 40px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 100%;
         }
 
         .back-button {
@@ -170,21 +171,25 @@ $media = json_decode($lecture['section_media'], true) ?: [];
         }
 
         .section-media {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             margin-top: 20px;
-            max-width: 100%;
         }
 
-        .section-media img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
+        .section-media img,
         .section-media video {
-            max-width: 100%;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: block;
+        }
+
+        .section-media img,
+        .section-media video {
+            border: 1px solid #e0e0e0;
         }
 
         .lecture-content {
@@ -227,26 +232,26 @@ $media = json_decode($lecture['section_media'], true) ?: [];
 
         <main class="content-area">
             <h1 class="lecture-title"><?php echo htmlspecialchars($lecture['title']); ?></h1>
-            <?php 
-            foreach ($contents as $content): ?>
+            <?php foreach ($contents as $index => $content): ?>
                 <div id="section-<?php echo $index; ?>" class="section-content">
                     <div class="lecture-content">
                         <?php echo html_entity_decode(htmlspecialchars_decode($content)); ?>
                     </div>
                     
-                    <?php if (!empty($media[$index])): ?>
+                    <?php if (!empty($media[$index]) && is_array($media[$index])): ?>
                         <div class="section-media">
-                            <?php
-                            $media_path = $media[$index];
-                            $extension = strtolower(pathinfo($media_path, PATHINFO_EXTENSION));
-                            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                                <img src="../public/<?php echo htmlspecialchars($media_path); ?>" alt="Section media">
-                            <?php elseif (in_array($extension, ['mp4', 'webm'])): ?>
-                                <video controls>
-                                    <source src="../public/<?php echo htmlspecialchars($media_path); ?>" type="video/<?php echo $extension; ?>">
-                                    Your browser does not support the video tag.
-                                </video>
-                            <?php endif; ?>
+                            <?php foreach ($media[$index] as $media_path): ?>
+                                <?php
+                                $extension = strtolower(pathinfo($media_path, PATHINFO_EXTENSION));
+                                if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                    <img src="../public/<?php echo htmlspecialchars($media_path); ?>" alt="Section media">
+                                <?php elseif (in_array($extension, ['mp4', 'webm'])): ?>
+                                    <video controls>
+                                        <source src="../public/<?php echo htmlspecialchars($media_path); ?>" type="video/<?php echo $extension; ?>">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
                 </div>
