@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <h1>DOM XSS</h1>
+        <h1>DHCP Starvation</h1>
     </header>
     <main class="content">
         <!-- Lecture Card -->
