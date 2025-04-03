@@ -59,35 +59,7 @@ while ($row = $result->fetch_assoc()) {
         <?php else: ?>
             <p>No courses available at the moment.</p>
         <?php endif; ?>
-        <a href="vul.php">
-        <div class="simulation-card">
-            <div class="simulation-header">
-                <h2>SQL 1</h2>
-            </div>
-        </div>
-        </a>
-        <a href="vul2.php">
-        <div class="simulation-card">
-            <div class="simulation-header">
-                <h2>SQL 2</h2>
-            </div>
-        </div>
-        </a>
-        <a href="vul3.php">
-        <div class="simulation-card">
-            <div class="simulation-header">
-                <h2>SQL 3</h2>
-            </div>
-        </div>
-        </a>
-        <a href="vul4.php">
-        <div class="simulation-card">
-            <div class="simulation-header">
-                <h2>SQL 4 </h2>
-            </div>
-        </div>
-        </a>
-        <!-- Back Button -->
+                <!-- Back Button -->
         <a href="categ.php" class="back-button">← Back</a>
     </main>
     <footer>
