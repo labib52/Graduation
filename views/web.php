@@ -2,25 +2,51 @@
 session_start();
 include('../controller/db_connection.php'); // Include database connection
 
-// Check if a user is logged in
+// Check if user is logged in
 $loggedIn = isset($_SESSION['user_id']);
+$user_id = $loggedIn ? $_SESSION['user_id'] : null;
 $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Guest";
 
-// Fetch courses dynamically from the database for the Web category
-$category_name = "Web"; // The category this page belongs to
+// Fetch category ID for "Web" from the database
+$category_id = null;
+$category_query = $conn->prepare("SELECT id FROM categories WHERE name = 'Web'");
+$category_query->execute();
+$category_result = $category_query->get_result();
+if ($category_row = $category_result->fetch_assoc()) {
+    $category_id = $category_row['id'];
+}
+
+// Fetch courses for this category with request status
 $courses = [];
+if ($category_id !== null) {
+    $query = $conn->prepare("
+        SELECT c.*, 
+            (SELECT status FROM requests 
+             WHERE user_id = ? AND course_id = c.id 
+             ORDER BY request_date DESC LIMIT 1) as request_status,
+            (SELECT COUNT(*) FROM enrollments 
+             WHERE student_id = ? AND course_id = c.id) as is_enrolled,
+            (SELECT id FROM lectures WHERE course_id = c.id LIMIT 1) as lecture_id
+        FROM courses c 
+        WHERE c.category_id = ?");
+    $query->bind_param("iii", $user_id, $user_id, $category_id);
+    $query->execute();
+    $result = $query->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
+}
 
-$query = $conn->prepare("
-    SELECT courses.id, courses.title, courses.description, categories.name AS category_name
-    FROM courses
-    JOIN categories ON courses.category_id = categories.id
-    WHERE categories.name = ?");
-$query->bind_param("s", $category_name);
-$query->execute();
-$result = $query->get_result();
-
-while ($row = $result->fetch_assoc()) {
-    $courses[] = $row;
+// Handle course request submission
+if (isset($_POST['request_course']) && $loggedIn) {
+    $course_id = $_POST['course_id'];
+    
+    // Insert new request
+    $insert_query = $conn->prepare("INSERT INTO requests (user_id, course_id, status) VALUES (?, ?, 'pending')");
+    $insert_query->bind_param("ii", $user_id, $course_id);
+    $insert_query->execute();
+    header("Location: " . $_SERVER['PHP_SELF'] . "?request_sent=true");
+    exit();
 }
 ?>
 
@@ -32,7 +58,50 @@ while ($row = $result->fetch_assoc()) {
     <title>Web Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../public/CSS/web.css">
-
+    <style>
+        .request-btn, .request-again-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .request-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+        .request-again-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .request-btn:hover, .request-again-btn:hover {
+            opacity: 0.9;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .status-pending { background-color: #ffd700; color: #000; }
+        .status-approved { background-color: #90EE90; color: #000; }
+        .status-rejected { background-color: #ffcccb; color: #000; }
+        .alert {
+            padding: 15px;
+            margin: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -44,22 +113,48 @@ while ($row = $result->fetch_assoc()) {
     <main class="content">
         <h2>Web Attacks</h2>
 
-        <?php if (!empty($courses)): ?>
-            <?php foreach ($courses as $course): ?>
-                <a href="/Graduation/views/attack_<?php echo strtolower(str_replace(' ', '', $course['title'])); ?>.php">
+        <?php if (isset($_GET['request_sent'])): ?>
+            <div class="alert success">Course request has been sent successfully!</div>
+        <?php endif; ?>
+
+        <div class="simulations">
+            <?php if (empty($courses)): ?>
+                <p>No courses available at the moment.</p>
+            <?php else: ?>
+                <?php foreach ($courses as $course): ?>
                     <div class="simulation-card">
                         <div class="simulation-header">
                             <h2><?php echo htmlspecialchars($course['title']); ?></h2>
-                            <span class="status active">Active</span>
+                            <p class="description"><?php echo htmlspecialchars($course['description']); ?></p>
+                            
+                            <?php if ($course['is_enrolled'] > 0): ?>
+                                <a href="attack_<?php echo strtolower(str_replace(' ', '', $course['title'])); ?>.php" class="request-btn">Access Course</a>
+                            <?php elseif ($loggedIn): ?>
+                                <?php if (empty($course['request_status'])): ?>
+                                    <form method="POST" style="display: inline;">
+                                        <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
+                                        <button type="submit" name="request_course" class="request-btn">Request Access</button>
+                                    </form>
+                                <?php else: ?>
+                                    <span class="status-badge status-<?php echo $course['request_status']; ?>">
+                                        Status: <?php echo ucfirst($course['request_status']); ?>
+                                    </span>
+                                    <?php if ($course['request_status'] === 'rejected'): ?>
+                                        <form method="POST" style="display: inline;">
+                                            <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
+                                            <button type="submit" name="request_course" class="request-again-btn">Request Again</button>
+                                        </form>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <a href="login.php" class="request-btn">Login to Request Access</a>
+                            <?php endif; ?>
                         </div>
-                        <p class="description"><?php echo htmlspecialchars($course['description']); ?></p>
                     </div>
-                </a>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No courses available at the moment.</p>
-        <?php endif; ?>
-                <!-- Back Button -->
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <!-- Back Button -->
         <a href="categ.php" class="back-button">← Back</a>
     </main>
     <footer>
