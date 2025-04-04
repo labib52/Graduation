@@ -60,7 +60,7 @@ if ($loggedIn) {
         <a href="<?php echo $loggedIn ? 'categ.php' : 'login.php'; ?>" class="cta-btn">Choose Your Lesson</a>
     </section>
 
-   <?php if ($loggedIn && !empty($enrolled_courses)): ?>
+    <?php if ($loggedIn && !empty($enrolled_courses)): ?>
         <section class="enrolled-courses">
             <h2>Your Enrolled Courses</h2>
             <ul class="course-list">
@@ -74,7 +74,6 @@ if ($loggedIn) {
             </ul>
         </section>
     <?php endif; ?>
-    
 
     <section class="features">
         <div class="feature-box">
