@@ -24,7 +24,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="/Graduation/views/lecture.php?id=36">
+        <a href="/Graduation/views/lecture.php?id=34">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>LLM Attack Lecture</h2>
@@ -49,7 +49,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
        <a href="index.php" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Kali Linux</h2>
+                    <h2>Try with Virtual Machine</h2>
                     <span class="status active">Active</span>
                 </div>
                 <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
