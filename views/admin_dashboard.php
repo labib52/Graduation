@@ -70,10 +70,8 @@ $total_courses = $active_courses + $pending_courses;
             <a href="admin_students.php">Manage Students</a>
             <a href="admin_enrollment.php">Enroll Students</a>
             <a href="admin_lectures.php">Manage lectures</a>
-            <a href="admin_labs.php" class="dashboard-button">
-                <i class="fas fa-flask"></i>
-                <span>Manage Labs</span>
-            </a>
+            <a href="admin_labs.php"> Manage Labs </a>
+            <a href="admin_requests.php">Course Requests</a>
         </div>
     </main>
 </body>
