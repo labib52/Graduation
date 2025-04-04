@@ -60,21 +60,20 @@ if ($loggedIn) {
         <a href="<?php echo $loggedIn ? 'categ.php' : 'login.php'; ?>" class="cta-btn">Choose Your Lesson</a>
     </section>
 
-    <?php if ($loggedIn && !empty($enrolled_courses)): ?>
+   <?php if ($loggedIn && !empty($enrolled_courses)): ?>
         <section class="enrolled-courses">
             <h2>Your Enrolled Courses</h2>
             <ul class="course-list">
                 <?php foreach ($enrolled_courses as $course): ?>
                     <li>
-                        <a href="attack_<?php echo strtolower(str_replace(' ', '_', $course['title'])); ?>.php">
+                        <a href="lecture.php?id=<?php echo htmlspecialchars($course['id']); ?>">
                             <?php echo htmlspecialchars($course['title']); ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
             </ul>
-<?php endif; ?>
-
         </section>
+    <?php endif; ?>
     
 
     <section class="features">
