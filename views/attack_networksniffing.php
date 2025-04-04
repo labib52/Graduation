@@ -38,7 +38,7 @@
        <a href="index.php" target="_blank">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>Kali Linux</h2>
+                    <h2>Try with Virtual Machine</h2>
                     <span class="status active">Active</span>
                 </div>
                 <p class="description">Click here to open the VM control panel and manually start Kali Linux.</p>
