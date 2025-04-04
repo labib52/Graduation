@@ -12,7 +12,8 @@ $enrolled_courses = [];
 if ($loggedIn) {
     $user_id = $_SESSION['user_id'];
     $query = $conn->prepare("
-        SELECT courses.id, courses.title, categories.name AS category_name
+        SELECT courses.id, courses.title, categories.name AS category_name, 
+               (SELECT id FROM lectures WHERE course_id = courses.id ORDER BY id ASC LIMIT 1) AS first_lecture_id
         FROM enrollments 
         JOIN courses ON enrollments.course_id = courses.id 
         JOIN categories ON courses.category_id = categories.id
@@ -66,9 +67,13 @@ if ($loggedIn) {
             <ul class="course-list">
                 <?php foreach ($enrolled_courses as $course): ?>
                     <li>
-                        <a href="lecture.php?id=<?php echo htmlspecialchars($course['id']); ?>">
-                            <?php echo htmlspecialchars($course['title']); ?>
-                        </a>
+                        <?php if (!empty($course['first_lecture_id'])): ?>
+                            <a href="lecture.php?id=<?php echo htmlspecialchars($course['first_lecture_id']); ?>">
+                                <?php echo htmlspecialchars($course['title']); ?>
+                            </a>
+                        <?php else: ?>
+                            <span><?php echo htmlspecialchars($course['title']); ?> (No lectures available)</span>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
