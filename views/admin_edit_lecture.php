@@ -1,10 +1,32 @@
 <?php
 // Add these lines at the very top of the file, before session_start()
-ini_set('upload_max_filesize', '2048M');
-ini_set('post_max_size', '2048M');
-ini_set('max_execution_time', '300');
-ini_set('max_input_time', '300');
-ini_set('memory_limit', '256M');
+ini_set('upload_max_filesize', '6000M');
+ini_set('post_max_size', '6000M');
+ini_set('max_execution_time', '600');
+ini_set('max_input_time', '600');
+ini_set('memory_limit', '1024M');
+
+// Add check for excessive POST content length
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_LENGTH'])) {
+    $maxPostSize = ini_get('post_max_size');
+    $maxPostBytes = return_bytes($maxPostSize);
+    if ($_SERVER['CONTENT_LENGTH'] > $maxPostBytes) {
+        die('Error: POST Content-Length exceeds the maximum allowed size of ' . $maxPostSize . '. Please reduce the file size or contact your administrator to increase the limit.');
+    }
+}
+
+// Helper function to convert PHP size values to bytes
+function return_bytes($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    $val = (int)$val;
+    switch($last) {
+        case 'g': $val *= 1024;
+        case 'm': $val *= 1024;
+        case 'k': $val *= 1024;
+    }
+    return $val;
+}
 
 session_start();
 include('../controller/db_connection.php');
@@ -62,8 +84,14 @@ function saveUploadedFile($file) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        $course_id = $_POST['course_id'];
-        $title = trim($_POST['title']);
+        // Fix undefined array keys by using isset checks
+        $course_id = isset($_POST['course_id']) ? $_POST['course_id'] : '';
+        $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+
+        // Validate required fields
+        if (empty($course_id) || empty($title)) {
+            throw new Exception("Course and title are required fields");
+        }
 
         // Initialize arrays
         $nav_items = [];
