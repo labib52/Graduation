@@ -1,6 +1,69 @@
 <?php
 session_start();
-include('../controller/db_connection.php');; // Include the database connection
+
+// Language handling
+if (isset($_GET['lang'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+$lang = isset($_SESSION['lang']) ? $_SESSION['lang'] : 'en';
+
+// Translations
+$translations = [
+    'en' => [
+        'signup' => 'Sign Up',
+        'create_account' => 'Create Account',
+        'join_platform' => 'Join the Cybersecurity Training Platform',
+        'username' => 'Username:',
+        'email' => 'Email:',
+        'password' => 'Password:',
+        'confirm_password' => 'Confirm Password:',
+        'two_factor' => 'Two-Factor Authentication',
+        'enable_2fa' => 'Enable Two-Factor Authentication',
+        'security_question' => 'Security Question:',
+        'security_answer' => 'Security Answer:',
+        'already_have_account' => 'Already have an account? Login',
+        'required' => 'This field is required.',
+        'invalid_email' => 'Invalid email format.',
+        'password_requirements' => 'Password must be at least 8 characters, include 1 capital letter, and 1 symbol.',
+        'passwords_no_match' => "Passwords don't match.",
+        'security_required' => 'Both security question and answer are required when 2FA is enabled.',
+        'username_email_taken' => 'Username or email is already taken.',
+        'registration_success' => 'Registration successful!',
+        'error' => 'Error:',
+        'pet_name' => "What was your first pet's name?",
+        'maiden_name' => "What is your mother's maiden name?",
+        'city_born' => "What city were you born in?",
+        'favorite_book' => "What is your favorite book?",
+    ],
+    'ar' => [
+        'signup' => 'إنشاء حساب',
+        'create_account' => 'إنشاء حساب',
+        'join_platform' => 'انضم إلى منصة التدريب على الأمن السيبراني',
+        'username' => 'اسم المستخدم:',
+        'email' => 'البريد الإلكتروني:',
+        'password' => 'كلمة المرور:',
+        'confirm_password' => 'تأكيد كلمة المرور:',
+        'two_factor' => 'المصادقة الثنائية',
+        'enable_2fa' => 'تفعيل المصادقة الثنائية',
+        'security_question' => 'سؤال الأمان:',
+        'security_answer' => 'إجابة الأمان:',
+        'already_have_account' => 'لديك حساب بالفعل؟ تسجيل الدخول',
+        'required' => 'هذا الحقل مطلوب.',
+        'invalid_email' => 'تنسيق البريد الإلكتروني غير صالح.',
+        'password_requirements' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، وتحتوي على حرف كبير ورمز واحد.',
+        'passwords_no_match' => 'كلمتا المرور غير متطابقتين.',
+        'security_required' => 'يجب إدخال سؤال وإجابة الأمان عند تفعيل المصادقة الثنائية.',
+        'username_email_taken' => 'اسم المستخدم أو البريد الإلكتروني مستخدم بالفعل.',
+        'registration_success' => 'تم التسجيل بنجاح!',
+        'error' => 'خطأ:',
+        'pet_name' => 'ما اسم أول حيوان أليف لديك؟',
+        'maiden_name' => 'ما هو اسم عائلة والدتك قبل الزواج؟',
+        'city_born' => 'في أي مدينة وُلدت؟',
+        'favorite_book' => 'ما هو كتابك المفضل؟',
+    ]
+];
+
+include('../controller/db_connection.php'); // Include the database connection
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
@@ -15,24 +78,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Validate fields
     if (empty($username)) {
-        $errors['username'] = "This field is required.";
+        $errors['username'] = $translations[$lang]['required'];
     }
     if (empty($email)) {
-        $errors['email'] = "This field is required.";
+        $errors['email'] = $translations[$lang]['required'];
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = "Invalid email format.";
+        $errors['email'] = $translations[$lang]['invalid_email'];
     }
     if (empty($password)) {
-        $errors['password'] = "This field is required.";
+        $errors['password'] = $translations[$lang]['required'];
     } elseif (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/\W/', $password)) {
-        $errors['password'] = "Password must be at least 8 characters, include 1 capital letter, and 1 symbol.";
+        $errors['password'] = $translations[$lang]['password_requirements'];
     }
     if ($password !== $confirm_password) {
-        $errors['confirm_password'] = "Passwords don't match.";
+        $errors['confirm_password'] = $translations[$lang]['passwords_no_match'];
     }
 
     if ($enable_2fa && (empty($security_question) || empty($security_answer))) {
-        $errors['security'] = "Both security question and answer are required when 2FA is enabled.";
+        $errors['security'] = $translations[$lang]['security_required'];
     }
 
     if (empty($errors)) {
@@ -43,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $checkQuery->store_result();
 
         if ($checkQuery->num_rows > 0) {
-            $errors['general'] = "Username or email is already taken.";
+            $errors['general'] = $translations[$lang]['username_email_taken'];
         } else {
             // Hash the password securely
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -54,11 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $insertQuery->bind_param("sssiss", $username, $email, $hashed_password, $enable_2fa, $security_question, $hashed_answer);
 
             if ($insertQuery->execute()) {
-                echo "Registration successful!";
+                // echo $translations[$lang]['registration_success'];
                 header("Location: login.php");
                 exit();
             } else {
-                $errors['general'] = "Error: " . $insertQuery->error;
+                $errors['general'] = $translations[$lang]['error'] . ' ' . $insertQuery->error;
             }
 
             $insertQuery->close();
@@ -72,12 +135,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>" dir="<?php echo $lang === 'ar' ? 'rtl' : 'ltr'; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Cybersecurity Training Platform</title>
+    <title><?php echo $translations[$lang]['signup']; ?> - Cybersecurity Training Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <?php if ($lang === 'ar'): ?>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; }
+    </style>
+    <?php endif; ?>
     <style>
         :root {
             --primary-blue: #007bff;
@@ -240,66 +309,88 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="signup-container">
+        <div class="language-switcher" style="text-align: right; margin-bottom: 10px;">
+            <?php if ($lang === 'en'): ?>
+                <a href="?lang=ar">العربية</a>
+            <?php else: ?>
+                <a href="?lang=en">English</a>
+            <?php endif; ?>
+        </div>
         <div class="signup-header">
-            <h1>Create Account</h1>
-            <p>Join the Cybersecurity Training Platform</p>
+            <h1><?php echo $translations[$lang]['create_account']; ?></h1>
+            <p><?php echo $translations[$lang]['join_platform']; ?></p>
         </div>
 
-        <?php if (isset($error)): ?>
-            <div class="error-message"><?php echo $error; ?></div>
+        <?php if (!empty($errors['general'])): ?>
+            <div class="error-message"><?php echo $errors['general']; ?></div>
         <?php endif; ?>
 
         <form method="POST" action="">
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username"><?php echo $translations[$lang]['username']; ?></label>
                 <input type="text" id="username" name="username" required>
+                <?php if (!empty($errors['username'])): ?>
+                    <div class="error-message"><?php echo $errors['username']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email"><?php echo $translations[$lang]['email']; ?></label>
                 <input type="email" id="email" name="email" required>
+                <?php if (!empty($errors['email'])): ?>
+                    <div class="error-message"><?php echo $errors['email']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password"><?php echo $translations[$lang]['password']; ?></label>
                 <input type="password" id="password" name="password" required>
+                <?php if (!empty($errors['password'])): ?>
+                    <div class="error-message"><?php echo $errors['password']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group">
-                <label for="confirm_password">Confirm Password:</label>
+                <label for="confirm_password"><?php echo $translations[$lang]['confirm_password']; ?></label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
+                <?php if (!empty($errors['confirm_password'])): ?>
+                    <div class="error-message"><?php echo $errors['confirm_password']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="two-fa-section">
-                <h3>Two-Factor Authentication</h3>
+                <h3><?php echo $translations[$lang]['two_factor']; ?></h3>
                 <div class="checkbox-group">
                     <input type="checkbox" id="enable_2fa" name="enable_2fa" onchange="toggle2FA(this)">
-                    <label for="enable_2fa">Enable Two-Factor Authentication</label>
+                    <label for="enable_2fa"><?php echo $translations[$lang]['enable_2fa']; ?></label>
                 </div>
 
                 <div id="security_questions" class="security-questions">
                     <div class="form-group">
-                        <label for="security_question">Security Question:</label>
+                        <label for="security_question"><?php echo $translations[$lang]['security_question']; ?></label>
                         <select name="security_question" id="security_question">
-                            <option value="What was your first pet's name?">What was your first pet's name?</option>
-                            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
-                            <option value="What city were you born in?">What city were you born in?</option>
-                            <option value="What is your favorite book?">What is your favorite book?</option>
+                            <option value="<?php echo $translations[$lang]['pet_name']; ?>"><?php echo $translations[$lang]['pet_name']; ?></option>
+                            <option value="<?php echo $translations[$lang]['maiden_name']; ?>"><?php echo $translations[$lang]['maiden_name']; ?></option>
+                            <option value="<?php echo $translations[$lang]['city_born']; ?>"><?php echo $translations[$lang]['city_born']; ?></option>
+                            <option value="<?php echo $translations[$lang]['favorite_book']; ?>"><?php echo $translations[$lang]['favorite_book']; ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="security_answer">Security Answer:</label>
+                        <label for="security_answer"><?php echo $translations[$lang]['security_answer']; ?></label>
                         <input type="text" id="security_answer" name="security_answer">
                     </div>
                 </div>
+                <?php if (!empty($errors['security'])): ?>
+                    <div class="error-message"><?php echo $errors['security']; ?></div>
+                <?php endif; ?>
             </div>
 
-            <button type="submit" class="submit-btn">Sign Up</button>
+            <button type="submit" class="submit-btn"><?php echo $translations[$lang]['signup']; ?></button>
         </form>
 
         <div class="links">
-            <a href="login.php">Already have an account? Login</a>
+            <a href="login.php"><?php echo $translations[$lang]['already_have_account']; ?></a>
         </div>
     </div>
 
