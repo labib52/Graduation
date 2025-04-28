@@ -82,67 +82,121 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// Language handling
+if (isset($_GET['lang'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+$lang = isset($_SESSION['lang']) ? $_SESSION['lang'] : 'en';
+
+// Translations
+$translations = [
+    'en' => [
+        'your_profile' => 'Your Profile',
+        'username' => 'Username',
+        'email' => 'Email',
+        'payment_info' => 'Payment Info',
+        'account_created' => 'Account Created At',
+        '2fa_status' => '2FA Status',
+        'security_question' => 'Security Question',
+        'security_answer' => 'Security Answer',
+        'required_disable_2fa' => 'Required to disable 2FA',
+        'select_security_question' => 'Select Security Question',
+        'answer' => 'Answer',
+        'enrolled_courses' => 'Enrolled Courses',
+        'update_profile' => 'Update Profile',
+        'back' => '← Back',
+        'pet_name' => "What is your pet's name?",
+        'maiden_name' => "What is your mother's maiden name?",
+        'favorite_color' => "What is your favorite color?"
+    ],
+    'ar' => [
+        'your_profile' => 'ملفك الشخصي',
+        'username' => 'اسم المستخدم',
+        'email' => 'البريد الإلكتروني',
+        'payment_info' => 'معلومات الدفع',
+        'account_created' => 'تم إنشاء الحساب في',
+        '2fa_status' => 'حالة المصادقة الثنائية',
+        'security_question' => 'سؤال الأمان',
+        'security_answer' => 'إجابة الأمان',
+        'required_disable_2fa' => 'مطلوب لتعطيل المصادقة الثنائية',
+        'select_security_question' => 'اختر سؤال الأمان',
+        'answer' => 'الإجابة',
+        'enrolled_courses' => 'الدورات المسجلة',
+        'update_profile' => 'تحديث الملف الشخصي',
+        'back' => '← رجوع',
+        'pet_name' => "ما اسم حيوانك الأليف؟",
+        'maiden_name' => "ما هو اسم عائلة والدتك قبل الزواج؟",
+        'favorite_color' => "ما هو لونك المفضل؟"
+    ]
+];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>" dir="<?php echo $lang === 'ar' ? 'rtl' : 'ltr'; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/CSS/View_profile.css">
-    <title>View Profile</title>
-
+    <title><?php echo $translations[$lang]['your_profile']; ?></title>
 </head>
 <body>
     <div class="container">
-        <h1>Your Profile</h1>
+        <div class="language-switcher">
+            <?php if ($lang === 'en'): ?>
+                <a href="?lang=ar">العربية</a>
+            <?php else: ?>
+                <a href="?lang=en">English</a>
+            <?php endif; ?>
+        </div>
+        <h1><?php echo $translations[$lang]['your_profile']; ?></h1>
         <form method="POST">
             <div class="form-group">
-                <label>Username</label>
+                <label><?php echo $translations[$lang]['username']; ?></label>
                 <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label><?php echo $translations[$lang]['email']; ?></label>
                 <input type="email" value="<?php echo htmlspecialchars($user['email']); ?>" disabled>
             </div>
             <div class="form-group">
-                <label>Payment Info</label>
+                <label><?php echo $translations[$lang]['payment_info']; ?></label>
                 <textarea name="payment_info"><?php echo htmlspecialchars($user['payment_info']); ?></textarea>
             </div>
             <div class="form-group">
-                <label>Account Created At</label>
+                <label><?php echo $translations[$lang]['account_created']; ?></label>
                 <input type="text" value="<?php echo htmlspecialchars($user['created_at']); ?>" disabled>
             </div>
             <div class="form-group">
-                <label>2FA Status</label>
+                <label><?php echo $translations[$lang]['2fa_status']; ?></label>
                 <input type="checkbox" name="is_2fa_enabled" <?php echo $user['is_2fa_enabled'] ? 'checked' : ''; ?>>
             </div>
             <?php if ($user['is_2fa_enabled']): ?>
                 <div class="form-group">
-                    <label>Security Question</label>
+                    <label><?php echo $translations[$lang]['security_question']; ?></label>
                     <input type="text" value="<?php echo htmlspecialchars($user['security_question']); ?>" disabled>
                 </div>
                 <div class="form-group">
-                    <label>Security Answer</label>
+                    <label><?php echo $translations[$lang]['security_answer']; ?></label>
                     <input type="text" name="security_answer">
-                    <small>Required to disable 2FA</small>
+                    <small><?php echo $translations[$lang]['required_disable_2fa']; ?></small>
                 </div>
             <?php else: ?>
                 <div class="form-group">
-                    <label>Select Security Question</label>
+                    <label><?php echo $translations[$lang]['select_security_question']; ?></label>
                     <select name="security_question">
-                        <option value="What is your pet's name?">What is your pet's name?</option>
-                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
-                        <option value="What is your favorite color?">What is your favorite color?</option>
+                        <option value="<?php echo $translations[$lang]['pet_name']; ?>"><?php echo $translations[$lang]['pet_name']; ?></option>
+                        <option value="<?php echo $translations[$lang]['maiden_name']; ?>"><?php echo $translations[$lang]['maiden_name']; ?></option>
+                        <option value="<?php echo $translations[$lang]['favorite_color']; ?>"><?php echo $translations[$lang]['favorite_color']; ?></option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Answer</label>
+                    <label><?php echo $translations[$lang]['answer']; ?></label>
                     <input type="text" name="security_answer">
                 </div>
             <?php endif; ?>
             <div class="form-group">
-                <label>Enrolled Courses</label>
+                <label><?php echo $translations[$lang]['enrolled_courses']; ?></label>
                 <ul>
                     <?php foreach ($courses as $course): ?>
                         <li><?php echo htmlspecialchars($course); ?></li>
@@ -152,9 +206,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if (isset($error)): ?>
                 <p class="error"><?php echo $error; ?></p>
             <?php endif; ?>
-            <button type="submit" name="update_profile">Update Profile</button>
+            <button type="submit" name="update_profile"><?php echo $translations[$lang]['update_profile']; ?></button>
         </form>
-        <a href="homepage.php" class="back-button">← Back</a>
+        <a href="homepage.php" class="back-button"><?php echo $translations[$lang]['back']; ?></a>
     </div>
 </body>
 </html>
