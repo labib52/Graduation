@@ -193,8 +193,6 @@ $total_courses = $active_courses + $pending_courses;
             <div class="dashboard-card">
                 <h2><?php echo $translations[$lang]['total_courses']; ?></h2>
                 <p><?php echo $total_courses; ?></p>
-                <p style="color: green;"><?php echo $translations[$lang]['active']; ?>: <?php echo $active_courses; ?></p>
-                <p style="color: orange;"><?php echo $translations[$lang]['pending']; ?>: <?php echo $pending_courses; ?></p>
             </div>
         </div>
 
