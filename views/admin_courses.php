@@ -7,15 +7,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
     $category_id = $_POST['category'];
-    $status = $_POST['status'];
     $level = $_POST['level'];
     $price = $_POST['price'];
    
 
-    if (!empty($title) && !empty($category_id) && !empty($status) && !empty($level)) {
-        $query = "INSERT INTO courses (title, description, category_id,level ,status, price) VALUES (?, ?, ?, ?, ?, ?)";
+    if (!empty($title) && !empty($category_id) && !empty($level)) {
+        $query = "INSERT INTO courses (title, description, category_id,level , price) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssisss", $title, $description, $category_id, $level, $status, $price);
+        $stmt->bind_param("ssisss", $title, $description, $category_id, $level, $price);
         $stmt->execute();
         header("Location: admin_courses.php");
         exit();
@@ -28,15 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_course'])) {
     $new_title = trim($_POST['new_title']);
     $new_description = trim($_POST['new_description']);
     $new_category_id = $_POST['new_category'];
-    $new_status = $_POST['new_status'];
     $new_level = $_POST['new_level'];
     $new_price = $_POST['new_price'];
     
 
-    if (!empty($new_title) && !empty($new_category_id) && !empty($new_status) && !empty($new_level)) {
-        $query = "UPDATE courses SET title = ?, description = ?, category_id = ?, status = ?, price = ?, level = ? WHERE id = ?";
+    if (!empty($new_title) && !empty($new_category_id) && !empty($new_level)) {
+        $query = "UPDATE courses SET title = ?, description = ?, category_id = ?, price = ?, level = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssisssi", $new_title, $new_description, $new_category_id, $new_status, $new_price, $new_level, $course_id);
+        $stmt->bind_param("ssisssi", $new_title, $new_description, $new_category_id, $new_price, $new_level, $course_id);
         $stmt->execute();
         header("Location: admin_courses.php");
         exit();
@@ -83,10 +81,7 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
                 <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name']; ?></option>
             <?php endwhile; ?>
         </select>
-        <select name="status">
-            <option value="active">Active</option>
-            <option value="pending">Pending</option>
-        </select>
+        
         <select name="level">
             <option value="beginner">Beginner</option>
             <option value="advanced">Advanced</option>
@@ -101,7 +96,6 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
             <th>Title</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Status</th>
             <th>Level</th>
             <th>Price</th>
             <th>Actions</th>
@@ -111,7 +105,6 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
                 <td><?php echo htmlspecialchars($row['title']); ?></td>
                 <td><?php echo htmlspecialchars($row['description']); ?></td>
                 <td><?php echo htmlspecialchars($row['category_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['status']); ?></td>
                 <td><?php echo htmlspecialchars($row['level']); ?></td>
                 <td><?php echo htmlspecialchars($row['price']); ?></td>
                 <td>
@@ -120,7 +113,6 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
                         '<?php echo htmlspecialchars($row['title']); ?>', 
                         '<?php echo htmlspecialchars($row['description']); ?>', 
                         <?php echo $row['category_id']; ?>, 
-                        '<?php echo htmlspecialchars($row['status']); ?>', 
                         '<?php echo htmlspecialchars($row['level']); ?>',
                         '<?php echo htmlspecialchars($row['price']); ?>'
                         
@@ -146,10 +138,7 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
                     <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name']; ?></option>
                 <?php endwhile; ?>
             </select>
-            <select name="new_status" id="edit_course_status">
-                <option value="active">Active</option>
-                <option value="pending">Pending</option>
-            </select>
+            
             <select name="new_level" id="edit_course_level">
                 <option value="beginner">Beginner</option>
                 <option value="advanced">Advanced</option>
@@ -161,12 +150,11 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
     </div>
 
     <script>
-        function editCourse(id, title, description, categoryId, status,level ,price ) {
+        function editCourse(id, title, description, categoryId, level ,price ) {
             document.getElementById('edit_course_id').value = id;
             document.getElementById('edit_course_title').value = title;
             document.getElementById('edit_course_description').value = description;
             document.getElementById('edit_course_category').value = categoryId;
-            document.getElementById('edit_course_status').value = status;
             document.getElementById('edit_course_level').value = level;
             document.getElementById('edit_course_price').value = price;
             document.getElementById('editForm').style.display = 'block';
