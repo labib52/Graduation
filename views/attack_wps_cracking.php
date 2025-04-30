@@ -57,7 +57,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         </a>
 
         <!-- Back Button -->
-        <a href="../wireless.php" class="back-button">← Back</a>
+       <a href="/Graduation/views/wireless.php" class="back-button">← Back</a>
     </main>
     <footer>
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
