@@ -42,6 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $enroll_query->bind_param("ii", $request_details['user_id'], $request_details['course_id']);
                     $enroll_query->execute();
                 }
+            } else if ($new_status === 'rejected') {
+                // Remove enrollment if exists when request is rejected
+                $delete_enrollment = $conn->prepare("DELETE FROM enrollments WHERE student_id = ? AND course_id = ?");
+                $delete_enrollment->bind_param("ii", $request_details['user_id'], $request_details['course_id']);
+                $delete_enrollment->execute();
             }
             
             // Commit the transaction
