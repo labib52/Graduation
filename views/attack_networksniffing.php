@@ -24,7 +24,7 @@
             </div>
         </a>
         <!-- Lab Exercises Card -->
-        <a href="/Graduation/views/lab.php?id=13">
+        <a href="/Graduation/views/lab.php?id=21">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>Lab Exercises</h2>
