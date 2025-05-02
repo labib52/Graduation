@@ -81,55 +81,36 @@ if ($loggedIn) {
 
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="<?php echo $lang === 'ar' ? 'rtl' : 'ltr'; ?>">
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+                pageLanguage: 'en'
+            },
+            'google_translate_element'
+        );
+    }
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cybersecurity Training Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/CSS/homepage.css">
+    <link rel="stylesheet" href="../public/CSS/homepage_1.css">
     <?php if ($lang === 'ar'): ?>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-        }
-    </style>
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
     <?php endif; ?>
     <style>
-        .auth-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .auth-links a {
-            padding: 8px 15px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-size: 14px;
-        }
-        .auth-links a:hover {
-            background-color: #0056b3;
-        }
-        .language-switcher a {
-            background-color: #007BFF;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            font-size: 14px;
-        }
-        .language-switcher a:hover {
-            background-color: #0056b3;
-        }
+       
     </style>
+
 </head>
+
 <body>
     <header class="header">
         <div class="auth-links">
@@ -143,13 +124,15 @@ if ($loggedIn) {
             <?php if ($is_admin): ?>
                 <a href="admin_dashboard.php" style="background: #ff9800;"><?php echo $translations[$lang]['admin_panel']; ?></a>
             <?php endif; ?>
-            <div class="language-switcher">
-                <?php if ($lang === 'en'): ?>
-                    <a href="?lang=ar">العربية</a>
-                <?php else: ?>
-                    <a href="?lang=en">English</a>
-                <?php endif; ?>
-            </div>
+            <?php if ($lang === 'en'): ?>
+                <a href="?lang=ar">العربية</a>
+            <?php else: ?>
+                <a href="?lang=en">English</a>
+            <?php endif; ?>
+
+            <button id="theme-toggle" aria-label="Toggle theme">
+                 🌓
+            </button>
         </div>
         <h1><?php echo $translations[$lang]['welcome']; ?>, <?php echo $username; ?>!</h1>
         <p><?php echo $translations[$lang]['gateway']; ?></p>
@@ -199,17 +182,41 @@ if ($loggedIn) {
         &copy; <?php echo date("Y"); ?> Cybersecurity Training Platform | <?php echo $translations[$lang]['rights_reserved']; ?>
         <!--Start of Tawk.to Script-->
         <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/67e95bf057b42a191471b8d5/1injou94l';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
+            var Tawk_API = Tawk_API || {},
+                Tawk_LoadStart = new Date();
+            (function() {
+                var s1 = document.createElement("script"),
+                    s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/67e95bf057b42a191471b8d5/1injou94l';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
         </script>
         <!--End of Tawk.to Script-->
     </footer>
 </body>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update button icon (optional)
+        themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌒';
+    });
+
+    // Optional: Update button icon on load
+    themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌒'
+</script>
+
 </html>

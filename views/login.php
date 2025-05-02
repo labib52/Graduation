@@ -156,6 +156,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             --success-green: #28a745;
             --light-gray: #f8f9fa;
         }
+        .darkmode{
+    --base-color:#070b1d;
+    --base-variant:#101425;
+    --text-color:#ffffff;
+    --secondary-text:#a4a5b8;
+    --primary-color:#3a435d;
+    --accent-color:#0071ff;
+}  
 
         * {
             margin: 0;
@@ -171,6 +179,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             align-items: center;
             justify-content: center;
             padding: 20px;
+            /* min-height: 100vh;
+    background-color: var(--base-color);
+    color: var(--text-color); */
         }
 
         .login-container {
@@ -288,7 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
-<body>
+<body class="darkmode">
     <div class="login-container">
         <div class="language-switcher" style="text-align: right; margin-bottom: 10px;">
             <?php if ($lang === 'en'): ?>
