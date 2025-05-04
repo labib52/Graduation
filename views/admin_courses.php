@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_course'])) {
     if (!empty($new_title) && !empty($new_category_id) && !empty($new_level)) {
         $query = "UPDATE courses SET title = ?, description = ?, category_id = ?, price = ?, level = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssisssi", $new_title, $new_description, $new_category_id, $new_price, $new_level, $course_id);
+        $stmt->bind_param("ssidsi", $new_title, $new_description, $new_category_id, $new_price, $new_level, $course_id);
         $stmt->execute();
         header("Location: admin_courses.php");
         exit();
