@@ -48,7 +48,7 @@ while ($row = $result->fetch_assoc()) {
 
         <?php if (!empty($courses)): ?>
             <?php foreach ($courses as $course): ?>
-                <a href="/Graduation/views/forensics_<?php echo strtolower(str_replace(' ', '_', $course['title'])); ?>.php">
+                <a href="lecture.php?id=<?php echo $course['id']; ?>">
                     <div class="simulation-card">
                         <div class="simulation-header">
                             <h2><?php echo htmlspecialchars($course['title']); ?></h2>
