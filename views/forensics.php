@@ -20,6 +20,19 @@ $query->execute();
 $result = $query->get_result();
 
 while ($row = $result->fetch_assoc()) {
+    // Fetch the first lecture for this course
+    $lectureQuery = $conn->prepare("SELECT id FROM lectures WHERE course_id = ? ORDER BY id ASC LIMIT 1");
+    $lectureQuery->bind_param("i", $row['id']);
+    $lectureQuery->execute();
+    $lectureResult = $lectureQuery->get_result();
+    $lectureId = null;
+
+    if ($lectureRow = $lectureResult->fetch_assoc()) {
+        $lectureId = $lectureRow['id'];
+    }
+
+    // Append lecture ID to the course data
+    $row['lecture_id'] = $lectureId;
     $courses[] = $row;
 }
 ?>
@@ -33,7 +46,6 @@ while ($row = $result->fetch_assoc()) {
     <title>Forensics Science</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../public/CSS/forensic.css">
-
 </head>
 
 <body>
@@ -48,7 +60,11 @@ while ($row = $result->fetch_assoc()) {
 
         <?php if (!empty($courses)): ?>
             <?php foreach ($courses as $course): ?>
-                <a href="lecture.php?id=<?php echo $course['id']; ?>">
+                <?php if ($course['lecture_id']): ?>
+                    <a href="lecture.php?id=<?php echo $course['lecture_id']; ?>">
+                <?php else: ?>
+                    <a href="#" onclick="alert('No lecture found for this course.'); return false;">
+                <?php endif; ?>
                     <div class="simulation-card">
                         <div class="simulation-header">
                             <h2><?php echo htmlspecialchars($course['title']); ?></h2>
