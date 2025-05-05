@@ -123,24 +123,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         // Handle new media uploads
                         if (isset($_FILES['sections']['name'][$index]['media']) && 
                             is_array($_FILES['sections']['name'][$index]['media'])) {
-                            
-                            foreach ($_FILES['sections']['name'][$index]['media'] as $fileIndex => $fileName) {
-                                if ($_FILES['sections']['error'][$index]['media'][$fileIndex] === UPLOAD_ERR_OK) {
+
+                            $mediaNames = $_FILES['sections']['name'][$index]['media'] ?? [];
+                            $mediaTypes = $_FILES['sections']['type'][$index]['media'] ?? [];
+                            $mediaTmp   = $_FILES['sections']['tmp_name'][$index]['media'] ?? [];
+                            $mediaErrors= $_FILES['sections']['error'][$index]['media'] ?? [];
+                            $mediaSizes = $_FILES['sections']['size'][$index]['media'] ?? [];
+
+                            foreach ($mediaNames as $fileIndex => $fileName) {
+                                if ($mediaErrors[$fileIndex] === UPLOAD_ERR_OK) {
                                     $file = [
-                                        'name' => $_FILES['sections']['name'][$index]['media'][$fileIndex],
-                                        'type' => $_FILES['sections']['type'][$index]['media'][$fileIndex],
-                                        'tmp_name' => $_FILES['sections']['tmp_name'][$index]['media'][$fileIndex],
-                                        'error' => $_FILES['sections']['error'][$index]['media'][$fileIndex],
-                                        'size' => $_FILES['sections']['size'][$index]['media'][$fileIndex]
+                                        'name' => $mediaNames[$fileIndex],
+                                        'type' => $mediaTypes[$fileIndex],
+                                        'tmp_name' => $mediaTmp[$fileIndex],
+                                        'error' => $mediaErrors[$fileIndex],
+                                        'size' => $mediaSizes[$fileIndex]
                                     ];
-                                    
+        
                                     $file_path = saveUploadedFile($file);
                                     if ($file_path) {
                                         $section_files[] = $file_path;
                                     }
                                 }
                             }
-                        }
+                }
+
                         
                         $section_media[] = $section_files;
                     }
