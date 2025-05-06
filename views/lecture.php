@@ -36,9 +36,22 @@ $media = json_decode($lecture['section_media'], true) ?: [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($lecture['title']); ?></title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../public/CSS/wirelesslec.css">
+    <!-- <link rel="stylesheet" href="../public/CSS/wirelesslec_2.css"> -->
     <style>
-        :root { --primary-blue: #007bff; --hover-blue: #0056b3; }
+        /* :root { --primary-blue: #007bff; --hover-blue: #0056b3; }
+        [data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --primary-color: #303840;
+    --header-bg: #3a4856;
+    --footer-bg: #2d3a47;
+    --sidebar-bg: #2d2d2d;
+    --sidebar-text: #526174;
+    --card-bg: #333333;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+    --progress-bg: #333333;
+    --hover-bg: rgba(102, 168, 255, 0.1);
+  }
         .lecture-container { display: flex; min-height: 100vh; }
         .side-nav {
             width: 300px; background: #f8f9fa; padding: 20px;
@@ -141,15 +154,221 @@ $media = json_decode($lecture['section_media'], true) ?: [];
         .lecture-content ul, .lecture-content ol {
             line-height: 2; margin: 0.5em 0;
         }
-        .lecture-content div, .lecture-content span { line-height: 2; }
+        .lecture-content div, .lecture-content span { line-height: 2; } */
+
+
+
+
+        :root {
+    --primary-blue: #007bff;
+    --hover-blue: #0056b3;
+    --background: #ffffff;
+    --text-color: #2c3e50;
+    --nav-bg: #f8f9fa;
+    --nav-border: #dee2e6;
+    --card-bg: #ffffff;
+    --box-shadow: rgba(0, 0, 0, 0.1);
+    --media-border: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --primary-blue: #3399ff;
+    --hover-blue: #1a73e8;
+    --background: #1e1e2f;
+    --text-color: #e0e0e0;
+    --nav-bg: #2a2a40;
+    --nav-border: #3a3a55;
+    --card-bg: #2a2a40;
+    --box-shadow: rgba(0, 0, 0, 0.4);
+    --media-border: #444;
+}
+
+body {
+    background: var(--background);
+    color: var(--text-color);
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.lecture-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.side-nav {
+    width: 300px;
+    background: var(--nav-bg);
+    padding: 20px;
+    border-right: 1px solid var(--nav-border);
+    transition: all 0.3s ease;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.side-nav.closed {
+    transform: translateX(-250px);
+}
+
+.side-nav-header {
+    color: var(--primary-blue);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-blue);
+}
+
+.nav-toggle {
+    position: absolute;
+    right: -40px;
+    top: 20px;
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 0 4px var(--box-shadow);
+    font-size: 1.2em;
+    z-index: 1000;
+}
+
+.content-area {
+    flex: 1;
+    padding: 30px;
+    margin-left: 300px;
+    transition: all 0.3s ease;
+    background: var(--background);
+    width: calc(100% - 300px);
+}
+
+.content-area.expanded {
+    margin-left: 50px;
+    width: calc(100% - 50px);
+}
+
+.lecture-title {
+    background: var(--primary-blue);
+    color: white;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-items li {
+    margin-bottom: 15px;
+}
+
+.nav-items a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.nav-items a:hover {
+    background: var(--primary-blue);
+    color: white;
+    transform: translateX(5px);
+}
+
+.section-content {
+    background: var(--card-bg);
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--box-shadow);
+    max-width: 100%;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-blue);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background: var(--hover-blue);
+}
+
+.section-media {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.section-media img,
+.section-media video {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+    display: block;
+    border: 1px solid var(--media-border);
+}
+
+.lecture-content {
+    line-height: 2;
+}
+
+.lecture-content p {
+    margin: 0;
+    padding: 0.5em 0;
+}
+
+.lecture-content ul,
+.lecture-content ol {
+    line-height: 2;
+    margin: 0.5em 0;
+}
+
+.lecture-content div,
+.lecture-content span {
+    line-height: 2;
+}
     </style>
 </head>
+
 <body>
 
 <a href="javascript:history.back()" class="back-button">← Back</a>
 
 <div class="lecture-container">
+
     <nav class="side-nav">
+    <button id="theme-toggle" aria-label="Toggle theme">
+                 🌓
+            </button>
         <div class="side-nav-header">YOUR NAVIGATION</div>
         <button class="nav-toggle">←</button>
         <ul class="nav-items">
@@ -212,4 +431,25 @@ $media = json_decode($lecture['section_media'], true) ?: [];
 </script>
 
 </body>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update button icon (optional)
+        themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌒';
+    });
+
+    // Optional: Update button icon on load
+    themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌒'
+</script>
 </html>

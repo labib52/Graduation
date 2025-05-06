@@ -55,7 +55,7 @@ while ($row = $result->fetch_assoc()) {
     <title>CyberWise</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../public/CSS/categ.css">
+    <link rel="stylesheet" href="../public/CSS/categ_1.css">
     <?php if ($lang === 'ar'): ?>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -67,6 +67,9 @@ while ($row = $result->fetch_assoc()) {
     <header class="header">
         <h1>CyberWise</h1>
         <div class="user-info"><?php echo $translations[$lang]['welcome']; ?>, <?php echo $username; ?>!</div>
+        <button id="theme-toggle" aria-label="Toggle theme">
+                 🌓
+            </button>
     </header>
     <div class="container">
         <h2 class="section-title"><?php echo $translations[$lang]['categories_title']; ?></h2>
@@ -92,4 +95,25 @@ while ($row = $result->fetch_assoc()) {
         <p>&copy; 2024 <?php echo $translations[$lang]['platform']; ?>. <?php echo $translations[$lang]['rights_reserved']; ?></p>
     </footer>
 </body>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update button icon (optional)
+        themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌒';
+    });
+
+    // Optional: Update button icon on load
+    themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌒'
+</script>
 </html>
