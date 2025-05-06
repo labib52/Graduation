@@ -25,7 +25,8 @@ $translations = [
         'manage_lectures' => 'Manage Lectures',
         'manage_labs' => 'Manage Labs',
         'course_requests' => 'Course Requests',
-        'statistics' => 'Statistics'
+        'statistics' => 'Statistics',
+        'lab_scores' => 'Lab Scores'
     ],
     'ar' => [
         'admin_dashboard' => 'لوحة التحكم',
@@ -42,7 +43,8 @@ $translations = [
         'manage_lectures' => 'إدارة المحاضرات',
         'manage_labs' => 'إدارة المعامل',
         'course_requests' => 'طلبات الدورات',
-        'statistics' => 'الإحصائيات'
+        'statistics' => 'الإحصائيات',
+        'lab_scores' => 'درجات المعامل'
     ]
 ];
 
@@ -205,6 +207,7 @@ $total_courses = $active_courses + $pending_courses;
             <a href="admin_labs.php"><?php echo $translations[$lang]['manage_labs']; ?></a>
             <a href="admin_requests.php"><?php echo $translations[$lang]['course_requests']; ?></a>
             <a href="admin_statistics.php"><?php echo $translations[$lang]['statistics']; ?></a>
+            <a href="admin_lab_scores.php"><?php echo $translations[$lang]['lab_scores']; ?></a>
         </div>
     </main>
 </body>
