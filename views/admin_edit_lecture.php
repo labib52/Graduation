@@ -199,7 +199,7 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Lecture</title>
-    <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <link rel="stylesheet" href="../public/CSS/admin_styles_1.css">
     <script src="../public/js/tinymce/tinymce.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -247,6 +247,10 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
                 height: 300
             });
         }
+
+
+
+
 
         // Function to add new section (modified for edit page)
         function addSection() {
@@ -391,6 +395,10 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
                 mediaItem.remove();
             }
         }
+
+
+
+        
     </script>
     <style>
         /* Add the same styles as in admin_add_lecture.php */
@@ -503,7 +511,8 @@ $section_media = json_decode($lecture['section_media'], true) ?: [];
             background-color: #c82333;
         }
     </style>
-</head>
+</head> 
+
 <body>
     <header>
         <h1>Edit Lecture</h1>

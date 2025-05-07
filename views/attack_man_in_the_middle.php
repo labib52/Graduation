@@ -35,7 +35,7 @@ if ($category_id !== null) {
     <title>Wireless Security Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../public/CSS/wireless.css">
+    <link rel="stylesheet" href="../public/CSS/wireless_1.css">
 </head>
 <body>
 
@@ -43,7 +43,10 @@ if ($category_id !== null) {
         <h1>Wireless Security Simulation</h1>
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
-        </div>
+        </div>  <button id="theme-toggle" aria-label="Toggle theme">
+                 🌓
+            </button>
+
     </header>
 
     <main class="content">
@@ -76,4 +79,25 @@ if ($category_id !== null) {
     </footer>
 
 </body>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update button icon (optional)
+        themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌒';
+    });
+
+    // Optional: Update button icon on load
+    themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌒'
+</script>
 </html>

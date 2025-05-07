@@ -13,7 +13,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEP Cracking Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/CSS/wirelesshome.css">
+    <link rel="stylesheet" href="../public/CSS/wirelesshome_1.css">
 </head>
 <body>
     <header>
@@ -21,6 +21,9 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         <div class="user-info">
             Welcome, <?php echo $username; ?>!
         </div>
+        <button id="theme-toggle" aria-label="Toggle theme">
+                 🌓
+            </button>
     </header>
     <main class="content">
         <!-- Lecture Card -->
@@ -63,4 +66,25 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         <p>© 2024 Cybersecurity Awareness Platform. All Rights Reserved.</p>
     </footer>
 </body>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update button icon (optional)
+        themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌒';
+    });
+
+    // Optional: Update button icon on load
+    themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌒'
+</script>
 </html>
