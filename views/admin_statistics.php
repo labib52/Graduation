@@ -26,7 +26,11 @@ $translations = [
         'enrollments' => 'Enrollments',
         'completion_rate' => 'Completion Rate',
         'failure_rate' => 'Failure Rate',
-        'back_to_dashboard' => 'Back to Dashboard'
+        'back_to_dashboard' => 'Back to Dashboard',
+        'user_levels' => 'User Course Levels',
+        'enrolled_courses' => 'Enrolled Courses',
+        'course_levels' => 'Course Levels',
+        'user_level' => 'User Level'
     ],
     'ar' => [
         'statistics' => 'إحصائيات الموقع',
@@ -38,7 +42,11 @@ $translations = [
         'enrollments' => 'التسجيلات',
         'completion_rate' => 'معدل الإكمال',
         'failure_rate' => 'معدل الفشل',
-        'back_to_dashboard' => 'العودة للوحة التحكم'
+        'back_to_dashboard' => 'العودة للوحة التحكم',
+        'user_levels' => 'مستويات دورات المستخدم',
+        'enrolled_courses' => 'الدورات المسجلة',
+        'course_levels' => 'مستويات الدورات',
+        'user_level' => 'مستوى المستخدم'
     ]
 ];
 
@@ -69,11 +77,11 @@ $top_courses_query = "SELECT
     c.title,
     COUNT(DISTINCT e.student_id) as enrollments,
     COALESCE(AVG(sa.score), 0) as avg_score,
-    COUNT(DISTINCT sa.user_id) * 100.0 / NULLIF(COUNT(DISTINCT e.student_id), 0) as completion_rate,
+    LEAST(COUNT(DISTINCT sa.user_id) * 100.0 / NULLIF(COUNT(DISTINCT e.student_id), 0), 100) as completion_rate,
     (
         COUNT(DISTINCT e.student_id) * 0.4 + 
         COALESCE(AVG(sa.score), 0) * 0.3 +
-        (COUNT(DISTINCT sa.user_id) * 100.0 / NULLIF(COUNT(DISTINCT e.student_id), 0)) * 0.3
+        (LEAST(COUNT(DISTINCT sa.user_id) * 100.0 / NULLIF(COUNT(DISTINCT e.student_id), 0), 100)) * 0.3
     ) as course_rank
 FROM courses c 
 LEFT JOIN enrollments e ON c.id = e.course_id
@@ -122,6 +130,28 @@ FROM students_answers
 GROUP BY performance_category
 ORDER BY MIN(score)";
 $performance_result = mysqli_query($conn, $performance_query);
+
+// Get user levels based on enrolled courses
+$user_levels_query = "SELECT 
+    u.username,
+    GROUP_CONCAT(c.title SEPARATOR ', ') as enrolled_courses,
+    GROUP_CONCAT(c.level SEPARATOR ', ') as course_levels,
+    CASE 
+        WHEN COUNT(CASE WHEN c.level = 'advanced' THEN 1 END) = COUNT(*) THEN 'Advanced'
+        WHEN COUNT(CASE WHEN c.level = 'beginner' THEN 1 END) = COUNT(*) THEN 'Beginner'
+        WHEN COUNT(CASE WHEN c.level = 'advanced' THEN 1 END) = COUNT(CASE WHEN c.level = 'beginner' THEN 1 END) THEN 'Intermediate'
+        WHEN COUNT(CASE WHEN c.level = 'advanced' THEN 1 END) >= 2 THEN 'Advanced'
+        WHEN COUNT(CASE WHEN c.level = 'advanced' THEN 1 END) = 1 AND COUNT(CASE WHEN c.level = 'beginner' THEN 1 END) >= 1 THEN 'Intermediate'
+        WHEN COUNT(CASE WHEN c.level = 'beginner' THEN 1 END) >= 2 THEN 'Intermediate'
+        ELSE 'Beginner'
+    END as user_level
+FROM users u
+JOIN enrollments e ON u.id = e.student_id
+JOIN courses c ON e.course_id = c.id
+WHERE u.is_admin = 0
+GROUP BY u.id, u.username
+ORDER BY u.username";
+$user_levels_result = mysqli_query($conn, $user_levels_query);
 ?>
 
 <!DOCTYPE html>
@@ -263,6 +293,30 @@ $performance_result = mysqli_query($conn, $performance_query);
                             <td><?php echo $lab['failure_rate']; ?>%</td>
                             <td><?php echo $lab['failed_labs']; ?></td>
                             <td><?php echo $lab['total_labs']; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="statistics-section">
+            <h2><?php echo $translations[$lang]['user_levels']; ?></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th><?php echo $translations[$lang]['user_name']; ?></th>
+                        <th><?php echo $translations[$lang]['enrolled_courses']; ?></th>
+                        <th><?php echo $translations[$lang]['course_levels']; ?></th>
+                        <th><?php echo $translations[$lang]['user_level']; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($user = mysqli_fetch_assoc($user_levels_result)): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['username']); ?></td>
+                            <td><?php echo htmlspecialchars($user['enrolled_courses']); ?></td>
+                            <td><?php echo htmlspecialchars($user['course_levels']); ?></td>
+                            <td><?php echo htmlspecialchars($user['user_level']); ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
