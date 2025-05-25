@@ -38,7 +38,7 @@ $scores_result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab Scores</title>
-    <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <link rel="stylesheet" href="../public/CSS/admin_styles_1.css">
     <style>
         .scores-table {
             width: 100%;
