@@ -160,7 +160,7 @@ $user_levels_result = mysqli_query($conn, $user_levels_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $translations[$lang]['statistics']; ?></title>
-    <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <link rel="stylesheet" href="../public/CSS/admin_styles_1.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .statistics-container {
