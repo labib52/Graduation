@@ -28,7 +28,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="/Graduation/views/lecture.php?id=48">
+        <a href="/Graduation/views/lecture.php?id=28">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>stored xss lecture</h2>
