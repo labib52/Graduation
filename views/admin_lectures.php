@@ -19,7 +19,7 @@ $lectures_result = mysqli_query($conn, $lectures_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Lectures</title>
-    <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <link rel="stylesheet" href="../public/CSS/admin_styles_1.css">
     <style>
         :root {
             --primary-blue: #007bff;
