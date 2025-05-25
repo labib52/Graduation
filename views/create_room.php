@@ -9,77 +9,130 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['category_id'] ?? null;
-    
+
     if (!$category_id) {
         echo json_encode(['error' => 'Category is required']);
         exit();
     }
 
-    // Generate a unique room code
     $room_code = strtoupper(substr(md5(uniqid()), 0, 6));
-    
+
     try {
         $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+
         // Create the game room
         $stmt = $db->prepare("INSERT INTO game_rooms (room_code, category_id, created_by) VALUES (?, ?, ?)");
         $stmt->execute([$room_code, $category_id, $_SESSION['user_id']]);
         $room_id = $db->lastInsertId();
-        
+
         // Add the creator as a participant
         $stmt = $db->prepare("INSERT INTO game_participants (room_id, user_id) VALUES (?, ?)");
         $stmt->execute([$room_id, $_SESSION['user_id']]);
-        
-        // Get 4 random courses from the selected category
-        $stmt = $db->prepare("
-            SELECT id FROM courses 
-            WHERE category_id = ? 
-            ORDER BY RAND() 
-            LIMIT 4
-        ");
+
+        // Get all active courses for the selected category
+        $stmt = $db->prepare("SELECT id FROM courses WHERE category_id = ? AND status = 'active'");
         $stmt->execute([$category_id]);
         $courses = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-        // For each course, get 5 random questions
-        $question_order = 1;
+
+        $course_count = count($courses);
+        if ($course_count === 0) {
+            echo json_encode(['error' => 'No active courses found in this category.']);
+            exit();
+        }
+
+        $total_questions_needed = 20;
+        $questions_collected = [];
+
+        shuffle($courses); // Randomize course order
+
+        // 1st pass: try to collect questions equally
         foreach ($courses as $course_id) {
-            $stmt = $db->prepare("
+            $limit = ceil($total_questions_needed / $course_count);
+            $limit = (int)$limit;
+
+            $sql = "
                 SELECT q.id 
                 FROM questions q
                 JOIN labs l ON q.lab_id = l.id
                 WHERE l.course_id = ?
                 ORDER BY RAND()
-                LIMIT 5
-            ");
+                LIMIT $limit
+            ";
+            $stmt = $db->prepare($sql);
             $stmt->execute([$course_id]);
             $questions = $stmt->fetchAll(PDO::FETCH_COLUMN);
-            
-            // Add questions to the game
-            foreach ($questions as $question_id) {
-                $stmt = $db->prepare("INSERT INTO game_questions (room_id, question_id, `order`) VALUES (?, ?, ?)");
-                $stmt->execute([$room_id, $question_id, $question_order++]);
+
+            $questions_collected = array_merge($questions_collected, $questions);
+        }
+
+        // If still not enough, get additional from the category pool
+        if (count($questions_collected) < $total_questions_needed && count($courses) > 0) {
+            $needed = $total_questions_needed - count($questions_collected);
+        
+            $additional_questions = [];
+        
+            if (count($questions_collected) > 0) {
+                // Build with NOT IN
+                $placeholders = rtrim(str_repeat('?,', count($courses)), ',');
+                $exclude_placeholders = rtrim(str_repeat('?,', count($questions_collected)), ',');
+                $sql = "
+                    SELECT q.id 
+                    FROM questions q
+                    JOIN labs l ON q.lab_id = l.id
+                    WHERE l.course_id IN ($placeholders)
+                    AND q.id NOT IN ($exclude_placeholders)
+                    ORDER BY RAND()
+                    LIMIT $needed
+                ";
+                $params = array_merge($courses, $questions_collected);
+            } else {
+                // No need for NOT IN
+                $placeholders = rtrim(str_repeat('?,', count($courses)), ',');
+                $sql = "
+                    SELECT q.id 
+                    FROM questions q
+                    JOIN labs l ON q.lab_id = l.id
+                    WHERE l.course_id IN ($placeholders)
+                    ORDER BY RAND()
+                    LIMIT $needed
+                ";
+                $params = $courses;
             }
+        
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
+            $additional_questions = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        
+            $questions_collected = array_merge($questions_collected, $additional_questions);
         }
         
+
+        // Ensure final set is exactly 20 questions
+        $questions_collected = array_slice($questions_collected, 0, $total_questions_needed);
+        shuffle($questions_collected);
+
+        $question_order = 1;
+        foreach ($questions_collected as $question_id) {
+            $stmt = $db->prepare("INSERT INTO game_questions (room_id, question_id, `order`) VALUES (?, ?, ?)");
+            $stmt->execute([$room_id, $question_id, $question_order++]);
+        }
+
         echo json_encode([
             'success' => true,
             'room_code' => $room_code,
             'room_id' => $room_id
         ]);
-        
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
     }
 } else {
-    // Display the form
     try {
         $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+
         $stmt = $db->query("SELECT id, name FROM categories ORDER BY name");
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
         ?>
         <head>
             <meta charset="UTF-8">
@@ -184,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 alert('Error creating room: ' + error.message);
             }
         });
+
         document.getElementById('startGameBtn').addEventListener('click', () => {
             const roomCode = document.getElementById('roomCode').textContent;
             window.location.href = `game.php?room=${roomCode}`;
@@ -195,4 +249,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Database error: " . $e->getMessage();
     }
 }
-?> 
+?>
