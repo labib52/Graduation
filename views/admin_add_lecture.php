@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Lecture</title>
-    <link rel="stylesheet" href="../public/CSS/admin_styles.css">
+    <link rel="stylesheet" href="../public/CSS/admin_styles_1.css">
     <style>
         :root {
             --primary-blue: #007bff;
