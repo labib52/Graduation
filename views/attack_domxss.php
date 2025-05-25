@@ -17,7 +17,7 @@
     </header>
     <main class="content">
         <!-- Lecture Card -->
-        <a href="/Graduation/views/lecture.php?id=50">
+        <a href="/Graduation/views/lecture.php?id=37">
             <div class="simulation-card">
                 <div class="simulation-header">
                     <h2>DOM XSS Lecture</h2>
