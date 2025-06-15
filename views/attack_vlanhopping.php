@@ -13,7 +13,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WPS Cracking Simulation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/CSS/network_2.css">
+    <link rel="stylesheet" href="../public/CSS/reflectedxss_1.css">
 </head>
 <body>
     <header>
@@ -30,10 +30,10 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['username'] ?? 'User') : "Gue
         <a href="/Graduation/views/lecture.php?id=41">
             <div class="simulation-card">
                 <div class="simulation-header">
-                    <h2>WPS Cracking Lecture</h2>
+                    <h2>Vlan hopping lecture</h2>
                     <span class="status active">Active</span>
                 </div>
-                <p class="description">Learn about exploiting vulnerabilities in the WPS protocol to gain unauthorized access to wireless networks and best practices to prevent such attacks.</p>
+                <p class="description">attacks.</p>
             </div>
         </a>
 
